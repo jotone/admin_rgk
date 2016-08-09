@@ -12,8 +12,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $u = $this->getUser();
-        var_dump($u);
-        exit();
+        $params = [];
+        return $this->render('RgkBundle:Admin:base.html.twig',$params);
     }
 }

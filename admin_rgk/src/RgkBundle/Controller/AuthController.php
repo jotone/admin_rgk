@@ -68,7 +68,7 @@ class AuthController extends Controller
         $user = $this->getUser();
         if($user)
             return $this->redirect('/');
-        
+
         $yaml = new Parser();
         $params = $yaml->parse(file_get_contents(__DIR__ . '/../../../app/config/params.yml'));
 
