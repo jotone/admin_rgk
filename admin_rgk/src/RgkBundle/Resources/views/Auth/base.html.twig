@@ -41,37 +41,16 @@
 
 </div>
 <div class="fullPagebg">
-    {% block content %}
-        <div class="mbox">
-            <div class="bigTitle text-center">
-                РУСГЕОКОМ
-            </div>
-            <div class="fullPagebg-center">
-                <div class="grayForm zForm zNice bigMg-form">
-                    <form>
-                        <div class="grayForm-image text-center zForm-row">
-                            <img src="images/formlogo.png" alt=""/>
-                        </div>
-                        <div class="zForm-row">
-                            <input type="text" required="required" name="loginInp" data-image="images/input_logo1.png"/>
-                        </div>
-                        <div class="zForm-row">
-                            <input type="password" required="required" name="passInp" data-image="images/input_logo2.png"/>
-                        </div>
-                        <div class="text-right zForm-link-row">
-                            <a href="#" class="zForm-link">Забыли пароль</a>
-                        </div>
-                        <div class="zForm-row text-center">
-                            <input type="submit" value="Войти" class="allWidth btn-lg"/>
-                        </div>
-                    </form>
-                </div>
-                <div class="fullPagebg-link text-center">
-                    <a href="#">СОЗДАТЬ АККАУНТ</a>
-                </div>
-            </div>
+    <div class="mbox">
+        <div class="bigTitle text-center">
+            РУСГЕОКОМ
         </div>
-    {% endblock %}
+        <div class="fullPagebg-center">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
 </div>
 </body>
 </html>

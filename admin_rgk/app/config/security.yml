@@ -66,4 +66,5 @@ security:
 
         #- { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER] }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/remindPassword$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/.*, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER] }

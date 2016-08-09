@@ -1,39 +1,29 @@
 {% extends 'RgkBundle:Auth:base.html.twig' %}
 {% block content %}
-    <div class="mbox">
-        <div class="bigTitle text-center">
-            РУСГЕОКОМ
-        </div>
-        <div class="fullPagebg-center">
-            <div class="grayForm zForm zNice bigMg-form">
-                <form action="{{ path("fos_user_security_check") }}" method="post">
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    <div class="grayForm zForm zNice bigMg-form">
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-                    <div class="grayForm-image text-center zForm-row">
-                        <img src="/images/formlogo.png" alt=""/>
-                    </div>
-                    {% if error is defined and error is not empty %}
-                        <div class="zForm-row">
-                            {{ error }}
-                        </div>
-                    {% endif %}
-                    <div class="zForm-row">
-                        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" data-image="/images/input_logo1.png"/>
-                    </div>
-                    <div class="zForm-row">
-                        <input type="password" required="required" id="password" name="_password" data-image="/images/input_logo2.png"/>
-                    </div>
-                    <div class="text-right zForm-link-row">
-                        <a href="#" class="zForm-link">Забыли пароль</a>
-                    </div>
-                    <div class="zForm-row text-center">
-                        <input type="submit" value="Войти" class="allWidth btn-lg"/>
-                    </div>
-                </form>
+            <div class="grayForm-image text-center zForm-row">
+                <img src="/images/formlogo.png" alt=""/>
             </div>
-            {#<div class="fullPagebg-link text-center">
-                <a href="#">СОЗДАТЬ АККАУНТ</a>
-            </div>#}
-        </div>
+            {% if error is defined and error is not empty %}
+                <div class="zForm-row">
+                    <p style="color: #dc6263;">{{ error }}</p>
+                </div>
+            {% endif %}
+            <div class="zForm-row">
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" data-image="/images/input_logo1.png"/>
+            </div>
+            <div class="zForm-row">
+                <input type="password" required="required" id="password" name="_password" data-image="/images/input_logo2.png"/>
+            </div>
+            <div class="text-right zForm-link-row">
+                <a href="/remindPassword" class="zForm-link">Забыли пароль</a>
+            </div>
+            <div class="zForm-row text-center">
+                <input type="submit" value="Войти" class="allWidth btn-lg"/>
+            </div>
+        </form>
     </div>
 {% endblock %}
