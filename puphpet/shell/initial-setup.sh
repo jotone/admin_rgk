@@ -20,6 +20,12 @@ fi
 touch '/.puphpet-stuff/vagrant-core-folder.txt'
 echo "${VAGRANT_CORE_FOLDER}" > '/.puphpet-stuff/vagrant-core-folder.txt'
 
+if [[ ! -f '/.puphpet-stuff/puppetlabs.gpg' ]] && [[ "${OS}" == 'debian' || "${OS}" == 'ubuntu' ]]; then
+    wget --quiet --tries=5 --connect-timeout=10 -O /.puphpet-stuff/puppetlabs.gpg \
+        https://apt.puppetlabs.com/pubkey.gpg
+    apt-key add /.puphpet-stuff/puppetlabs.gpg
+fi
+
 if [[ ! -f '/.puphpet-stuff/init-apt-get-update' ]] && [[ "${OS}" == 'debian' || "${OS}" == 'ubuntu' ]]; then
     apt-get update
 

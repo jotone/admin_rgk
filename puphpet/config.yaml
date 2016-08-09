@@ -19,14 +19,14 @@ vagrantfile:
                         check_guest_tools: 0
                         update_guest_tools: 0
                 machines:
-                    vflm_srxb9m1b90b1:
-                        id: machine1
+                    vflm_pzvcoltzrtv6:
+                        id: sonata
                         hostname: machine1.puphpet
                         network:
                             private_network: 192.168.56.101
                             forwarded_port:
-                                vflmnfp_x8ns1z7gj8cy:
-                                    host: '6512'
+                                vflmnfp_a80fkp2belmc:
+                                    host: '7198'
                                     guest: '22'
                         memory: '512'
                         cpus: '1'
@@ -38,7 +38,7 @@ vagrantfile:
                     - '--verbose'
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
         synced_folder:
-            vflsf_fjbknvgr9lig:
+            vflsf_hmkc641wcvjn:
                 source: ./
                 target: /var/www
                 sync_type: default
@@ -96,7 +96,7 @@ locale:
         locales:
             - en_GB.UTF-8
             - en_US.UTF-8
-        timezone: Europe/Kiev
+        timezone: UTC
 firewall:
     install: '1'
     rules: {  }
@@ -104,7 +104,7 @@ cron:
     install: '1'
     jobs: {  }
 nginx:
-    install: '1'
+    install: '0'
     settings:
         default_vhost: 1
         proxy_buffer_size: 128k
@@ -115,11 +115,11 @@ nginx:
         names_hash_bucket_size: 128
     upstreams: {  }
     vhosts:
-        nxv_wbrhlnjg1r1w:
+        nxv_fe2kcr2k2hjs:
             server_name: awesome.dev
             server_aliases:
-                - www.admin_rgk.dev
-            www_root: /var/www/admin_rgk/app
+                - www.awesome.dev
+            www_root: /var/www/awesome
             listen_port: '80'
             index_files:
                 - index.html
@@ -135,7 +135,7 @@ nginx:
             rewrite_to_https: '1'
             spdy: '1'
             locations:
-                nxvl_ev2kx55j61ou:
+                nxvl_w5tv8es6gplk:
                     location: /
                     try_files:
                         - $uri
@@ -146,7 +146,7 @@ nginx:
                     fastcgi_split_path: ''
                     proxy: ''
                     proxy_redirect: ''
-                nxvl_j05tvpwijplh:
+                nxvl_z6jc0or4x5gc:
                     location: '~ \.php$'
                     try_files:
                         - $uri
@@ -164,7 +164,7 @@ nginx:
                     proxy_redirect: ''
     proxies: {  }
 apache:
-    install: '0'
+    install: '1'
     settings:
         version: 2.4
         user: www-data
@@ -177,11 +177,11 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        av_89459dagd8hq:
+        av_zqodtz55bbv0:
             servername: awesome.dev
             serveraliases:
                 - www.awesome.dev
-            docroot: /var/www/admin_rgk/web
+            docroot: /var/www/awesome
             port: '80'
             setenv:
                 - 'APP_ENV dev'
@@ -196,8 +196,8 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_wbjxhsvjg4lt:
-                    path: /var/www/admin_rgk/web
+                avd_b3txmvy4i0aj:
+                    path: /var/www/awesome
                     options:
                         - Indexes
                         - FollowSymlinks
@@ -208,7 +208,7 @@ apache:
                         - 'all granted'
                     custom_fragment: ''
                     files_match:
-                        avdfm_h0vcjkf1bokb:
+                        avdfm_agc9mf5osdgt:
                             path: \.php$
                             sethandler: 'proxy:fcgi://127.0.0.1:9000'
                             custom_fragment: ''
@@ -237,7 +237,7 @@ php:
     fpm_ini:
         error_log: /var/log/php-fpm.log
     fpm_pools:
-        phpfp_1fk4nhxfcjq2:
+        phpfp_l4wp92vfbsm4:
             ini:
                 prefix: www
                 listen: '127.0.0.1:9000'
@@ -280,7 +280,7 @@ drush:
 ruby:
     install: '1'
     versions:
-        rv_8zpkbmwelts2:
+        rv_kgcq4k4bj21d:
             default: '1'
             bundler: '1'
             version: 1.9.3
@@ -320,15 +320,15 @@ mariadb:
         override_options: {  }
     adminer: 0
     users:
-        mariadbnu_w3ef3r33f6k9:
+        mariadbnu_6r86zlzy1oma:
             name: dbuser
             password: '123'
     databases:
-        mariadbnd_fkcmbxlv7trd:
+        mariadbnd_nrp6z8kvwnp4:
             name: dbname
             sql: ''
     grants:
-        mariadbng_vohf6rgspx26:
+        mariadbng_oqaxr6tha3js:
             user: dbuser
             table: '*.*'
             privileges:
@@ -337,19 +337,19 @@ mysql:
     install: '1'
     settings:
         version: '5.6'
-        root_password: datasvitend
+        root_password: '123'
         override_options: {  }
     adminer: '1'
     users:
-        mysqlnu_suywmxr0zfcu:
+        mysqlnu_fkskor79n48i:
             name: vjxzebra
             password: datasvitend
     databases:
-        mysqlnd_pikb1cn99sfd:
+        mysqlnd_sy19axuroait:
             name: vjxzebra
             sql: ''
     grants:
-        mysqlng_q37agnmglh8g:
+        mysqlng_5yszapvm0mkm:
             user: vjxzebra
             table: '*.*'
             privileges:
@@ -414,7 +414,7 @@ elastic_search:
         version: 2.3.1
         java_install: true
     instances:
-        esi_6m19hz1qj2nf:
+        esi_ewt86j7zeoj3:
             name: es-01
 solr:
     install: '0'
