@@ -21,17 +21,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         admin:
-            pattern:            /admin(.*)
+            pattern:            /(.*)
             context:            user
             form_login:
                 provider:       fos_userbundle
-                login_path:     /admin/login
+                login_path:     /login
                 use_forward:    false
-                check_path:     /admin/login_check
+                check_path:     /login_check
                 failure_path:   null
             logout:
-                path:           /admin/logout
-                target:         /admin/login
+                path:           /logout
+                target:         /login
             anonymous:          true
 
         main:
@@ -44,7 +44,7 @@ security:
                 check_path:     /login_check
                 failure_path:   null
             logout:             true
-            anonymous:          true
+            anonymous:          false
             # activate different ways to authenticate
 
             # http_basic: ~
@@ -54,15 +54,16 @@ security:
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Admin login page needs to be accessed without credential
-        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
-        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER] }
-        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER] }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/.*, role: [ROLE_ADMIN, ROLE_SUPER_ADMIN, ROLE_USER] }

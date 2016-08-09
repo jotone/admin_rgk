@@ -1,0 +1,187 @@
+/*zNice base styles DONT TOUCH IF YOU DONT KNOW WHAT IS THIS!!!!!*/
+.zNice-wrap {display:inline-block;position:relative;}
+.zNice-disabled{opacity: 0.5;}
+.zNice-qInput .zNice-tInput{position:relative;}
+.zNice-bg{position:absolute;left:0;top:0;bottom:0;right:0;}
+.zNice-color{position:absolute;display:block;right:30px;top:5px;bottom:5px;width:30px;}
+.zNice-image{position:absolute;display:block;right:30px;top:0px;bottom:0px;}
+.zNice-image img{vertical-align:middle;}
+.zNice-error-text{position:absolute;left:100%;top:3px;color:red;margin:0 0 0 5px;white-space:nowrap;font-size: 0;display: none !important;}
+.zNice-tArea textarea,.zNice-tInput input{position:relative;z-index:1;vertical-align:bottom;border:0;overflow:auto;outline:none !important;width:100%;font-size:12px;font-family:sans-serif;background:url('../images/spacer.gif');}
+
+.zNice-select{cursor:pointer;}
+.zNice-expanded{z-index:7;}
+.zNice-expanded .zNice-select-list{display:block;}
+.zNice-select-text{display:block;white-space:nowrap;position:relative;}
+.zNice-select-open{display:block;position:absolute;right:0;top:0;}
+.zNice-select-list{position:absolute;left:0px;top:100%;list-style:none;display: none;margin:0;overflow-y:auto;min-width: 100%;white-space:nowrap;}
+.zNice-select-list li{display:block;position:relative;}
+.zNice-select-item{display:block;position:relative;}
+
+.zNice-checkbox input,.zNice-radio input,.zNice-select select{position:absolute;left:-99999em;border:none;margin:0;padding:0;}
+
+
+/* -------------
+ * placeholder
+ * ------------- */
+::-webkit-input-placeholder {color:#a3a3a3;font-weight: 500;}
+:-moz-placeholder {color:#a3a3a3;font-weight: 500;}
+::-moz-placeholder {color:#a3a3a3;font-weight: 500;}
+:-ms-input-placeholder {color:#a3a3a3;font-weight: 500;}
+/* END zNice base styles DONT TOUCH IF YOU DONT KNOW WHAT IS THIS!!!!!*/
+
+
+
+
+
+
+/* -------------
+ * TeaxArea
+ * ------------- */
+.zNice-tArea{display:block;}
+.zNice-tArea textarea{padding:20px;}
+.zNice-tArea .zNice-bg{background:#fff;border:1px solid #bfb7b7;}
+
+
+/* -------------
+ * Text Inputs
+ * ------------- */
+/*Default input*/
+.zNice-tInput{display:block;}
+.zNice-tInput input{padding: 5px 14px;height:27px;color: #a3a3a3;font-weight: 500;}
+.zNice-tInput .zNice-bg{background:#fff;border:1px solid #bfb7b7;}
+
+
+/*Icon input*/
+.zNice-tInput-image{}
+.zNice-tInput-image input{padding-left:52px;height: 50px;font-size: 16px;}
+.zNice-tInput-image .zNice-image{position:absolute;left:10px;right:auto;}
+.inputDate.zNice-tInput-image input{padding-left: 14px;padding-right: 40px;height: 33px;font-size: 14px;color: #000;}
+.inputDate.zNice-tInput-image .zNice-image{left: auto;right: 5px;top: 0px;}
+
+/*Color input*/
+.zNice-tInput-color{padding-right:40px;}
+.zNice-tInput-color input{padding-left:35px}
+.zNice-tInput-color .zNice-color{position:absolute;left:10px;right:auto;width:20px;}
+
+/*Quant input*/
+.zNice-qInput{display:inline-block;}
+.zNice-qInput .zNice-tInput{display:inline-block;vertical-align:middle;}
+.zNice-qInput input{text-align:center;}
+.zNice-qInput-control{height:20px;width:20px;display:inline-block;vertical-align:middle;background:url('../images/zNice-qInput.png') left top no-repeat;cursor:pointer;
+-webkit-user-select: none;
+-moz-user-select: none;
+-khtml-user-select: none; }
+.zNice-qInput-inc:hover{background-position:left bottom;}
+.zNice-qInput-dec{background-position:right top;}
+.zNice-qInput-dec:hover{background-position:right bottom;}
+
+
+/* -------------
+ * Selects Inputs
+ * ------------- */
+ /*Default Select*/
+.zNice-select{display:block;height: 34px;line-height: 34px;font-size: 15px;}
+.zNice-select .zNice-bg{background:#fff;border:1px solid #ccc;}
+.zNice-select-text{overflow:hidden;position:relative;}
+
+.zNice-select-open{width: 35px;height: 33px;background: #469dc1 url('../images/pointer_top.png') no-repeat center 15px;}
+.zNice-select-open:hover{opacity: 0.8;}
+.zNice-select:hover .zNice-expanded {background-position:right bottom;}
+
+
+.zNice-select-list{border-bottom:1px solid #ccc;background-color: #fff;max-height:400px;}
+.zNice-select-list li{border-width:0 1px 1px;border-style:solid;border-color:#ccc;}
+.zNice-select-list li:last-child{border-bottom:0;}
+.zNice-select-list li.zNice-selected>.zNice-select-item,.zNice-select-list li:hover>.zNice-select-item{background:#eaeaea;color:#000;}
+.zNice-select-list li .zNice-select-item{margin:0 -1px;}
+
+.zNice-select-item,.multipleText{padding: 0px 34px 0 13px;}
+
+.zNice-select-image .zNice-image{width:30px;text-align:center;}
+
+.header-select .zNice-select-list{right: 35px;min-width: 0;}
+.header-select .zNice-select-list li{border: 0;}
+.header-select .zNice-select-list li .zNice-select-item{margin:0;}
+/* -------------
+ * Checkboxes
+ * ------------- */
+.zNice-checkbox {display:inline-block;z-index: 2;width:18px;height:18px;vertical-align: middle;cursor:pointer;}
+.zNice-checkbox .zNice-bg{background: transparent url('../images/zNice-checkbox.png') no-repeat left top;border:1px solid #ccc;}
+.zNice-checkbox:hover .zNice-bg{background-position:right top;border-color:#f78383;}
+
+
+/* -------------
+ * Radio
+ * ------------- */
+.zNice-radio {display:inline-block;z-index: 2;width:12px;height:12px;vertical-align: middle;cursor:pointer;}
+.zNice-radio .zNice-bg{background: transparent url('../images/zNice-radio.png') no-repeat left top;}
+
+.zNice-checked .zNice-bg{ background-position: left bottom;}
+.zNice-checked:hover .zNice-bg{ background-position: right bottom;border-color:#f78383;}
+
+
+
+
+
+/*Validation*/
+
+/*TeaxArea*/
+.zNice-tArea.zNice-focus .zNice-bg{border-color:yellow;}
+.zNice-tArea.zNice-error .zNice-bg{border-color:red;}
+.zNice-tArea.zNice-valid .zNice-bg{border-color:green;}
+
+/*Default input*/
+.zNice-tInput.zNice-focus .zNice-bg{border-color:yellow;}
+.zNice-tInput.zNice-error .zNice-bg{border-color:red;}
+.zNice-tInput.zNice-valid .zNice-bg{border-color:green;}
+
+/*Quant input*/
+.zNice-qInput.zNice-focus .zNice-bg{border-color:yellow;}
+.zNice-qInput.zNice-error .zNice-bg{border-color:red;}
+.zNice-qInput.zNice-valid .zNice-bg{border-color:green;}
+
+
+/*Checkboxes*/
+.zNice-checkbox.zNice-focus .zNice-bg{border-color:yellow;}
+.zNice-checkbox.zNice-error .zNice-bg{border-color:red;}
+.zNice-checkbox.zNice-valid .zNice-bg{border-color:green;}
+
+/*Radios*/
+.zNice-radio.zNice-focus .zNice-bg{border-color:yellow;}
+.zNice-radio.zNice-error .zNice-bg{border-color:red;}
+.zNice-radio.zNice-valid .zNice-bg{border-color:green;}
+
+
+
+/*END Validation*
+
+
+ /* -------------
+ * File upload input
+ *  .zNiceInputWrapper.fileupload padding-right must be bigger as .ubutton width
+ * ------------- */
+.button {min-width: 159px;max-width: 100%;padding: 0 4px;display: inline-block;vertical-align: top;cursor: pointer;position: relative;text-decoration: none;height: 30px;line-height: 30px;color: #fff;font-size: 11px;letter-spacing: 0.14em;text-align: center;background: #dc6263;overflow: hidden;font-weight: 400;text-transform: uppercase;text-shadow: 1px 1px 0 #633a45;
+}
+.button.btn-lg{height: 49px;line-height: 49px;font-size: 16px;}
+.allWidth.button{display: block;}
+.button:hover {background: #f26e6f;}
+.button input {height: 100%;width:100%;position: absolute;left: 0;top: 0;right:0;border: 0;background: url("../images/spacer.gif");cursor: pointer;}
+
+.button.sm-btn{min-width: 81px;font-size: 11px;font-weight: 700;letter-spacing: -0.01em;}
+
+.button.button_bgay{color: #444 !important;background: #f3f3f3;border:1px solid #d9d9d9;text-shadow: none;}
+.button.button_bgay:hover{background: #ccc;}
+
+
+.zNiceInputWrapper.fileupload{display: block; position: relative;background:#fff;}
+.zNiceInputWrapper.fileupload .zNiceInputBg {height:28px;line-height:28px; display: block;font-size:12px;text-align:left;white-space:nowrap;overflow:hidden;color:#999999;background:#fff;position:relative;z-index:1;padding: 0 77px 0 13px;border:1px solid #bfb7b7;}
+.zNiceInputWrapper.fileupload input {position: absolute;  top: -9999px; left: -9999px; background: #fff;}
+.zNiceInputWrapper.fileupload .ubutton{min-width: 77px;height: 26px;display:inline-block;position: absolute;top: 1px;right: 1px;line-height: 26px;color:#fff;font-size:14px;text-align:center;background:#6d9aea;cursor: pointer;z-index: 2;background: #a3a3a3;}
+.zNiceInputWrapper.fileupload .ubutton:hover {
+  background: #a3a3a3; /* Old browsers */
+
+}
+.zNiceInputWrapper.fileupload .zNiceInputLeft {color: #a3a3a3;font-size: 13px;}
+
+

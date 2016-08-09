@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <title></title>
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&amp;subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="css/reset.css" media="all" />
+        <script src="js/jquery-1.10.0.min.js" type="text/javascript"></script>
+        <script src="js/selectivizr-min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="css/jquery.znice.css" media="all" />
+        <script src="js/jquery.validate.min.js" type="text/javascript"></script>
+        <script src="js/jquery.znice.validate.js" type="text/javascript"></script>
+        <script src="js/jquery.znice.js" type="text/javascript"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox.css" media="all" />
+        <script src="fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+        <script src="js/modernizr.js" type="text/javascript"></script>
+        <script src="js/jquery.watermark.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" media="all" />
+        <script src="js/jquery-ui.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
+        <script src="js/scr.js" type="text/javascript"></script>
+        <!--[if lt IE 9]>
+        <script>
+            document.createElement('header');
+            document.createElement('nav');
+            document.createElement('section');
+            document.createElement('article');
+            document.createElement('aside');
+            document.createElement('footer');
+            document.createElement('time');
+        </script>	
+        <script src="js/pie.js" type="text/javascript"></script>
+        <![endif]-->
+        <!--[if lt IE 8]><script src="js/oldie/warning.js"></script><script>window.onload=function(){e("js/oldie/")}</script><![endif]-->
+    </head>
+    <body class="enterPage">
+        <div class="zHiddenBlock">
+            <div class="tablePopup" id="keyWord">
+                <div class="popupTitle">
+                    Ключевое слово
+                </div>
+                <div class="sTable">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>
+                                    <div class="sTable-inner grayBg">Дата</div>
+                                </td>
+                                <td>
+                                    <div class="sTable-inner">Р</div>
+                                </td>
+                                <td>
+                                    <div class="sTable-inner">"Р"</div>
+                                </td>
+                                <td>
+                                    <div class="sTable-inner">М</div>
+                                </td>
+                                <td>
+                                    <div class="sTable-inner">"М"</div>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>21.02.15</td>
+                                <td>5 000</td>
+                                <td>1 000</td>
+                                <td>4 000</td>
+                                <td>1 000</td>
+                            </tr>
+                            <tr>
+                                <td>21.02.15</td>
+                                <td>5 000</td>
+                                <td>1 000</td>
+                                <td>4 000</td>
+                                <td>1 000</td>
+                            </tr>
+                            <tr>
+                                <td>21.02.15</td>
+                                <td>5 000</td>
+                                <td>1 000</td>
+                                <td>4 000</td>
+                                <td>1 000</td>
+                            </tr>
+                            <tr>
+                                <td>21.02.15</td>
+                                <td>5 000</td>
+                                <td>1 000</td>
+                                <td>4 000</td>
+                                <td>1 000</td>
+                            </tr>
+                            <tr>
+                                <td>21.02.15</td>
+                                <td>5 000</td>
+                                <td>1 000</td>
+                                <td>4 000</td>
+                                <td>1 000</td>
+                            </tr>
+                            <tr>
+                                <td>21.02.15</td>
+                                <td>5 000</td>
+                                <td>1 000</td>
+                                <td>4 000</td>
+                                <td>1 000</td>
+                            </tr>
+                            <tr>
+                                <td>21.02.15</td>
+                                <td>5 000</td>
+                                <td>1 000</td>
+                                <td>4 000</td>
+                                <td>1 000</td>
+                            </tr>
+                            <tr>
+                                <td>21.02.15</td>
+                                <td>5 000</td>
+                                <td>1 000</td>
+                                <td>4 000</td>
+                                <td>1 000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="lPopup report" id="report">
+                <div class="popupTitle">
+                    Вывести отчет
+                </div>
+                <div class="report-form zForm zNice">
+                    <form>
+                        <div class="zForm-row">
+                            <div class="zForm-col">
+                                <div class="report-form-left pull-left">От</div>
+                                <div class="report-form-right pull-left">
+                                    <input type="text" required="required" class="inputDate" name="date_inp" id="dateFrom" data-image="images/input_date.png"/>
+                                </div>
+                            </div>
+                            <div class="zForm-col">
+                                <div class="report-form-left pull-left">До</div>
+                                <div class="report-form-right pull-left">
+                                    <input type="text" required="required" class="inputDate" name="date_inp2" id="dateTo" data-image="images/input_date.png"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="zForm-row radioRow">
+                            <div class="zForm-text">Формат:</div>
+                            <label class="zForm-radio">
+                            <input type="radio" name="format" checked="checked"/><span class="zForm-text">html</span>
+                            </label>
+                            <label class="zForm-radio">
+                            <input type="radio" name="format"/><span class="zForm-text">xls</span>
+                            </label>
+                        </div>
+                        <div class="zForm-row">
+                            <input type="submit" class="sm-btn" value="ВЫВЕСТИ"/>
+                            <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="lPopup report" id="addSite">
+                <div class="popupTitle">
+                    Добавить код
+                </div>
+                <div class="report-form zForm zNice">
+                    <form>
+                        <div class="zForm-row">
+                            <input type="text" required="required" placeholder="Название сайта"/>
+                        </div>
+                        <div class="zForm-row radioRow">
+                            <input type="text" required="required" placeholder="Код"/>
+                        </div>
+                        <div class="zForm-row">
+                            <input type="submit" class="sm-btn" value="Добавить"/>
+                            <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="lPopup report" id="addKonk">
+                <div class="popupTitle">
+                    Добавить конкурента
+                </div>
+                <div class="report-form zForm zNice">
+                    <form>
+                        <div class="zForm-row">
+                            <input type="text" required="required" placeholder="Название конкурента"/>
+                        </div>
+                        <div class="zForm-row radioRow">
+                            <input type="text" required="required" placeholder="URL товара"/>
+                        </div>
+                        <div class="zForm-row">
+                            <input type="submit" class="sm-btn" value="Добавить"/>
+                            <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="lPopup productEdit zNice" id="productEdit">
+                <form>
+                    <div class="productEdit-top text-right">
+                        <a href="#" class="icon icon_edit editButton"></a>
+                        <a href="#" class="icon icon_refr refreshButton"></a>
+                    </div>
+                    <div class="productEdit-line">
+                        <div class="productEdit-line-tabel">
+                            Товар:
+                        </div>
+                        <div class="productEdit-line-text productEdit-name">
+                            <input type="text" class="editInput" readonly="readonly" value="RGK UL-41" required="required"/>
+                        </div>
+                    </div>
+                    <div class="productEdit-line">
+                        <div class="productEdit-line-tabel">
+                            Категория:
+                        </div>
+                        <div class="productEdit-line-text productEdit-cat">
+                            <input type="text" class="editInput" readonly="readonly" value="Лазерный уровень" required="required"/>
+                        </div>
+                    </div>
+                    <div class="productEdit-line">
+                        <div class="productEdit-line-tabel">
+                            URL товара:
+                        </div>
+                        <div class="productEdit-line-text productEdit-url">
+                            <input type="text" class="editInput" readonly="readonly" value="www.220-volt.ru/rgk-ui-41" required="required"/>
+                        </div>
+                    </div>
+                    <div class="productEdit-line">
+                        <div class="productEdit-line-tabel">
+                            Последнее обновление:
+                        </div>
+                        <div class="productEdit-line-text productEdit-date">
+                            01.11.2015
+                        </div>
+                    </div>
+                    <input type="hidden" id="productId">
+                </form>
+            </div>
+        </div>
+        <div class="fullPagebg">
+            <div class="mbox">
+                <div class="bigTitle text-center">
+                    РУСГЕОКОМ
+                </div>
+                <div class="fullPagebg-center">
+                    <div class="grayForm zForm zNice bigMg-form">
+                        <form>
+                            <div class="grayForm-image text-center zForm-row">
+                                <img src="images/formlogo.png" alt=""/>
+                            </div>
+                            <div class="zForm-row">
+                                <input type="text" required="required" name="loginInp" data-image="images/input_logo1.png"/>
+                            </div>
+                            <div class="zForm-row">
+                                <input type="password" required="required" name="passInp" data-image="images/input_logo2.png"/>
+                            </div>
+                            <div class="text-right zForm-link-row">
+                                <a href="#" class="zForm-link">Забыли пароль</a>
+                            </div>
+                            <div class="zForm-row text-center">
+                                <input type="submit" value="Войти" class="allWidth btn-lg"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="fullPagebg-link text-center">
+                        <a href="#">СОЗДАТЬ АККАУНТ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
