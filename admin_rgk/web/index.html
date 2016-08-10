@@ -36,7 +36,7 @@
         <![endif]-->
         <!--[if lt IE 8]><script src="js/oldie/warning.js"></script><script>window.onload=function(){e("js/oldie/")}</script><![endif]-->
     </head>
-    <body>
+    <body class="bigWidth">
         <div class="zHiddenBlock">
             <div class="tablePopup" id="keyWord">
                 <div class="popupTitle">
@@ -243,7 +243,7 @@
         <header class="header">
             <div class="mbox hpaddBlock">
                 <div class="header-logo pull-left">
-                    <img src="images/logo.png" alt="" />			
+                    <a href="/index"><img src="images/logo.png" alt="" /></a>			
                 </div>
                 <div class="header-cabinet pull-right">
                     <div class="hCabinet row">
@@ -256,31 +256,42 @@
                         </div>
                     </div>
                 </div>
-                <div class="header-select zNice">
-                    <form>
-                        <select>
-                            <option>Выбрать сайт</option>
-                            <option>Сайт 1</option>
-                            <option>Сайт 2</option>
-                            <option>Сайт 3</option>
-                            <option>Сайт 4</option>
-                            <option>Сайт 5</option>
-                            <option>Сайт 6</option>
-                        </select>
-                    </form>
-                </div>
+
             </div>
         </header>
         <div class="topLine-bottom">
             <div class="mbox hpaddBlock">
                 <div class="topLine-left pull-left">
+                    <div class="hLinks pull-right text-right">
+                        <div class="hLinks-item">
+                            <a href="#">
+                            <span class="icon icon_searchb"></span><span class="vfix"></span>
+                            </a>
+                            <div class="hLinks-item-info">
+                                Поиск
+                            </div>
+                        </div>
+                        <div class="hLinks-item">
+                            <a href="#">
+                            <span class="icon icon_downl"></span><span class="vfix"></span>
+                            </a>
+                            <div class="hLinks-item-info">
+                                Перенос в непривязанные
+                            </div>
+                        </div>
+                        <div class="hLinks-item">
+                            <a href="#">
+                            <span class="icon icon_doc"></span><span class="vfix"></span>
+                            </a>
+                            <div class="hLinks-item-info">
+                                Перенос в непривязанные
+                            </div>
+                        </div>
+                    </div>
                     <div class="breadcrumbs">
                         <ul>
                             <li>
-                                <a href="#"> SEO <span class="icon icon_pointerRigt"></span></a>
-                                <ul>
-                                    <li><a href="#">Мониторинг цен</a></li>
-                                </ul>
+                                <a href="#">Мониторинг цен <span class="icon icon_pointerRigt"></span></a>
                             </li>
                             <li>
                                 Главная
@@ -288,19 +299,17 @@
                         </ul>
                     </div>
                 </div>
-                <div class="topLine-right pull-left">
-                    <div class="headerInfo row">
-                        <div class="col-4">
-                            В топе:
-                            <p>100000</p>
+                <div class="topLine-right nopadd pull-left">
+                    <div class="competitorsItem">
+                        <div class="competitors">
+                            <div class="icon icon_competitors"></div>
+                            Конкуренты:
+                            <span>100</span>
                         </div>
-                        <div class="col-4">
-                            Не в топе:
-                            <p>100000</p>
-                        </div>
-                        <div class="col-4">
-                            Не в выдаче
-                            <p>100000</p>
+                        <div class="products">
+                            <div class="icon icon_products"></div>
+                            Товары:
+                            <span>100</span>
                         </div>
                     </div>
                 </div>
@@ -312,160 +321,449 @@
                 <div class="sidebar">
                     <div class="leftMenu">
                         <ul>
-                            <li class="active">
-                                <a href="#"><span class="icon icon_menu1"></span> Главная</a>
-                            </li>
-                            <li>
-                                <a href="#"><span class="icon icon_menu2"></span> Позиции</a>
-                            </li>
+
                             <li>
                                 <a href="#"><span class="icon icon_menu3"></span> Отчет</a>
                             </li>
                             <li>
-                                <a href="#"><span class="icon icon_menu4"></span> Импорт</a>
+                                <a href="#"><span class="icon icon_menu6"></span> Цены</a>
                             </li>
-                            <li>
-                                <a href="#"><span class="icon icon_menu5"></span> Каталог</a>
+                            <li class="active">
+                                <a href="#"><span class="icon icon_menu7"></span> Конкуренты</a>
                             </li>
+
                         </ul>
                     </div>
                 </div>
             </aside>
             <section class="content_w">
                 <div class="content">
-                    <div class="content-left pull-left">
-                        <div class="positionList">
-                            <div class="positionListTitle">
-                                <a href="#">
-                                    <div class="icon iconMenu"></div>
-                                </a>
-                                <span>ПОЗИЦИИ</span> (5 объектов)
+                    <div class="content-left pull-left litright">
+
+                        <div class="lsep"></div>
+                        <div class="tabs blueTabs">
+                            <div class="tabs-buttons">
+                                <a href="#" data-utab="1" class="active">Товары</a>
+
+                                <div class="clear"></div>
                             </div>
-                            <div class="userItem">
-                                <div class="userItemList">
-                                    <a class="userItemLink" href="#">
-                                        <div class="icon iconlist"></div>
-                                        Пользовательский 1
-                                    </a>
-                                    <span class="dataItemLink"> 2015.12 Фев</span>
-                                    <a href="#">
-                                        <div class="icon iconExit"></div>
-                                    </a>
+                            <div class="tabs-window" data-utab="1">
+                                <div class="catalogTop searchWrap smart">
+                                    <div class="hsearch">
+                                        <div class="search">
+                                            <form>
+                                                <div class="search-button">
+                                                    <input type="submit" value=""/>
+                                                </div>
+                                                <div class="searsh-input">
+                                                    <input type="text" placeholder="Поиск"/>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalogList-wrap">
+                                    <div class="modalWindow">
+                                        <ul>
+                                            <li>
+                                                <a href="#">Создать группу</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Редактировать</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Перемеситить</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Удалить</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="catalogList">
+                                        <div class="catalogList-title">
+                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел1</a>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="catalogList">
+                                        <div class="catalogList-title">
+                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="catalogList">
+                                        <div class="catalogList-title">
+                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел1</a>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="catalogList">
+                                        <div class="catalogList-title">
+                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="catalogList">
+                                        <div class="catalogList-title">
+                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел1</a>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="catalogList active">
+                                        <div class="catalogList-title">
+                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="catalogList">
+                                        <div class="catalogList-title">
+                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="catalogList">
+                                        <div class="catalogList-title">
+                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="catalogList">
+                                        <div class="catalogList-title">
+                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="userItem">
-                                <div class="userItemList">
-                                    <a class="userItemLink" href="#">
-                                        <div class="icon iconlist"></div>
-                                        Пользовательский 1
-                                    </a>
-                                    <span class="dataItemLink">12 Фев</span>
-                                    <a href="#">
-                                        <div class="icon iconExit"></div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="userItem">
-                                <div class="userItemList">
-                                    <a class="userItemLink" href="#">
-                                        <div class="icon iconlist"></div>
-                                        Пользовательский 1
-                                    </a>
-                                    <span class="dataItemLink">12 Фев</span>
-                                    <a href="#">
-                                        <div class="icon iconExit"></div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="userItem">
-                                <div class="userItemList">
-                                    <a class="userItemLink" href="#">
-                                        <div class="icon iconlist"></div>
-                                        Пользовательский 2
-                                    </a>
-                                    <span class="dataItemLink">12 Фев</span>
-                                    <a href="#">
-                                        <div class="icon iconExit"></div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="userItem">
-                                <div class="userItemList">
-                                    <a class="userItemLink" href="#">
-                                        <div class="icon iconlist"></div>
-                                        Пользовательский 3
-                                    </a>
-                                    <span class="dataItemLink">12 Фев</span>
-                                    <a href="#">
-                                        <div class="icon iconExit"></div>
-                                    </a>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
-                    <div class="content-right pull-left">
-                        <div class="positionList">
-                            <div class="staatisticTitle">
-                                <span class="staatisticTitleLeft">МОНИТОРИНГ</span>
-                                <a href="#">
-                                <span class="icon iconRefresh"></span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="statistic">
-                            <script type="text/javascript">
-                                google.load("visualization", "1", {packages:["corechart"]});
-                                google.setOnLoadCallback(drawChart);
-                                	function drawChart() {
-                                		var data = google.visualization.arrayToDataTable([
-                                			['month','Sales','Expenses'],
-                                			['01.11',0,150],
-                                			['02.12',320,200],
-                                			['03.01',530,450],
-                                			['04.02',750,700],
-                                			['05.03',1220,1200],
-                                			['06.04',1090,1100],
-                                			['07.05',600,750],
-                                			['08.06',740,1100],
-                                			['09.07',800,1300],
-                                			['05.02',550,1100]
-                                		]);
-                                		var options = {
-                                			vAxis: {
-                                				textPosition: 'in',
-                                				minValue: 2000,
-                                				textStyle: {
-                                					color: '#898e91',
-                                					fontName: "Roboto",
-                                					fontSize: 9
-                                				}
-                                			},
-                                			hAxis:{
-                                				textStyle:{
-                                					color: '#898e91',
-                                					fontName: "Roboto",
-                                					fontSize: 9
-                                				}
-                                			},
-                                			backgroundColor:{
-                                				fill:'transparent'
-                                			},
-                                			pointSize:6,
-                                			theme:{
-                                				chartArea: {
-                                					width: '430',
-                                					height: '228',
-                                				}
-                                			},
-                                			legend: 'none'
-                                		};
-                                
-                                	var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-                                	chart.draw(data, options);
-                                    	}
-                                  
-                            </script>
-                            <div id="chart_div" style="width: 424px; height: 322px;"></div>
+                    <div class="allWidth-content right-tabs">
+                        <h1 class="mainheading">
+                            <span>Название отчета</span><a href="#" class="icon icon_edit pull-right"></a>
+                        </h1>
+                        <div class="lsep"></div>
+                        <div class="sTable bTable Add-on_price">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">ТОВАР <span class="pull-right RightMar">&uarr;</span></a></td>
+                                        <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">Цена <span class="pull-right RightMar">&darr;</span></a></td>
+                                        <td>
+                                            <div class="sTable-inner">200-volt.ru</div>
+                                        </td>
+                                        <td>
+                                            <div class="sTable-inner">vseinstrumenti</div>
+                                        </td>
+                                        <td>
+                                            <div class="sTable-inner">200-volt.ru</div>
+                                        </td>
+                                        <td>
+                                            <div class="sTable-inner">gsi.ru</div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td> 1 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #40ae49;">-70%</span></td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #40ae49;">+100%</span></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>3 000 <span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                        <td>-</td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                        <td>4 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>5 000 <span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #d88d2a;">+10%</span></td>
+                                        <td>-</td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>1 000 <span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #abadb0;">+0%</span></td>
+                                        <td>-</td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>3 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #d88d2a;">+10%</span></td>
+                                        <td>-</td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #d88d2a;">+10%</span></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                        <td>3 000<span class="Bgmonitoring" style="background: #abadb0;">+0%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>3 000<span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #d88d2a;">+10%</span></td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #d88d2a;">+10%</span></td>
+                                        <td>-</td>
+                                        <td>2 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>3 000<span class="Bgmonitoring" style="background: #abadb0;">+0%</span></td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #40ae49;">-100%</span></td>
+                                        <td>-</td>
+                                        <td>4 000</td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #abadb0;">+0%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #abadb0;">+0%</span></td>
+                                        <td>-</td>
+                                        <td>3 000<span class="Bgmonitoring" style="background: #d2232a;">+100%</span></td>
+                                        <td>-</td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #d88d2a;">+10%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #40ae49;">-70%</span></td>
+                                        <td>3 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                        <td>-</td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            RGK UI-11 
+                                            <p>Лазерный уровень</p>
+                                        </td>
+                                        <td>3 000<span class="Bgmonitoring" style="background: #d2232a;">-70%</span></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>5 000<span class="Bgmonitoring" style="background: #d88d2a;">+10%</span></td>
+                                        <td>1 000<span class="Bgmonitoring" style="background: #abadb0;">+0%</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

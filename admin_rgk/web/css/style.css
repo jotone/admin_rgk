@@ -276,8 +276,8 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .productEdit-line-text.productEdit-name,.productEdit-line-text.productEdit-name input{font-size: 18px;}
 .productEdit-line-text.productEdit-url,.productEdit-line-text.productEdit-url input{color:#004a80;}
 .linkProduct{color: #7d8ebd;max-width: 224px;text-overflow: ellipsis;white-space: nowrap;display: block;margin: 0 auto;overflow: hidden;}
-
-.prodTable table thead td,.konkTable table thead td{width: 50%;font-size: 14px;}
+.Add-on_price.sTable  tr{ position: relative;}
+.prodTable table thead td,.konkTable table thead td{width: 33.33333%;font-size: 14px;}
 .prodTable table td,.konkTable table td{font-size: 13px;text-align: center!important;}
 .prodTable .icon_litplus,.konkTable thead .icon{margin:0 10px;}
 .konkTable thead .icon{margin-left: -15px;}
