@@ -1,0 +1,73 @@
+{% extends 'RgkBundle:Admin:base.html.twig' %}
+{% macro recursiveMenu(section) %}
+    <li>
+        {% if section.children|length %}
+            <a href="#" data-id="{{ section.id }}"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>{{ section.title }}</a>
+            <ul>
+                {% for child in section.children %}
+                    {{ _self.recursiveMenu(child) }}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h4><a href="" data-id="{{ section.id }}">{{ section.title }}</a></h4>
+        {% endif %}
+    </li>
+{% endmacro %}
+
+{% block content %}
+    <div class="content-left pull-left litright">
+        <div class="lsep"></div>
+        <div class="tabs blueTabs">
+            <div class="tabs-buttons">
+                <a href="#" data-utab="1" class="active">Товары</a>
+
+                <div class="clear"></div>
+            </div>
+            <div class="tabs-window" data-utab="1">
+                <div class="catalogTop searchWrap smart">
+                    <div class="hsearch">
+                        <div class="search">
+                            <form>
+                                <div class="search-button">
+                                    <input type="submit" value=""/>
+                                </div>
+                                <div class="searsh-input">
+                                    <input type="text" placeholder="Поиск"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="catalogList-wrap">
+                    <div class="modalWindow">
+                        <ul>
+                            <li>
+                                <a href="#">Создать группу</a>
+                            </li>
+                            <li>
+                                <a href="#">Редактировать</a>
+                            </li>
+                            <li>
+                                <a href="#">Перемеситить</a>
+                            </li>
+                            <li>
+                                <a href="#">Удалить</a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if sections %}
+                        <div class="catalogList">
+                            <ul>
+                                {% for section in sections %}
+                                    {{ _self.recursiveMenu(section) }}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
