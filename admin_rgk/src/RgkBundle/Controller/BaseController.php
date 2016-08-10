@@ -9,9 +9,29 @@
 namespace RgkBundle\Controller;
 
 use RgkBundle\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
-class BaseController
+class BaseController extends Controller
 {
+    private $menu = [
+        0 => [
+            'link'=>'rgk_report_index',
+            'class'=>'icon_menu3',
+            'title'=>'Отчет'
+        ],
+        1 => [
+            'link'=>'rgk_price_index',
+            'class'=>'icon_menu6',
+            'title'=>'Цены'
+        ],
+        2 => [
+            'link'=>'rgk_code_index',
+            'class'=>'icon_menu7',
+            'title'=>'Конкуренты'
+        ]
+    ];
+
     public static function sendEmail($attributes, $container)
     {
         if(!isset($attributes['emailTo']) || !isset($attributes['emailFrom']))
@@ -33,5 +53,26 @@ class BaseController
         if ($container->get('mailer')->send($message) == 1)
             return true;
 
+    }
+
+    public function getTemplatteParams()
+    {
+        return [
+            'leftMenu'=>$this->getLeftMenu()
+        ];
+    }
+
+    public function addLeftMenu($link,$title,$class='')
+    {
+        $this->menu[] = [
+            'link'=>strval($link),
+            'class'=>strval($title),
+            'title'=>strval($class)
+        ];
+    }
+
+    public function getLeftMenu()
+    {
+        return $this->menu;
     }
 }

@@ -2,17 +2,10 @@
 
 namespace RgkBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
-    /**
-     * @Route("/")
-     */
-    public function indexAction()
-    {
-        $params = [];
-        return $this->render('RgkBundle:Admin:base.html.twig',$params);
-    }
+
 }
