@@ -243,7 +243,7 @@
 <header class="header">
     <div class="mbox hpaddBlock">
         <div class="header-logo pull-left">
-            <a href="/"><img src="/images/logo.png" alt="" /></a>
+            <a href="{{ path('rgk_price_index') }}"><img src="/images/logo.png" alt="" /></a>
         </div>
         <div class="header-cabinet pull-right">
             <div class="hCabinet row">
@@ -252,12 +252,12 @@
                 </div>
                 <div class="hCabinet-left text-right">
                     <div class="hCabinet-name">{{ app.user.username }}</div>
-                    <a href="/logout" class="hCabinet-link">Выйти</a>
+                    <a href="{{ asset('logout') }}" class="hCabinet-link">Выйти</a>
                 </div>
             </div>
         </div>
         <div class="header-select zNice">
-            <form>
+            {#<form>
                 <select>
                     <option>Выбрать сайт</option>
                     <option>Сайт 1</option>
@@ -267,7 +267,7 @@
                     <option>Сайт 5</option>
                     <option>Сайт 6</option>
                 </select>
-            </form>
+            </form>#}
         </div>
     </div>
 </header>
@@ -301,11 +301,11 @@
         <div class="sidebar">
             <div class="leftMenu">
                 {% block leftMenu %}
-                    {% if left_menu is defined and left_menu is not empty %}
+                    {% if leftMenu is defined and leftMenu is not empty %}
                     <ul>
-                        {% for item in left_menu %}
-                            <li {% if item.active %} class="active" {% endif %}>
-                                <a href="{{ item.link }}"><span class="icon {{ item.class }}"></span>{{ item.title }}</a>
+                        {% for item in leftMenu %}
+                            <li {% if item.link == app.request.attributes.get('_route') %} class="active" {% endif %}>
+                                <a href="{{ path(item.link) }}"><span class="icon {{ item.class }}"></span>{{ item.title }}</a>
                             </li>
                         {% endfor %}
                     </ul>
