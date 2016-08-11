@@ -233,11 +233,11 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .sTable-inner{padding: 11px 5px;text-decoration: none;display: block;text-decoration: none;color: #000;}
 .greentext{color: #73c47a;}
 .redtext{color: #db4f55;}
-.Bgmonitoring{padding: 2px 1px;display: inline-block; text-align: center;position: relative;top:-5px;font-size: 7px;color: #fff; float: right;font-weight: normal;min-width: 25px;}
+.Bgmonitoring{padding: 2px 1px;display: inline-block; text-align: center;top:-5px;font-size: 7px;color: #fff;font-weight: normal;min-width: 25px; position: absolute; right: 5px; top: 3px;}
 
 .bTable table tbody td:first-child{width: 194px;text-align: left;padding-left: 37px;}
 .bTable table tbody td:nth-child(2){width: 143px;text-align: left;}
-.bTable{font-size: 10px;font-weight: 700;}
+.bTable{font-weight: 700;}
 .bTable table tbody td{padding:10px 10px;}
 .closeWrap{position: relative;}
 
@@ -394,12 +394,15 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .cfix:after{content: '';display: block;height: 0;font-size: 1px;line-height: 1px;overflow: hidden;clear: both;}
 .tables-wrap{ position: relative;}
 .sTable.Add-on_price{ width: 305px;}
-.new-table-price{position: absolute;    left: 305px;    top: 0; overflow-x: scroll;width: calc(100% - 305px); overflow-y: hidden;}
-.table-new{ }
+.new-table-price{position: absolute;    left: 306px;    top: 0; overflow-x: scroll;width: calc(100% - 305px); overflow-y: hidden;}
+
 .table-head{white-space: nowrap;}
-.table-head .table-td{background: #d1d2d4;}
+.table-head .table-td{background: #d1d2d4; padding: 11px 5px; border-bottom: none; white-space: normal;    line-height: 1.2em;}
 .table-row{white-space: nowrap;}
 .hover,
-.table-row:hover{background: #d4e8f1;}
-.table-td{ display: inline-block;width: 305px; margin-left: -2px; text-align: center;padding: 11px 5px;border-bottom: 1px solid #d1d2d2;}
-.table-td:hover{ background: #c2c2c2;}
+.table-row:hover{background: #d4e8f1; }
+.table-new-two .table-td{ display: inline-block; min-width: 100px; margin-left: -2px; text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
+.table-new-two .table-td:hover{ background: #86a4b1;}
+.table-new-one .table-td{width: 85px; display: inline-block; margin-left: -1px;text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
+.table-new-one .table-td:first-child{width: 220px; }
+.table-new-one .table-head .table-td{ padding: 0; vertical-align: top;}
