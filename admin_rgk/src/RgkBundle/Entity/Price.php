@@ -159,5 +159,36 @@ class Price
     {
         return $this->code;
     }
+
+    /**
+     * Get percent
+     *
+     * @return number
+     */
+    function getPercent(){
+        if(!$this->getProduct() || !$this->getProduct()->getPrice() || !$this->getPrice())
+            return 0;
+
+        return round(($this->getPrice()/$this->getProduct()->getPrice() - 1)*100);
+    }
+
+    /**
+     * Get label
+     *
+     * @return string
+     */
+    function getLabel(){
+        $percent = $this->getPercent();
+        switch (true){
+            case ($percent >50):
+                return '#40ae49';
+            case ($percent >0):
+                return '#e6e831';
+            case ($percent > -50):
+                return '#f7a743';
+            default:
+                return '#f74343';
+        }
+    }
 }
 

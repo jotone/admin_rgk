@@ -25,14 +25,26 @@ class PriceController extends BaseController
          * @var Section $a
          */
         $params = $this->getTemplatteParams();
+        $params['active_section'] = intval($id);
+        $params['active_section_title'] = '';
         $params['sections'] = $this->getDoctrine()
                                      ->getRepository('RgkBundle:Section')
                                      ->findBy(array(), array('title' => 'ASC'));
+        if(!empty($params['sections'])){
+            /**
+             * @var Section $a
+             */
+            foreach ($params['sections'] as &$a){
+                if($a->getId() == $id) {
+                    $params['active_section_title'] = $a->getTitle();
+                    break;
+                }
+            }
+        }
         $params['sections'] = $this->menuStrict($params['sections']);
         if($request->get("_route") == 'rgk_price_section'){
-            $id = intval($id);
             //get active section id with all children
-            $sectionSpectre = $this->getSectionChildTreeIds($id,$params['sections']);
+            $sectionSpectre = $this->getSectionChildTreeIds($params['active_section'],$params['sections']);
             if(empty($sectionSpectre))
                 return $this->redirectToRoute("rgk_price_index");
 
@@ -44,14 +56,13 @@ class PriceController extends BaseController
             //get products of active section
             $params['products'] = $this->getDoctrine()
                                        ->getRepository('RgkBundle:Product')
-                                       ->findBy(array('section'=>$sectionSpectre), array('title' => 'ASC'));
+                                       ->findBy(array('section'=>$sectionSpectre), array('title' => 'ASC','price'=>'ASC'));
         }
         return $this->render('RgkBundle:Admin:price.html.twig',$params);
     }
 
     private function menuStrict(&$objects,$parent=0)
     {
-
         $resp = [];
         /**
          * @var Section $object

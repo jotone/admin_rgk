@@ -47,6 +47,19 @@ class Product
     private $section;
 
     /**
+     * @ORM\OneToMany(targetEntity="Price", mappedBy="product",cascade={"persist"},orphanRemoval=true)
+     */
+    protected $prices;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -126,6 +139,87 @@ class Product
     public function getSection()
     {
         return $this->section;
+    }
+
+    /**
+     * Add prices
+     *
+     * @param \RgkBundle\Entity\Price $prices
+     * @return Product
+     */
+    public function addPrices(\RgkBundle\Entity\Price $prices)
+    {
+        $prices->setProduct($this);
+        $this->prices[] = $prices;
+
+        return $this;
+    }
+
+    /**
+     * Remove prices
+     *
+     * @param \RgkBundle\Entity\Price $prices
+     */
+    public function removePrices(\RgkBundle\Entity\Price $prices)
+    {
+        $this->prices->removeElement($prices);
+    }
+
+    /**
+     * Get prices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPrices()
+    {
+        return $this->prices;
+    }
+
+    /**
+     * Get percent
+     *
+     * @return number
+     */
+    function getPercent(){
+        if(!$this->getPrices() || !$this->getPrice())
+            return 0;
+
+
+        $count = 0;
+        $sum = 0;
+        /**
+         * @var Price $price
+         */
+        foreach ($this->getPrices()->toArray() as $price){
+            if($price->getPrice()){
+                $sum += $price->getPrice();
+                $count++;
+            }
+        }
+        if($count==0)
+            return 0;
+
+        $sum = $sum/$count; // take middle price
+        return round(($this->getPrice()/$sum - 1)*100);
+    }
+
+    /**
+     * Get label
+     *
+     * @return string
+     */
+    function getLabel(){
+        $percent = $this->getPercent();
+        switch (true){
+            case ($percent >50):
+                return '#f74343';
+            case ($percent >0):
+                return '#f7a743';
+            case ($percent > -50):
+                return '#e6e831';
+            default:
+                return '#40ae49';
+        }
     }
 }
 
