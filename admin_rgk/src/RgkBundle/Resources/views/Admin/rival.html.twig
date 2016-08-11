@@ -1,0 +1,48 @@
+{% extends 'RgkBundle:Admin:base.html.twig' %}
+{% block content %}
+    <div class="allWidth-content">
+        <div class="contSearch">
+            <div class="search">
+                <form>
+                    <div class="search-button">
+                        <input type="submit" value="">
+                    </div>
+                    <div class="searsh-input">
+                        <input type="text" placeholder="Поиск" name="q" value="{{ q }}">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="lsep"></div>
+        <div class="sTable bTable prodTable">
+            <table>
+                <thead>
+                <tr>
+
+                    <td><a href="#addSite" class="sTable-inner grayBg fancybox-popup"><span class="icon icon_litplus pull-left"></span>Название</a></td>
+                    <td><span class="sTable-inner grayBg">Сайт</span></td>
+                    <td><span class="sTable-inner grayBg">Код</span></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rival in rivals %}
+                    <tr data-id="{{ rival.id }}">
+                        <td>{{ rival.name }}</td>
+                        <td><a href="{{ rival.url }}" target="_blank" class="linkProduct">{{ rival.url }}</a> </td>
+                        <td>
+                            {% set one = true %}
+                            {% for code in rival.code %}
+                                {% if one and code.default %}
+                                    {{ code.code }}
+                                    {% set one = false %}
+                                {% endif %}
+                            {% endfor %}
+                            <div class="closeWrap"><a href="#" class="icon icon_close"></a></div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

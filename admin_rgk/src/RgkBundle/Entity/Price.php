@@ -51,7 +51,7 @@ class Price
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Code")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="code", referencedColumnName="id",nullable=true,onDelete="SET NULL")
+     *   @ORM\JoinColumn(name="code", referencedColumnName="id",nullable=true,onDelete="CASCADE")
      * })
      */
     private $code;

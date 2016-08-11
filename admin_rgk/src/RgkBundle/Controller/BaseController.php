@@ -78,4 +78,17 @@ class BaseController extends Controller
     {
         return $this->menu;
     }
+
+
+    public function renderApiJson($value, $isJson=false, $httpMessage = 'Message', $contentType = 'application/json'){
+        @ob_clean(); // clear output buffer to avoid rendering anything else
+        @header("Content-type: $contentType");
+        // @header('HTTP/1.1 '.$httpStatus.' '.$httpMessage);
+        @header("Access-Control-Allow-Headers: origin, content-type, accept");
+        @header("Access-Control-Allow-Origin: *");
+        @header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE, PATCH, OPTIONS");
+
+        echo ($isJson?$value:json_encode($value));
+        exit();
+    }
 }

@@ -74,78 +74,80 @@
     </div>
     {% endblock %}
     {% block product %}
-        <div class="allWidth-content right-tabs">
-            <h1 class="mainheading">
-                <span>{{ active_section_title }}</span><a href="#" data-id="{{ active_section }}" class="icon icon_edit pull-right"></a>
-            </h1>
-            <div class="lsep"></div>
-            <div class="tables-wrap">
-                {% if products|length %}
-                    <div class="sTable bTable Add-on_price">
-                        <table>
-                            <thead>
-                            <tr>
-                                <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">ТОВАР <span class="pull-right RightMar">&uarr;</span></a></td>
-                                <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">Цена <span class="pull-right RightMar">&darr;</span></a></td>
+        {% if products is defined %}
+            <div class="allWidth-content right-tabs">
+                <h1 class="mainheading">
+                    <span>{{ active_section_title }}</span><a href="#" data-id="{{ active_section }}" class="icon icon_edit pull-right"></a>
+                </h1>
+                <div class="lsep"></div>
+                <div class="tables-wrap">
+                    {% if products|length %}
+                        <div class="sTable bTable Add-on_price">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">ТОВАР <span class="pull-right RightMar">&uarr;</span></a></td>
+                                    <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">Цена <span class="pull-right RightMar">&darr;</span></a></td>
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for product in products %}
-                                <tr data-id="{{ product.id }}">
-                                    <td>{{ product.title }}</td>
-                                    <td>
-                                        {{ product.price|number_format(0,',',' ') }}
-                                        {% if product.percent != 0 %}
-                                            <span class="Bgmonitoring" style="background: {{ product.label }};">{{ product.percent }}%</span>
-                                        {% endif %}
-                                    </td>
                                 </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    {% if rivals %}
-                        <div class="new-table-price">
-                            <div class="table-new">
-                                <div class="table-head  cfix">
-                                    {% for rival in rivals %}
-                                        <div class="table-td">{{ rival.name }}</div>
-                                    {% endfor %}
-                                </div>
+                                </thead>
+                                <tbody>
                                 {% for product in products %}
-                                    <div class="table-row cfix" data-id="{{ product.id }}">
-                                        {% for rival in rivals %}
-
-                                            {% set noValue = true %}
-
-                                            {% for price in product.prices %}
-                                                {% if price.code.rival.id == rival.id %}
-                                                    <div class="table-td">
-                                                        {{ price.price|number_format(0,',',' ') }}
-                                                        {% if price.percent != 0 %}
-                                                            <span class="Bgmonitoring" style="background: {{ price.label }};">{{ price.percent }}%</span>
-                                                        {% endif %}
-                                                    </div>
-                                                    {% set noValue = false %}
-                                                {% endif %}
-                                            {% endfor %}
-
-                                            {% if noValue %}
-                                                <div class="table-td">-</div>
+                                    <tr data-id="{{ product.id }}">
+                                        <td>{{ product.title }}</td>
+                                        <td>
+                                            {{ product.price|number_format(0,',',' ') }}
+                                            {% if product.percent != 0 %}
+                                                <span class="Bgmonitoring" style="background: {{ product.label }};">{{ product.percent }}%</span>
                                             {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% if rivals %}
+                            <div class="new-table-price">
+                                <div class="table-new">
+                                    <div class="table-head  cfix">
+                                        {% for rival in rivals %}
+                                            <div class="table-td">{{ rival.name }}</div>
                                         {% endfor %}
                                     </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% else %}
-                    Раздет пуст
-                {% endif %}
-            </div>
+                                    {% for product in products %}
+                                        <div class="table-row cfix" data-id="{{ product.id }}">
+                                            {% for rival in rivals %}
 
-        </div>
+                                                {% set noValue = true %}
+
+                                                {% for price in product.prices %}
+                                                    {% if noValue and price.code.rival.id == rival.id %}
+                                                        <div class="table-td">
+                                                            {{ price.price|number_format(0,',',' ') }}
+                                                            {% if price.percent != 0 %}
+                                                                <span class="Bgmonitoring" style="background: {{ price.label }};">{{ price.percent }}%</span>
+                                                            {% endif %}
+                                                        </div>
+                                                        {% set noValue = false %}
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                {% if noValue %}
+                                                    <div class="table-td">-</div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        Раздет пуст
+                    {% endif %}
+                </div>
+
+            </div>
+        {% endif %}
     {% endblock %}
 {% endblock %}
 
