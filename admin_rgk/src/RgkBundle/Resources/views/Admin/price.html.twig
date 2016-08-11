@@ -3,7 +3,7 @@
     <li>
         {% if section.children|length %}
 
-        <div class="wrap-title"><a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="folder_item {% if section.id == active_section %}active{% endif %}"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>{{ section.title }}</a></div>
+        <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="folder_item {% if section.id == active_section %}active{% endif %}">{{ section.title }}</a></div>
 
             <ul>
                 {% for child in section.children %}
@@ -12,7 +12,7 @@
             </ul>
         {% else %}
 
-            <a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="active" ><span class="icon icon_file"></span>{{ section.title }}</a>
+            <span class="icon icon_file"></span><a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="{% if section.id == active_section %}active{% endif %}" >{{ section.title }}</a>
 
         {% endif %}
     </li>
