@@ -2,14 +2,16 @@
 {% macro recursiveMenu(section) %}
     <li>
         {% if section.children|length %}
-            <a href="#" data-id="{{ section.id }}"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>{{ section.title }}</a>
+            <a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="folder_item"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>{{ section.title }}</a>
             <ul>
                 {% for child in section.children %}
                     {{ _self.recursiveMenu(child) }}
                 {% endfor %}
             </ul>
         {% else %}
-            <a href="" data-id="{{ section.id }}">{{ section.title }}</a>
+
+            <a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="active" ><span class="icon icon_file"></span>{{ section.title }}</a>
+
         {% endif %}
     </li>
 {% endmacro %}

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CodeController extends BaseController
 {
     /**
-     * @Route("/code")
+     * @Route("/rival")
      */
     public function indexAction(Request $request)
     {

@@ -16,9 +16,10 @@ use RgkBundle\Entity\Section;
 class PriceController extends BaseController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="rgk_price_index")
+     * @Route("/section/{id}", name="rgk_price_section")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request,$id=0)
     {
         /**
          * @var Section $a
@@ -28,6 +29,23 @@ class PriceController extends BaseController
                                      ->getRepository('RgkBundle:Section')
                                      ->findBy(array(), array('title' => 'ASC'));
         $params['sections'] = $this->menuStrict($params['sections']);
+        if($request->get("_route") == 'rgk_price_section'){
+            $id = intval($id);
+            //get active section id with all children
+            $sectionSpectre = $this->getSectionChildTreeIds($id,$params['sections']);
+            if(empty($sectionSpectre))
+                return $this->redirectToRoute("rgk_price_index");
+
+            //get all rivals array
+            $params['rivals'] = $this->getDoctrine()
+                                     ->getRepository('RgkBundle:Rival')
+                                     ->findBy(array(), array('name' => 'ASC'));
+
+            //get products of active section
+            $params['products'] = $this->getDoctrine()
+                                       ->getRepository('RgkBundle:Product')
+                                       ->findBy(array('section'=>$sectionSpectre), array('title' => 'ASC'));
+        }
         return $this->render('RgkBundle:Admin:price.html.twig',$params);
     }
 
@@ -49,6 +67,29 @@ class PriceController extends BaseController
                     'title'=>$object->getTitle(),
                     'children'=>$this->menuStrict($objects,$object->getId())
                 ];
+            }
+        }
+        return $resp;
+    }
+
+    private function getSectionChildTreeIds($id,$sectArray)
+    {
+        $resp = [];
+        foreach ($sectArray as $item){
+            if($id != $item['id'])
+            {
+                if(!empty($item['children'])){
+                    $resp = array_merge($resp,$this->getSectionChildTreeIds($id,$item['children']));
+                }
+                continue;
+            }
+
+            $resp[] = $item['id'];
+
+            if(!empty($item['children'])){
+                foreach ($item['children'] as $child){
+                    $resp = array_merge($resp,$this->getSectionChildTreeIds($child['id'],$item['children']));
+                }
             }
         }
         return $resp;
