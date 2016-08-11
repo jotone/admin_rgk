@@ -391,3 +391,15 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .competitorsItem span{float: right;}
 .icon_competitors{background: url('../images/icon_hum.png') no-repeat center top;width: 16px;height: 15px;margin-right: 4px;}
 .icon_products{background: url('../images/icon_label.png') no-repeat center top;width: 16px;height: 12px;margin-right: 4px;}
+.cfix:after{content: '';display: block;height: 0;font-size: 1px;line-height: 1px;overflow: hidden;clear: both;}
+.tables-wrap{ position: relative;}
+.sTable.Add-on_price{ width: 305px;}
+.new-table-price{position: absolute;    left: 305px;    top: 0; overflow-x: scroll;width: calc(100% - 305px); overflow-y: hidden;}
+.table-new{ }
+.table-head{white-space: nowrap;}
+.table-head .table-td{background: #d1d2d4;}
+.table-row{white-space: nowrap;}
+.hover,
+.table-row:hover{background: #d4e8f1;}
+.table-td{ display: inline-block;width: 305px; margin-left: -2px; text-align: center;padding: 11px 5px;border-bottom: 1px solid #d1d2d2;}
+.table-td:hover{ background: #c2c2c2;}
