@@ -82,7 +82,7 @@
             </h1>
             <div class="lsep"></div>
             <div class="tables-wrap">
-                {% if products|length %}
+                {% if products is defined and products|length %}
                     <div class="sTable bTable Add-on_price">
                         <table>
                             <thead>
