@@ -1,8 +1,8 @@
 {% extends 'RgkBundle:Admin:base.html.twig' %}
-{% macro recursiveMenu(section) %}
+{% macro recursiveMenu(section,active_section=0) %}
     <li>
         {% if section.children|length %}
-            <a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="folder_item"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>{{ section.title }}</a>
+            <a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="folder_item {% if section.id == active_section %}active{% endif %}"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>{{ section.title }}</a>
             <ul>
                 {% for child in section.children %}
                     {{ _self.recursiveMenu(child) }}
@@ -17,7 +17,8 @@
 {% endmacro %}
 
 {% block content %}
-    <div class="content-left pull-left litright">
+    {% block sections %}
+        <div class="content-left pull-left litright">
         <div class="lsep"></div>
         <div class="tabs blueTabs">
             <div class="tabs-buttons">
@@ -61,7 +62,7 @@
                         <div class="catalogList">
                             <ul>
                                 {% for section in sections %}
-                                    {{ _self.recursiveMenu(section) }}
+                                    {{ _self.recursiveMenu(section,active_section) }}
                                 {% endfor %}
                             </ul>
                         </div>
@@ -71,5 +72,81 @@
 
         </div>
     </div>
+    {% endblock %}
+    {% block product %}
+        <div class="allWidth-content right-tabs">
+            <h1 class="mainheading">
+                <span>{{ active_section_title }}</span><a href="#" data-id="{{ active_section }}" class="icon icon_edit pull-right"></a>
+            </h1>
+            <div class="lsep"></div>
+            <div class="tables-wrap">
+                {% if products|length %}
+                    <div class="sTable bTable Add-on_price">
+                        <table>
+                            <thead>
+                            <tr>
+                                <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">ТОВАР <span class="pull-right RightMar">&uarr;</span></a></td>
+                                <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">Цена <span class="pull-right RightMar">&darr;</span></a></td>
 
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for product in products %}
+                                <tr data-id="{{ product.id }}">
+                                    <td>{{ product.title }}</td>
+                                    <td>
+                                        {{ product.price|number_format(0,',',' ') }}
+                                        {% if product.percent != 0 %}
+                                            <span class="Bgmonitoring" style="background: {{ product.label }};">{{ product.percent }}%</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% if rivals %}
+                        <div class="new-table-price">
+                            <div class="table-new">
+                                <div class="table-head  cfix">
+                                    {% for rival in rivals %}
+                                        <div class="table-td">{{ rival.name }}</div>
+                                    {% endfor %}
+                                </div>
+                                {% for product in products %}
+                                    <div class="table-row cfix" data-id="{{ product.id }}">
+                                        {% for rival in rivals %}
+
+                                            {% set noValue = true %}
+
+                                            {% for price in product.prices %}
+                                                {% if price.code.rival.id == rival.id %}
+                                                    <div class="table-td">
+                                                        {{ price.price|number_format(0,',',' ') }}
+                                                        {% if price.percent != 0 %}
+                                                            <span class="Bgmonitoring" style="background: {{ price.label }};">{{ price.percent }}%</span>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% set noValue = false %}
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            {% if noValue %}
+                                                <div class="table-td">-</div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    Раздет пуст
+                {% endif %}
+            </div>
+
+        </div>
+    {% endblock %}
 {% endblock %}
+
+
