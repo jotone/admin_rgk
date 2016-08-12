@@ -103,6 +103,8 @@
         }
     }
     function search() {
+        chekForActive();
+        plusMinusImg();
         var input = $('#smartSearch');
         input.keypress( function () {
             setTimeout(function () {
@@ -142,6 +144,14 @@
                 }
             );
 
+        }
+        function chekForActive() {
+            $('.catalogList ul a').each(function () {
+               if ($(this).hasClass('active')){
+                   $(this).parents('ul').addClass('active');
+                   $(this).parents('li').addClass('active');
+               }
+            });
         }
     }
 /*END smart search*/
