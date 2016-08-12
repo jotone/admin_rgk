@@ -1,6 +1,6 @@
 {% extends 'RgkBundle:Admin:base.html.twig' %}
-{% macro recursiveMenu(section,active_section=0) %}
-    <li>
+{% macro recursiveMenu(section,active_section=0,depth=0) %}
+    <li {% if depth == 1 %}class="active"{% endif %}>
         {% if section.children|length %}
 
         <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="folder_item {% if section.id == active_section %}active{% endif %}">{{ section.title }}</a></div>
@@ -62,9 +62,9 @@
                     </div>
                     {% if sections %}
                         <div class="catalogList">
-                            <ul style="display: block">
+                            <ul class="main active" style="display: block;">
                                 {% for section in sections %}
-                                    {{ _self.recursiveMenu(section,active_section) }}
+                                    {{ _self.recursiveMenu(section,active_section,1) }}
                                 {% endfor %}
                             </ul>
                         </div>
