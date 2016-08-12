@@ -352,12 +352,12 @@
                                 <div class="catalogTop searchWrap smart">
                                     <div class="hsearch">
                                         <div class="search">
-                                            <form>
+                                            <form onsubmit="return false;">
                                                 <div class="search-button">
                                                     <input type="submit" value=""/>
                                                 </div>
                                                 <div class="searsh-input">
-                                                    <input type="text" placeholder="Поиск"/>
+                                                    <input id="smartSearch" type="text" placeholder="Поиск"/>
                                                 </div>
                                             </form>
                                         </div>
@@ -381,201 +381,459 @@
                                         </ul>
                                     </div>
                                     <div class="catalogList">
-                                        <div class="catalogList-title">
-                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел1</a>
-                                        </div>
-                                        <ul>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+                                        <ul class="main active" style="display: block;">
+                                            <li class="active">
+
+                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/8" data-id="8" class="">kjgy</a>
+
                                             </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+
+                                            <li class="active">
+
+                                                <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/3" data-id="3" class="folder_item ">Main 3</a></div>
+
+                                                <ul>
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/15" data-id="15" class="">bdsfggd</a>
+
+                                                    </li>
+
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/16" data-id="16" class="">cdfg</a>
+
+                                                    </li>
+
+                                                    <li>
+
+                                                        <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/17" data-id="17" class="folder_item ">dsa</a></div>
+
+                                                        <ul>
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/54" data-id="54" class="">иуцкп</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/53" data-id="53" class="">мцук</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/52" data-id="52" class="">сцу</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/51" data-id="51" class="">чавыу уц</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/50" data-id="50" class="">яав</a>
+
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/18" data-id="18" class="">erty</a>
+
+                                                    </li>
+
+                                                </ul>
                                             </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+
+                                            <li class="active">
+
+                                                <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/1" data-id="1" class="folder_item ">Главная 1</a></div>
+
+                                                <ul>
+                                                    <li>
+
+                                                        <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/6" data-id="6" class="folder_item ">sub 2</a></div>
+
+                                                        <ul>
+                                                            <li>
+
+                                                                <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/27" data-id="27" class="folder_item ">внекн</a></div>
+
+                                                                <ul>
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/61" data-id="61" class="">ortyj</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/62" data-id="62" class="">piutyuy</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/68" data-id="68" class="">qwewf</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/63" data-id="63" class="">sdfh</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/64" data-id="64" class="">trte</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/65" data-id="65" class="">uwqgf</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/67" data-id="67" class="">wefd</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/69" data-id="69" class="">xwerg</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/66" data-id="66" class="">yderf</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/70" data-id="70" class="">yegsdfg</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/71" data-id="71" class="">zsdfg</a>
+
+                                                                    </li>
+
+                                                                </ul>
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/28" data-id="28" class="">гвыафп</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/29" data-id="29" class="folder_item ">двы</a></div>
+
+                                                                <ul>
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/58" data-id="58" class="">lrty</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/59" data-id="59" class="">msh</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/60" data-id="60" class="">nrdth</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/55" data-id="55" class="">туууаы</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/56" data-id="56" class="">ьук</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/57" data-id="57" class="">юбцк</a>
+
+                                                                    </li>
+
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+                                                    <li>
+
+                                                        <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/4" data-id="4" class="folder_item ">sub glavn</a></div>
+
+                                                        <ul>
+                                                            <li>
+
+                                                                <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/20" data-id="20" class="folder_item ">gdss</a></div>
+
+                                                                <ul>
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/30" data-id="30" class="">еыва</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/31" data-id="31" class="">йцуке</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/34" data-id="34" class="">кенг</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/33" data-id="33" class="">укен</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/32" data-id="32" class="">цуке</a>
+
+                                                                    </li>
+
+                                                                </ul>
+                                                            </li>
+
+                                                            <li>
+
+                                                                <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/21" data-id="21" class="folder_item ">heet</a></div>
+
+                                                                <ul>
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/36" data-id="36" class="">гшщз</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/35" data-id="35" class="">нгшщ</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/37" data-id="37" class="">шщзх</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/38" data-id="38" class="">щзхъ</a>
+
+                                                                    </li>
+
+                                                                </ul>
+                                                            </li>
+
+                                                            <li>
+
+                                                                <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/22" data-id="22" class="folder_item ">isda</a></div>
+
+                                                                <ul>
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/39" data-id="39" class="">зхъф</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/40" data-id="40" class="">хъфы</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/41" data-id="41" class="">ъфыв</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/42" data-id="42" class="">ывап</a>
+
+                                                                    </li>
+
+                                                                </ul>
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/23" data-id="23" class="">kgh</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/5" data-id="5" class="folder_item ">subsub</a></div>
+
+                                                                <ul>
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/25" data-id="25" class="">авы</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/26" data-id="26" class="">бвап</a>
+
+                                                                    </li>
+
+                                                                    <li>
+
+                                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/24" data-id="24" class="">дло</a>
+
+                                                                    </li>
+
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+                                                </ul>
                                             </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
+
+                                            <li class="active">
+
+                                                <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/2" data-id="2" class="folder_item ">слово</a></div>
+
+                                                <ul>
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/14" data-id="14" class="">asdfddf</a>
+
+                                                    </li>
+
+                                                    <li>
+
+                                                        <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="/app_dev.php/section/9" data-id="9" class="folder_item ">dfghssdfgbn</a></div>
+
+                                                        <ul>
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/47" data-id="47" class="">жэ про</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/46" data-id="46" class="">лджэ</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/45" data-id="45" class="">олдж</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/43" data-id="43" class="">прол</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/44" data-id="44" class="">ролд</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/48" data-id="48" class="">элор ывап</a>
+
+                                                            </li>
+
+                                                            <li>
+
+                                                                <span class="icon icon_file"></span><a href="/app_dev.php/section/49" data-id="49" class="">я ва</a>
+
+                                                            </li>
+
+                                                        </ul>
+                                                    </li>
+
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/11" data-id="11" class="">ewqrye</a>
+
+                                                    </li>
+
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/19" data-id="19" class="">fds</a>
+
+                                                    </li>
+
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/10" data-id="10" class="">kgfhkghhk</a>
+
+                                                    </li>
+
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/13" data-id="13" class="">nnbnf</a>
+
+                                                    </li>
+
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/12" data-id="12" class="">qwer</a>
+
+                                                    </li>
+
+                                                    <li>
+
+                                                        <span class="icon icon_file"></span><a href="/app_dev.php/section/7" data-id="7" class="">word</a>
+
+                                                    </li>
+
+                                                </ul>
                                             </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="catalogList">
-                                        <div class="catalogList-title">
-                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
-                                        </div>
-                                        <ul>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="catalogList">
-                                        <div class="catalogList-title">
-                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел1</a>
-                                        </div>
-                                        <ul>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="catalogList">
-                                        <div class="catalogList-title">
-                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
-                                        </div>
-                                        <ul>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="catalogList">
-                                        <div class="catalogList-title">
-                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел1</a>
-                                        </div>
-                                        <ul>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="catalogList active">
-                                        <div class="catalogList-title">
-                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
-                                        </div>
-                                        <ul>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="catalogList">
-                                        <div class="catalogList-title">
-                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
-                                        </div>
-                                        <ul>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="catalogList">
-                                        <div class="catalogList-title">
-                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
-                                        </div>
-                                        <ul>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="catalogList">
-                                        <div class="catalogList-title">
-                                            <a href="#"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>Раздел2</a>
-                                        </div>
-                                        <ul>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><span class="icon icon_file"></span>Подраздел1</a>
-                                            </li>
+
                                         </ul>
                                     </div>
                                 </div>

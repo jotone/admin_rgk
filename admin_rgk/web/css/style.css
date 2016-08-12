@@ -47,7 +47,7 @@ img{vertical-align:bottom;border:0;max-width:100%;}
 .icon.icon_bottom{width: 21px;height: 20px;background-image: url(../images/icon_bottom.png);}
 .icon.icon_top{width: 21px;height: 20px;background-image: url(../images/icon_top.png);}
 .icon.icon_folder{width: 15px;height: 12px;background-image: url(../images/icon_folder.png);}
-.icon.icon_file{width: 14px;height: 16px;background-image: url(../images/icon_file.png);}
+.icon.icon_file{width: 14px;height: 16px;background-image: url(../images/icon_file.png);margin-left: 16px;}
 .icon.icon_edit{width: 15px;height: 15px;background-image: url(../images/icon_pen.png);}
 .icon.icon_close{width: 10px;height: 10px;background-image: url(../images/icon_close.png);}
 
@@ -58,8 +58,9 @@ img{vertical-align:bottom;border:0;max-width:100%;}
 .icon_searchb{width: 28px;height: 28px;background-image:url(../images/icon_search.png);}
 .icon_refr{width: 18px;height: 20px;background-image:url(../images/refrech.png);}
 
-.icon.icon_lplus{width: 9px;height: 9px;padding: 1px;border:1px solid #888888;background: url(../images/plm.png) center center no-repeat;}
-.catalogList.active .icon.icon_lplus{background: url(../images/plm_.png) center center no-repeat; }
+.icon.icon_lplus{width: 9px;height: 9px;padding: 1px;border:1px solid #888888;background: url(../images/plm.png) center center no-repeat;cursor: pointer;}
+.active.icon.icon_lplus,
+.minus.icon_lplus{background: url(../images/plm_.png) center center no-repeat; }
 /* /icons styling*/
 
 
@@ -160,10 +161,8 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .content-right .icon{float: right;}
 .content-left.litLeft{width: 270px;}
 .content-left.litright{margin-right: 11px;width: 281px;}
-.litright .litTitle{padding-top: 19px;}
-.litright .catalogList-wrap{padding-top: 5px;}
-.litright .catalogList-wrap .catalogList a{padding-left: 30px;}
-.litright .catalogList ul li a{padding-left: 63px!important;}
+
+
 .allWidth-content{padding: 18px 36px 15px 14px;}
 .allWidth-content.right-tabs{margin-left: 290px;max-width: 100%;}
 .right-tabs .sTable  tr td:first-child{width: 150px;}
@@ -201,13 +200,22 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .catalogList-title .icon{margin-right: 9px;top: -2px;position: relative;}
 .catalogList ul .icon{margin-right: 6px;}
 .catalogList .icon_lplus{margin-right: 6px;}
-.catalogList a{font-size: 12px;color: #455159;text-decoration: none;font-weight: 500;padding: 0 19px;}
+.catalogList a{font-size: 12px;color: #455159;text-decoration: none;font-weight: 500;}
 .catalogList.active >a{font-weight: 700;}
-.catalogList ul{padding: 7px 0px 0px;display: none;}
-.catalogList ul li{margin-bottom: 6px;}
-.catalogList ul li a{padding: 2px 19px 0px 52px;display: block;}
-.catalogList ul li:hover a,.catalogList ul li a.active {background: #e6e5e5;}
-.catalogList.active ul{display: block;}
+
+
+.catalogList ul li.active{ display: block;}
+.catalogList ul.active{ display: block;}
+.catalogList ul{ padding-left: 10px; display: none; margin-bottom: 10px;}
+.wrap-title{ margin-top: 7px;}
+.catalogList ul li a:hover,
+.catalogList ul li a.active {background: #e6e5e5;}
+.catalogList ul li  { display: none;}
+.catalogList>ul{display: block;}
+
+
+
+
 .modalWindow{position: absolute;background: #fff;-webkit-box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);padding: 17px 15px 5px 15px;min-width: 122px;display: none;}
 .modalWindow ul li{margin-bottom: 12px;}
 .modalWindow ul li:last-child{margin-bottom: 8px;}
@@ -403,6 +411,6 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .table-row:hover{background: #d4e8f1; }
 .table-new-two .table-td{ display: inline-block; min-width: 100px; margin-left: -2px; text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
 .table-new-two .table-td:hover{ background: #86a4b1;}
-.table-new-one .table-td{width: 85px; display: inline-block; margin-left: -1px;text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
+.table-new-one .table-td{width: 85px; display: inline-block; margin-left: -2px;text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
 .table-new-one .table-td:first-child{width: 220px; }
 .table-new-one .table-head .table-td{ padding: 0; vertical-align: top;}

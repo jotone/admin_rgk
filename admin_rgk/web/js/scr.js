@@ -145,17 +145,7 @@ function addActiveParent(el){
 }
 
 function menuOpen(){
-	$('.catalogList ul a').click(function(e){
-	    var pos = $('.catalogList-wrap').offset(),
-	    	elem_left = pos.left,
-	    	elem_top = pos.top,
-	    	Xinner = e.pageX - elem_left,
-	    	Yinner = e.pageY - elem_top;
-		$('.catalogList ul a').removeClass('active');
-		$(this).addClass('active');
-    	$('.modalWindow').css({'display':'block','left':Xinner,'top':Yinner})
-		return false;
-	});
+	
 }
 
 
