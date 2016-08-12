@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use RgkBundle\Entity\Section;
+use ParseBundle\Controller\ParseController;
 
 class PriceController extends BaseController
 {
@@ -21,6 +22,9 @@ class PriceController extends BaseController
      */
     public function indexAction(Request $request,$id=0)
     {
+  //      $parse = new ParseController();
+ //       $result=$parse->get_price('http://stylus.ua/sokovyzhimalki/philips-hr-183202.html','#product-block .price');
+//        var_dump($result); exit();
         /**
          * @var Section $a
          */
