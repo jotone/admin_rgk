@@ -8,6 +8,8 @@
 
 namespace RgkBundle\Controller;
 
+use RgkBundle\Entity\Price;
+use RgkBundle\Entity\Product;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,6 +78,194 @@ class PriceController extends BaseController
         $sections = $this->menuStrict($sections);
 
         return $this->renderApiJson($sections);
+    }
+
+    /**
+     * @Route("/actionSection", name="rgk_post_section")
+     * @Route("/actionSection/{id}", name="rgk_action_section")
+     */
+    public function sectionAction(Request $request,$id=0)
+    {
+        if($request->getMethod() != 'POST' || $request->getMethod() != 'DELETE')
+            return $this->redirectToRoute('rgk_price_index');
+
+
+        if($request->get("_route") == 'rgk_action_section'){
+            $section = $this->getDoctrine()
+                ->getRepository('RgkBundle:Section')
+                ->find(intval($id));
+            if(!$section)
+                $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+            if($request->getMethod() == 'DELETE'){
+                $manager = $this->getDoctrine()->getManager();
+                $manager->remove($section);
+                $manager->flush();
+                $this->renderApiJson(['success'=>true]);
+            }
+        }
+        else
+            $section = new Section();
+
+        $data = $request->request->get('product');
+        $parentSection = (isset($data['section']) && $data['section']>0?
+            $this->getDoctrine()->getRepository('RgkBundle:Section')->find(intval($data['section'])):
+            null
+        );
+        $section->setTitle((isset($data['title'])?$data['title']:''));
+
+        if(!$section->getId() || !$parentSection){
+            $section->setParentSection((is_object($parentSection)?$parentSection:null));
+        } else { //check if $parentSection is not $sectionChaild
+            $all = $this->getDoctrine()
+                ->getRepository('RgkBundle:Section')
+                ->findBy(array(), array('title' => 'ASC'));
+            $all = $this->menuStrict($all);
+            $childArray = $this->getSectionChildTreeIds($section->getId(),$all);
+            if(in_array($parentSection->getId(),$childArray))
+                $this->renderApiJson(['error' => 'Ошибка передачи родительского раздела']);
+            $section->setParentSection($parentSection);
+        }
+
+        $errors = $this->get('validator')->validate($section);
+        if (count($errors) > 0)
+            $this->renderApiJson(['error' => 'Ошибка передачи данных раздела']);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($section);
+        $manager->flush();
+
+        $this->renderApiJson(['success'=>true]);
+    }
+
+    /**
+     * @Route("/actionProduct", name="rgk_post_product")
+     * @Route("/actionProduct/{id}", name="rgk_action_product")
+     */
+    public function productAction(Request $request,$id=0)
+    {
+        if($request->getMethod() != 'POST' || $request->getMethod() != 'DELETE')
+            return $this->redirectToRoute('rgk_price_index');
+
+        if($request->get("_route") == 'rgk_action_product'){
+            $product = $this->getDoctrine()
+                ->getRepository('RgkBundle:Product')
+                ->find(intval($id));
+            if(!$product)
+                $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+            if($request->getMethod() == 'DELETE'){
+                $manager = $this->getDoctrine()->getManager();
+                $manager->remove($product);
+                $manager->flush();
+                $this->renderApiJson(['success'=>true]);
+            }
+        }
+        else
+            $product = new Product();
+
+        $data = $request->request->get('product');
+        $section = (isset($data['section']) && $data['section']>0?$this->getDoctrine()->getRepository('RgkBundle:Section')->find(intval($data['section'])):null);
+        $product->setTitle((isset($data['title'])?$data['title']:''))
+                ->setPrice((isset($data['price']) && $data['price']>0?floatval($data['price']):0))
+                ->setSection($section);
+
+        $errors = $this->get('validator')->validate($product);
+        if (count($errors) > 0)
+            $this->renderApiJson(['error' => 'Ошибка передачи данных продукта']);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($product);
+        $manager->flush();
+
+        $this->renderApiJson(['success'=>true]);
+    }
+
+
+    /**
+     * @Route("/actionPrice", name="rgk_post_price")
+     * @Route("/actionPrice/{id}", name="rgk_action_price")
+     */
+    public function priceAction(Request $request,$id=0)
+    {
+        if($request->getMethod() != 'POST' || $request->getMethod() != 'DELETE')
+            return $this->redirectToRoute('rgk_price_index');
+
+        $data = $request->request->get('price');
+        if($request->get("_route") == 'rgk_action_price'){
+            $price = $this->getDoctrine()
+                ->getRepository('RgkBundle:Price')
+                ->find(intval($id));
+            if(!$price)
+                $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+            if($request->getMethod() == 'DELETE'){
+                $manager = $this->getDoctrine()->getManager();
+                $manager->remove($price);
+                $manager->flush();
+                $this->renderApiJson(['success'=>true]);
+            }
+        }
+        else {
+            $price = new Price();
+            $product = (
+                isset($data['product']) && $data['product']>0?
+                    $this->getDoctrine()->getRepository('RgkBundle:Product')->find(intval($data['product'])):false
+            );
+            if($product)
+                $price->setProduct($product);
+            else
+                $this->renderApiJson(['error' => 'Ошибка передачи продукта']);
+        }
+
+        //check code
+        $code = (isset($data['code']) && $data['code']>0?$this->getDoctrine()->getRepository('RgkBundle:Code')->find(intval($data['code'])):null);
+        if(!$code)
+            $this->renderApiJson(['error' => 'Ошибка передачи кода']);
+
+        $price->setCode($code)
+             ->setUrl((isset($data['url'])?$data['url']:''))
+             ->setDate(new \DateTime());
+        //check parce
+        $parse = new ParseController();
+        $priceValue = $parse->get_price($price->getUrl(),$price->getCode()->getCode());
+
+        if(!$priceValue)
+            $this->renderApiJson(['error' => 'Ошибка передачи кода']);
+
+        $price->setPrice($priceValue);
+
+        $errors = $this->get('validator')->validate($price);
+        if (count($errors) > 0)
+            $this->renderApiJson(['error' => 'Ошибка передачи данных цены']);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($price);
+        $manager->flush();
+
+        $this->productCheckPrices($price->getProduct());
+
+        $this->renderApiJson(['success'=>true]);
+    }
+
+    private function productCheckPrices(Product $product){
+        if($product->getPrices()){
+            /**
+             * @var Price $price
+             */
+            $rivalSpectre = [];
+            foreach ($product->getPrices()->toArray() as $price){
+                if(!$price->getCode())
+                    continue;
+                if(!in_array($price->getCode()->getRival()->getId(),$rivalSpectre))
+                    $rivalSpectre[] =  $price->getCode()->getRival()->getId();
+                else { //remove
+                    $manager = $this->getDoctrine()->getManager();
+                    $manager->remove($price);
+                    $manager->flush();
+                }
+            }
+        }
     }
 
     private function menuStrict(&$objects,$parent=0)
