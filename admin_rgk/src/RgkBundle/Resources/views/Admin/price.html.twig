@@ -7,7 +7,7 @@
 
             <ul>
                 {% for child in section.children %}
-                    {{ _self.recursiveMenu(child) }}
+                    {{ _self.recursiveMenu(child,active_section) }}
                 {% endfor %}
             </ul>
         {% else %}
