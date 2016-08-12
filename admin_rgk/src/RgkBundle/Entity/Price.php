@@ -57,6 +57,13 @@ class Price
     private $code;
 
     /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="url", type="string", length=4096)
+     */
+    private $url;
+
+    /**
      * Get id
      *
      * @return int
@@ -158,6 +165,29 @@ class Price
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return Price
+     */
+    public function setUrl($url = '')
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**

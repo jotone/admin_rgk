@@ -22,9 +22,9 @@ class PriceController extends BaseController
      */
     public function indexAction(Request $request,$id=0)
     {
-  //      $parse = new ParseController();
- //       $result=$parse->get_price('http://stylus.ua/sokovyzhimalki/philips-hr-183202.html','#product-block .price');
-//        var_dump($result); exit();
+        //$parse = new ParseController();
+        //$result=$parse->get_price('http://carpan.com.ua/tovar/katushka-jaxon-tabias-fdx-kj-tab100','.item-price-current');
+        //var_dump($result); exit();
         /**
          * @var Section $a
          */
