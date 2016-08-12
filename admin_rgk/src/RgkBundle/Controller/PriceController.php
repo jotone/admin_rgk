@@ -61,6 +61,19 @@ class PriceController extends BaseController
         return $this->render('RgkBundle:Admin:price.html.twig',$params);
     }
 
+    /**
+     * @Route("/sectionList", name="rgk_section_list")
+     */
+    public function sectionListAction()
+    {
+        $sections = $this->getDoctrine()
+            ->getRepository('RgkBundle:Section')
+            ->findBy(array(), array('title' => 'ASC'));
+        $sections = $this->menuStrict($sections);
+
+        return $this->renderApiJson($sections);
+    }
+
     private function menuStrict(&$objects,$parent=0)
     {
         $resp = [];
