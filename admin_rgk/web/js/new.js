@@ -150,6 +150,7 @@
                if ($(this).hasClass('active')){
                    $(this).parents('ul').addClass('active');
                    $(this).parents('li').addClass('active');
+                   $(this).closest('ul').find('>li').addClass('active');
                }
             });
         }

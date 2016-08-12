@@ -207,7 +207,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .catalogList ul li.active{ display: block;}
 .catalogList ul.active{ display: block;}
 .catalogList ul{ padding-left: 10px; display: none; margin-bottom: 10px;}
-.wrap-title{ margin-top: 7px;}
+.wrap-title{ margin: 7px 0;}
 .catalogList ul li a:hover,
 .catalogList ul li a.active {background: #e6e5e5;}
 .catalogList ul li  { display: none;}
