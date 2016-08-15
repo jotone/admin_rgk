@@ -157,13 +157,18 @@
     }
 
 
-    function menuMoveItem(popupContent){
+    function menuMoveItemPopUp(popupContent){
         $.fancybox.open({
             content: '<div class="alertPopup">'+popupContent+'</div>',
             padding:0,
             fitToView:false,
             autoSize:true,
             wrapCSS: 'classWrap'
+        });
+    }
+    function moveItem() {
+        $(document).on('click', '.moveItem', function (e) {
+            e.preventDefault();
         });
     }
 
