@@ -149,10 +149,14 @@
                         fitToView:false,
                         autoSize:true,
                         wrapCSS: 'classWrap',
-                        afterLoad: function () {
+                        afterShow: function () {
                             var element = document.getElementsByClassName('submit-tmp');
-                            $('.popTroll form select').styler();
-                            
+                            $('.tzNice').styler();
+
+
+
+
+
                                 $(document).on('click', element, function () {
 
                                     var newId = $('.popTroll form select').val();
@@ -197,7 +201,7 @@
                     if(mass[i].children.length > 0){ parseData(mass[i].children, ++depth); }
                 }
             }
-            result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="report-form zForm zNice"><form><div class="zForm-row select"><select class="tzNice" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
+            result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="report-form zForm zNice"><form><div class="zForm-row select"><select class="tzNice" data-smart-positioning ="-1" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
             return result;
         }
     }
