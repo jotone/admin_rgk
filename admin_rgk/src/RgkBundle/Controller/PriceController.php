@@ -91,10 +91,10 @@ class PriceController extends BaseController
     public function sectionAction(Request $request,$id=0)
     {
 
-        if($request->getMethod() != 'POST' || $request->getMethod() != 'DELETE') {
+        if($request->getMethod() != 'POST' && $request->getMethod() != 'DELETE') {
             //if ajax
             if ( $request->isXmlHttpRequest() )
-                $this->renderApiJson(['error'=>'invalidMethod','meta'=>$request->getMethod()]);
+                $this->renderApiJson(['error'=>'invalidMethod']);
             return $this->redirectToRoute('rgk_price_index');
         }
 
@@ -152,7 +152,7 @@ class PriceController extends BaseController
      */
     public function productAction(Request $request,$id=0)
     {
-        if($request->getMethod() != 'POST' || $request->getMethod() != 'DELETE')
+        if($request->getMethod() != 'POST' && $request->getMethod() != 'DELETE')
             return $this->redirectToRoute('rgk_price_index');
 
         if($request->get("_route") == 'rgk_action_product'){
@@ -196,7 +196,7 @@ class PriceController extends BaseController
      */
     public function priceAction(Request $request,$id=0)
     {
-        if($request->getMethod() != 'POST' || $request->getMethod() != 'DELETE')
+        if($request->getMethod() != 'POST' && $request->getMethod() != 'DELETE')
             return $this->redirectToRoute('rgk_price_index');
 
         $data = $request->request->get('price');
