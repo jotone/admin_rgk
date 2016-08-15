@@ -121,9 +121,10 @@ class PriceController extends BaseController
             null
         );
         $section->setTitle((isset($data['title'])?$data['title']:''));
-
+        
         if(!$section->getId() || !$parentSection){
             $section->setParentSection((is_object($parentSection)?$parentSection:null));
+
         } else { //check if $parentSection is not $sectionChaild
             $all = $this->getDoctrine()
                 ->getRepository('RgkBundle:Section')
