@@ -75,6 +75,7 @@
                 event = event || window.event;
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
                 var itemId = $(this).attr('data-id');
+                var title = $(this).text();
                 var pos = $('.catalogList-wrap').offset(),
                     elem_left = pos.left,
                     elem_top = pos.top,
@@ -83,7 +84,7 @@
                 $('.catalogList ul a').removeClass('active');
                 $(this).addClass('active');
                 $('.modalWindow').css({'display':'block','left':Xinner,'top':Yinner}).attr('data-id',itemId);
-                moveItem(itemId);
+                moveItem(itemId, title);
                 return false;
             }, false);
         }
@@ -133,7 +134,7 @@
         }
     }
 
-    function moveItem(id) {
+    function moveItem(id, title) {
         $(document).on('click', '.moveItem', function (e) {
             e.preventDefault();
             $.ajax({
@@ -155,12 +156,12 @@
                                 $(document).on('click', element, function () {
 
                                     var newId = $('.popTroll form select').val();
-                                    var title = $('.popTroll form option[value='+newId+']').text();
+
                                     console.log(title);
                                     console.log(newId);
                                     $.ajax({
                                         url : "/app_dev.php/actionSection/"+id,
-                                        //dataType:"json",
+                                        dataType:"json",
                                         data: {
                                             product:{
                                                 title: title,
@@ -170,6 +171,7 @@
                                         type:'POST',
                                         success : function(data){
                                             console.log(data);
+
                                         },
                                         error: function (xhr, ajaxOptions, thrownError) {
                                             console.log(xhr.status);
