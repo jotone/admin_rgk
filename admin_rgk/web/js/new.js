@@ -150,6 +150,8 @@
                         wrapCSS: 'classWrap',
                         afterLoad: function () {
                             var element = document.getElementsByClassName('submit-tmp');
+                            $('.popTroll form select').styler();
+                            
                                 $(document).on('click', element, function () {
 
                                     var newId = $('.popTroll form select').val();
