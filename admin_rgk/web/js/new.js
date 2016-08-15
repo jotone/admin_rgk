@@ -174,12 +174,15 @@
                                         },
                                         type:'POST',
                                         success : function(data){
-                                            console.log(data);
-
+                                            if(typeof data.error != 'undefined')
+                                                console.log(data.error);
+                                            else if (typeof data.success != 'undefined')
+                                                location.reload();
+                                            else
+                                                console.log(data);
                                         },
                                         error: function (xhr, ajaxOptions, thrownError) {
-                                            console.log(xhr.status);
-                                            console.log(thrownError);
+                                            location.reload();
                                         }
                                     });
                                     return false;

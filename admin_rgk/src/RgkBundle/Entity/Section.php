@@ -81,7 +81,7 @@ class Section
      */
     public function setParentSection(Section $target = null)
     {
-        $this->rival = $target;
+        $this->parentSection = $target;
 
         return $this;
     }
