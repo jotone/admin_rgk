@@ -56,7 +56,7 @@ class CodeController extends BaseController
      */
     public function rivalAction(Request $request,$id=0)
     {
-        if($request->getMethod() != 'POST' || $request->getMethod() != 'DELETE')
+        if($request->getMethod() != 'POST' && $request->getMethod() != 'DELETE')
            return $this->redirectToRoute('rgk_code_index');
 
         if($request->get("_route") == 'rgk_action_rival'){
