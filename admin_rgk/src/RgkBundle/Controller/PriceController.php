@@ -70,13 +70,17 @@ class PriceController extends BaseController
     /**
      * @Route("/sectionList", name="rgk_section_list")
      */
-    public function sectionListAction()
+    public function sectionListAction(Request $request)
     {
         $sections = $this->getDoctrine()
             ->getRepository('RgkBundle:Section')
             ->findBy(array(), array('title' => 'ASC'));
         $sections = $this->menuStrict($sections);
 
+        $id = $request->query->get('id');
+        if($id>0){
+            $this->unsetChild($sections,intval($id));
+        }
         return $this->renderApiJson($sections);
     }
 
@@ -264,6 +268,18 @@ class PriceController extends BaseController
                     $manager->remove($price);
                     $manager->flush();
                 }
+            }
+        }
+    }
+
+    private function unsetChild(&$objects,$id)
+    {
+        foreach ($objects as $key=>$object){
+            if($object['id'] == $id){
+                unset($objects[$key]);
+                break;
+            } elseif (!empty($object['children'])){
+                $this->unsetChild($objects[$key]['children'],$id);
             }
         }
     }
