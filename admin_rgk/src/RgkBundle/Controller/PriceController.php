@@ -90,9 +90,13 @@ class PriceController extends BaseController
      */
     public function sectionAction(Request $request,$id=0)
     {
-        if($request->getMethod() != 'POST' || $request->getMethod() != 'DELETE')
-            return $this->redirectToRoute('rgk_price_index');
 
+        if($request->getMethod() != 'POST' || $request->getMethod() != 'DELETE') {
+            //if ajax
+            if ( $request->isXmlHttpRequest() )
+                $this->renderApiJson(['error'=>'invalidMethod','meta'=>$request->getMethod()]);
+            return $this->redirectToRoute('rgk_price_index');
+        }
 
         if($request->get("_route") == 'rgk_action_section'){
             $section = $this->getDoctrine()
