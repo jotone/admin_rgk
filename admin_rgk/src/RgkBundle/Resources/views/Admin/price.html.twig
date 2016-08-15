@@ -1,18 +1,21 @@
 {% extends 'RgkBundle:Admin:base.html.twig' %}
-{% macro recursiveMenu(section,active_section=0,depth=0) %}
+{% macro recursiveMenu(section,parentid=0,active_section=0,depth=0) %}
     <li {% if depth == 1 %}class="active"{% endif %}>
         {% if section.children|length %}
 
-        <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span><a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="folder_item {% if section.id == active_section %}active{% endif %}">{{ section.title }}</a></div>
+        <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>
+            <a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" data-parentid="{{ (parentid>0?parentid:'') }}" class="folder_item {% if section.id == active_section %}active{% endif %}">{{ section.title }}</a>
+        </div>
 
             <ul>
                 {% for child in section.children %}
-                    {{ _self.recursiveMenu(child,active_section) }}
+                    {{ _self.recursiveMenu(child,section.id,active_section) }}
                 {% endfor %}
             </ul>
         {% else %}
 
-            <span class="icon icon_file"></span><a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" class="{% if section.id == active_section %}active{% endif %}" >{{ section.title }}</a>
+            <span class="icon icon_file"></span>
+            <a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}"  data-parentid="{{ (parentid>0?parentid:'') }}" class="{% if section.id == active_section %}active{% endif %}" >{{ section.title }}</a>
 
         {% endif %}
     </li>
@@ -67,7 +70,7 @@
                         <div class="catalogList">
                             <ul class="main active" style="display: block;">
                                 {% for section in sections %}
-                                    {{ _self.recursiveMenu(section,active_section,1) }}
+                                    {{ _self.recursiveMenu(section,0,active_section,1) }}
                                 {% endfor %}
                             </ul>
                         </div>
