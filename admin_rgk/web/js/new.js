@@ -150,11 +150,24 @@
                if ($(this).hasClass('active')){
                    $(this).parents('ul').addClass('active');
                    $(this).parents('li').addClass('active');
-                   $(this).closest('ul').find('>li').addClass('active');
+                   $(this).parents('ul').find('>li').addClass('active');
                }
             });
         }
     }
+
+
+    function menuMoveItem(popupContent){
+        $.fancybox.open({
+            content: '<div class="alertPopup">'+popupContent+'</div>',
+            padding:0,
+            fitToView:false,
+            autoSize:true,
+            wrapCSS: 'classWrap'
+        });
+    }
+
+    
 /*END smart search*/
 $(document).ready(function () {
 
