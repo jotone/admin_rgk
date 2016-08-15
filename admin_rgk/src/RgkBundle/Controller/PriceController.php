@@ -79,7 +79,7 @@ class PriceController extends BaseController
 
         $id = $request->query->get('id');
         if($id>0){
-            $this->unsetChild($sections,intval($id));
+            $sections = $this->unsetChild($sections,intval($id));
         }
         return $this->renderApiJson($sections);
     }
@@ -272,16 +272,17 @@ class PriceController extends BaseController
         }
     }
 
-    private function unsetChild(&$objects,$id)
+    private function unsetChild($objects,$id)
     {
         foreach ($objects as $key=>$object){
             if($object['id'] == $id){
                 unset($objects[$key]);
                 break;
             } elseif (!empty($object['children'])){
-                $this->unsetChild($objects[$key]['children'],$id);
+                $objects[$key]['children'] = $this->unsetChild($objects[$key]['children'],$id);
             }
         }
+        return array_values($objects);
     }
 
     private function menuStrict(&$objects,$parent=0)
