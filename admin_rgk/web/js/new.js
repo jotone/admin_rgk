@@ -75,7 +75,10 @@
                 event = event || window.event;
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
                 var itemId = $(this).attr('data-id');
+                var parentId;
+                console.log($(this))
                 var title = $(this).text();
+                
                 var pos = $('.catalogList-wrap').offset(),
                     elem_left = pos.left,
                     elem_top = pos.top,
@@ -133,83 +136,82 @@
             });
         }
     }
-
-    function moveItem(id, title) {
-        $(document).on('click', '.moveItem', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type:'get',
-                url:'/app_dev.php/sectionList',
-                data:{id:id},
-                success:function (data) {
-                    var content = generatePopUpContent(data, id);
-                    $.fancybox.open({
-                        content: content,
-                        padding:0,
-                        fitToView:false,
-                        autoSize:true,
-                        wrapCSS: 'classWrap',
-                        afterShow: function () {
-                            var element = document.getElementsByClassName('submit-tmp');
-                            $('.tzNice').styler();
-
-
-
-
-
-                                $(document).on('click', element, function () {
-
-                                    var newId = $('.popTroll form select').val();
-
-                                    console.log(title);
-                                    console.log(newId);
-                                    $.ajax({
-                                        url : "/app_dev.php/actionSection/"+id,
-                                        dataType:"json",
-                                        data: {
-                                            product:{
-                                                title: title,
-                                                section: newId
-                                            }
-                                        },
-                                        type:'POST',
-                                        success : function(data){
-                                            if(typeof data.error != 'undefined')
-                                                console.log(data.error);
-                                            else if (typeof data.success != 'undefined')
-                                                location.reload();
-                                            else
-                                                console.log(data);
-                                        },
-                                        error: function (xhr, ajaxOptions, thrownError) {
-                                            location.reload();
-                                        }
+    //functional move Item
+        function moveItem(id, title) {
+            $(document).on('click', '.moveItem', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type:'get',
+                    url:'/app_dev.php/sectionList',
+                    data:{id:id},
+                    success:function (data) {
+                        var content = generatePopUpContent(data, id);
+                        $.fancybox.open({
+                            content: content,
+                            padding:0,
+                            fitToView:false,
+                            autoSize:true,
+                            wrapCSS: 'classWrap',
+                            afterShow: function () {
+                                var element = document.getElementsByClassName('submit-tmp');
+                                //$('.tzNice').styler();
+                                    $('.submit-tmp').click(function () {
+                                        var newId = $('.popTroll form select').val();
+                                        finalAjax(id, newId, title);
+                                        return false;
                                     });
-                                    return false;
-                                })
-                        }
-                    });
+                            }
+                        });
+                    }
+                });
+            });
+            function generatePopUpContent(data, id) {
+                var content = '';
+                var depth =0;
+                parseData(data, depth);
+                function parseData(mass, depth) {
+                    var nbsp = '';
+                    for (var j=0; j<depth; j++){nbsp = nbsp + '&nbsp;';}
+                    for (var i= 0; i < mass.length; i++){
+                        content = content + '<option value="'+mass[i].id+'" '+(mass[i].id==id?'selected':'')+'>'+nbsp+mass[i].title+'</option>';
+                        if(mass[i].children.length > 0){ parseData(mass[i].children, ++depth); }
+                    }
+                }
+                result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="report-form zForm zNice"><form><div class="zForm-row select"><select class="tzNice" data-smart-positioning ="-1" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
+                return result;
+            }
+    
+        }
+        function finalAjax(id, newId, title) {
+            $.ajax({
+                url : "/app_dev.php/actionSection/"+id,
+                dataType:"json",
+                data: {
+                    product:{
+                        title: title,
+                        section: newId
+                    }
+                },
+                type:'POST',
+                success : function(data){
+                    if(typeof data.error != 'undefined')
+                        console.log(data.error);
+                    else if (typeof data.success != 'undefined')
+                        location.reload();
+                    else
+                        console.log(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    location.reload();
                 }
             });
-        });
-        function generatePopUpContent(data, id) {
-            var content = '';
-            var depth =0;
-            parseData(data, depth);
-            function parseData(mass, depth) {
-                var nbsp = '';
-                for (var j=0; j<depth; j++){nbsp = nbsp + '&nbsp;';}
-                for (var i= 0; i < mass.length; i++){
-                    content = content + '<option value="'+mass[i].id+'" '+(mass[i].id==id?'selected':'')+'>'+nbsp+mass[i].title+'</option>';
-                    if(mass[i].children.length > 0){ parseData(mass[i].children, ++depth); }
-                }
-            }
-            result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="report-form zForm zNice"><form><div class="zForm-row select"><select class="tzNice" data-smart-positioning ="-1" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
-            return result;
         }
+    // functional edit 
+    function editItem() {
+        $(document).on('click', '.moveItem', function (e) {
+            e.preventDefault();
+        });
     }
-
-    
 /*END smart search*/
 $(document).ready(function () {
 
