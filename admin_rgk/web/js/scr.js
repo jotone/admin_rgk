@@ -144,9 +144,7 @@ function addActiveParent(el){
 	})
 }
 
-function menuOpen(){
-	
-}
+
 
 
 /* DOCUMENT READY  */
@@ -154,7 +152,7 @@ $(document).ready(function() {
 	modernize();
 	minHeightPage();
 	addActiveParent($('.catalogList-title'));
-	menuOpen();
+	
 	initDatepicker();
 
 	$(document).click(function (e) {
