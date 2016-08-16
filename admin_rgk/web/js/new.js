@@ -75,10 +75,8 @@
                 event = event || window.event;
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
                 var itemId = $(this).attr('data-id');
-                var parentId;
-                console.log($(this))
+                var parentId = $(this).attr('data-parentid');
                 var title = $(this).text();
-                
                 var pos = $('.catalogList-wrap').offset(),
                     elem_left = pos.left,
                     elem_top = pos.top,
@@ -87,7 +85,10 @@
                 $('.catalogList ul a').removeClass('active');
                 $(this).addClass('active');
                 $('.modalWindow').css({'display':'block','left':Xinner,'top':Yinner}).attr('data-id',itemId);
+                createGroup(itemId);
+                editItem($(this), itemId, parentId);
                 moveItem(itemId, title);
+
                 return false;
             }, false);
         }
@@ -136,82 +137,161 @@
             });
         }
     }
-    //functional move Item
-        function moveItem(id, title) {
-            $(document).on('click', '.moveItem', function (e) {
-                e.preventDefault();
+    //context menu on smart search
+        //functional move Item
+            function moveItem(id, title) {
+                $(document).on('click', '.moveItem', function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type:'get',
+                        url:'/app_dev.php/sectionList',
+                        data:{id:id},
+                        success:function (data) {
+                            var content = generatePopUpContent(data, id);
+                            $.fancybox.open({
+                                content: content,
+                                padding:0,
+                                fitToView:false,
+                                autoSize:true,
+                                wrapCSS: 'classWrap',
+                                afterShow: function () {
+                                    var element = document.getElementsByClassName('submit-tmp');
+                                    //$('.tzNice').styler();
+                                        $('.submit-tmp').click(function () {
+                                            var newId = $('.popTroll form select').val();
+                                            finalAjax(id, newId, title);
+                                            return false;
+                                        });
+                                }
+                            });
+                        }
+                    });
+                });
+                function generatePopUpContent(data, id) {
+                    var content = '';
+                    var depth =0;
+                    parseData(data, depth);
+                    function parseData(mass, depth) {
+                        var nbsp = '';
+                        for (var j=0; j<depth; j++){nbsp = nbsp + '&nbsp;';}
+                        for (var i= 0; i < mass.length; i++){
+                            content = content + '<option value="'+mass[i].id+'" '+(mass[i].id==id?'selected':'')+'>'+nbsp+mass[i].title+'</option>';
+                            if(mass[i].children.length > 0){ parseData(mass[i].children, ++depth); }
+                        }
+                    }
+                    result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="report-form zForm zNice"><form><div class="zForm-row select"><select class="tzNice" data-smart-positioning ="-1" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
+                    return result;
+                }
+        
+            }
+            function finalAjax(id, newId, title) {
                 $.ajax({
-                    type:'get',
-                    url:'/app_dev.php/sectionList',
-                    data:{id:id},
-                    success:function (data) {
-                        var content = generatePopUpContent(data, id);
-                        $.fancybox.open({
-                            content: content,
-                            padding:0,
-                            fitToView:false,
-                            autoSize:true,
-                            wrapCSS: 'classWrap',
-                            afterShow: function () {
-                                var element = document.getElementsByClassName('submit-tmp');
-                                //$('.tzNice').styler();
-                                    $('.submit-tmp').click(function () {
-                                        var newId = $('.popTroll form select').val();
-                                        finalAjax(id, newId, title);
-                                        return false;
-                                    });
-                            }
-                        });
+                    url : "/app_dev.php/actionSection/"+id,
+                    dataType:"json",
+                    data: {
+                        product:{
+                            title: title,
+                            section: newId
+                        }
+                    },
+                    type:'POST',
+                    success : function(data){
+                        if(typeof data.error != 'undefined')
+                           errorMessage(data.error);
+                        else if (typeof data.success != 'undefined')
+                            location.reload();
+                        else
+                            console.log(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        location.reload();
                     }
                 });
-            });
-            function generatePopUpContent(data, id) {
-                var content = '';
-                var depth =0;
-                parseData(data, depth);
-                function parseData(mass, depth) {
-                    var nbsp = '';
-                    for (var j=0; j<depth; j++){nbsp = nbsp + '&nbsp;';}
-                    for (var i= 0; i < mass.length; i++){
-                        content = content + '<option value="'+mass[i].id+'" '+(mass[i].id==id?'selected':'')+'>'+nbsp+mass[i].title+'</option>';
-                        if(mass[i].children.length > 0){ parseData(mass[i].children, ++depth); }
-                    }
-                }
-                result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="report-form zForm zNice"><form><div class="zForm-row select"><select class="tzNice" data-smart-positioning ="-1" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
-                return result;
             }
-    
-        }
-        function finalAjax(id, newId, title) {
-            $.ajax({
-                url : "/app_dev.php/actionSection/"+id,
-                dataType:"json",
-                data: {
-                    product:{
-                        title: title,
-                        section: newId
-                    }
-                },
-                type:'POST',
-                success : function(data){
-                    if(typeof data.error != 'undefined')
-                        console.log(data.error);
-                    else if (typeof data.success != 'undefined')
+            function errorMessage(data){
+                var content = '<div class= "errorMessage"><span>'+data+'</span></div>'
+                $.fancybox.open({
+                    content: content,
+                    padding: 0,
+                    fitToView: false,
+                    autoSize: true,
+                    wrapCSS: 'classWrap',
+                    afterClose: function () {
                         location.reload();
-                    else
-                        console.log(data);
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    location.reload();
-                }
-            });
-        }
-    // functional edit 
-    function editItem() {
-        $(document).on('click', '.moveItem', function (e) {
-            e.preventDefault();
-        });
-    }
+                    }
+                })
+            };
+        //END functional move Item
+        // functional edit item
+            function editItem(item, itemId, parentId) {
+                $(document).on('click', '.editItem', function (e) {
+                    e.preventDefault();
+                    var parent = item.parent();
+                    var placeholder = item.text();
+                    var old = item;
+                    var icon = item.prev();
+                    item.remove();
+                    parent.html(' <input type="text" required="required" class="zNice" placeholder="'+placeholder+'" name="editName" id="editName" />');
+                    $('.smartSearch-modal').css('display','none');
+
+                    parent.find('input').focus().blur(function () {
+
+                        var text = $(this).val();
+                        parent.find('input').remove();
+                        old.text(text).appendTo(parent);
+                        parent.prepend(icon);
+                        finalAjaxEdit(itemId, parentId, text);
+                    });
+                    document.onkeyup = function (e) {
+                        e = e || window.event;
+                        if (e.keyCode === 13) {
+                            var text = parent.find('input').val();
+                            parent.find('input').remove();
+                            old.text(text).appendTo(parent);
+                            parent.prepend(icon);
+                            finalAjaxEdit(itemId, parentId, text);
+                        }
+                        return false;
+                    }
+
+                });
+            }
+            function finalAjaxEdit(id, newId, title) {
+                $.ajax({
+                    url : "/app_dev.php/actionSection/"+id,
+                    dataType:"json",
+                    data: {
+                        product:{
+                            title: title,
+                            section: newId
+                        }
+                    },
+                    type:'POST',
+                    success : function(data){
+                        if(typeof data.error != 'undefined')
+                            errorMessage(data.error);
+                        else if (typeof data.success != 'undefined')
+                            console.log('succes editing');
+                        else
+                            console.log(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        location.reload();
+                    }
+                });
+            }
+        //END functional edit item
+        // functional create itemGroup
+            function createGroup(parentId) {
+                $(document).on('click', '.createGroup .button', function (e) {
+                    e.preventDefault();
+                    var text = $('input[name="newGroup"]').val();
+                    console.log(text);
+                    return false;
+                });
+            }
+        // END functional create itemGroup
+            
 /*END smart search*/
 $(document).ready(function () {
 

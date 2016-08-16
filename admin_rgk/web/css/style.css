@@ -417,7 +417,12 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 
 
 #moveItem{ padding: 20px;}
-
+.errorMessage{
+    line-height: 1.5;
+    font-size: 18px;
+    text-align: center;
+    padding: 20px;
+}
 .popTroll button{
     margin-right: 8px;
     min-width: 81px;
