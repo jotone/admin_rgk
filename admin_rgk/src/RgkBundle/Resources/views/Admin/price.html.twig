@@ -91,38 +91,33 @@
                 <div class="tables-wrap">
                     {% if products|length %}
                         <div class="sTable bTable Add-on_price">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">ТОВАР <span class="pull-right RightMar">&uarr;</span></a></td>
-                                    <td><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">Цена <span class="pull-right RightMar">&darr;</span></a></td>
-                                </tr>
-                            </thead>
-                                <tbody>
+                            <div class="table-new-one">
+                                <div class="table-head wdth">
+                                    <div class="table-td"><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">ТОВАР <span class="pull-right RightMar">↓</span></a></div>
+                                    <div class="table-td"><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">Цена <span class="pull-right RightMar">↓</span></a></div>
+                                </div>
                                 {% for product in products %}
-                                    <tr data-id="{{ product.id }}">
-                                        <td>{{ product.title }}</td>
-                                        <td>
-                                            {{ product.price|number_format(0,',',' ') }}
+                                    <div class="table-row wdth" data-id="{{ product.id }}">
+                                        <div class="table-td" >{{ product.title }}</div>
+                                        <div class="table-td" >{{ product.price|number_format(0,',',' ') }}
                                             {% if product.percent != 0 %}
                                                 <span class="Bgmonitoring" style="background: {{ product.label }};">{{ product.percent }}%</span>
                                             {% endif %}
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </div>
                                 {% endfor %}
-                                </tbody>
-                            </table>
+                            </div>
                         </div>
                         {% if rivals %}
                             <div class="new-table-price">
-                                <div class="table-new">
-                                    <div class="table-head  cfix">
+                                <div class="table-new-two">
+                                    <div class="table-head  cfix wdth">
                                         {% for rival in rivals %}
                                             <div class="table-td">{{ rival.name }}</div>
                                         {% endfor %}
                                     </div>
                                     {% for product in products %}
-                                        <div class="table-row cfix" data-id="{{ product.id }}">
+                                        <div class="table-row cfix wdth" data-id="{{ product.id }}">
                                             {% for rival in rivals %}
 
                                                 {% set noValue = true %}
