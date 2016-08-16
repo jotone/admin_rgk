@@ -178,7 +178,7 @@ class PriceController extends BaseController
         $product->setTitle((isset($data['title'])?$data['title']:''))
                 ->setPrice((isset($data['price']) && $data['price']>0?floatval($data['price']):0))
                 ->setSection($section);
-
+        $this->renderApiJson($data);
         $errors = $this->get('validator')->validate($product);
         if (count($errors) > 0)
             $this->renderApiJson(['error' => 'Ошибка передачи данных продукта']);
