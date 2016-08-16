@@ -93,11 +93,16 @@ class CodeController extends BaseController
             /**
              * @var Code $code
              */
-            $code = $this->getDoctrine()
-                ->getRepository('RgkBundle:Code')
-                ->find($codeId);
-            if(!$code || $code->getRival()->getId() != $rival->getId())
-                $this->renderApiJson(['error'=>'Ошибка передачи кода']);
+            if(empty($codeText)) {
+                $code = $this->getDoctrine()
+                    ->getRepository('RgkBundle:Code')
+                    ->find($codeId);
+                if (!$code || $code->getRival()->getId() != $rival->getId())
+                    $this->renderApiJson(['error' => 'Ошибка передачи кода']);
+            } else {
+                $code = new Code();
+                $code->setCode($codeText);
+            }
         }
 
         $errors = $this->get('validator')->validate($rival);
