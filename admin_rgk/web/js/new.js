@@ -429,7 +429,7 @@
             
             function finalAjaxDeleteItem(id) {
                 $.ajax({
-                    url : "/app_dev.php/actionProduct/"+id,
+                    url : "/app_dev.php/actionSection/"+id,
                     dataType:"json",
                     type:'DELETE',
                     beforeSend:function () {
