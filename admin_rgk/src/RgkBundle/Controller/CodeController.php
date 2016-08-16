@@ -82,7 +82,7 @@ class CodeController extends BaseController
 
         //set default code
         $codeId = (isset($data['code'])?intval($data['code']):0);
-        $codeText = (isset($date['codeText'])?$date['codeText']:'');
+        $codeText = (isset($data['codeText'])?$data['codeText']:'');
 
         if(!$rival->getId()) { //create code object
             if(empty($codeText))
@@ -106,9 +106,9 @@ class CodeController extends BaseController
 
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($rival);
-
+        $manager->flush();
         $code->setRival($rival)
-             ->setDefault(true);
+             ->setDef(true);
 
         $manager->persist($code);
         $manager->flush();

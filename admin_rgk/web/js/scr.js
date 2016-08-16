@@ -172,10 +172,7 @@ $(document).ready(function() {
 
 	u_tabs('.tabs-buttons a','.tabs-window');
 
-	$('.closeFancybox').click(function(){
-		$.fancybox.close();
-		return false;
-	});
+
 
 	$('.sTable tbody tr').click(function(){
 		$('.sTable tbody tr').removeClass('active');
@@ -229,4 +226,9 @@ $(document).ready(function() {
 
 $(window).resize(function() {
 	minHeightPage();
+});
+
+$(document).on('click','.closeFancybox',function(){
+	$.fancybox.close();
+	return false;
 });

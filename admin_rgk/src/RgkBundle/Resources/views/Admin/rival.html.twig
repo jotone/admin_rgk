@@ -1,4 +1,33 @@
 {% extends 'RgkBundle:Admin:base.html.twig' %}
+{% block zhidden %}
+    {{ parent() }}
+    <div class="lPopup report" id="addSite">
+        <div class="popupTitle">
+            Добавить конкурента
+        </div>
+        <div class="report-form zForm zNice">
+            <form>
+                <div class="zForm-row error" style="display: none; color: #ff0000;">
+
+                </div>
+                <div class="zForm-row">
+                    <input type="text" required="required" placeholder="Название" name="rival[name]"/>
+                </div>
+
+                <div class="zForm-row">
+                    <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]"/>
+                </div>
+                <div class="zForm-row radioRow">
+                    <input type="text" minlength="5" required="required" placeholder="Код" name="rival[codeText]"/>
+                </div>
+                <div class="zForm-row">
+                    <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#addSite form')); return false;"/>
+                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
 {% block content %}
     <div class="allWidth-content">
         <div class="contSearch">
@@ -32,12 +61,12 @@
                         <td>
                             {% set one = true %}
                             {% for code in rival.code %}
-                                {% if one and code.default %}
+                                {% if one and code.def %}
                                     {{ code.code }}
                                     {% set one = false %}
                                 {% endif %}
                             {% endfor %}
-                            <div class="closeWrap"><a href="#" class="icon icon_close"></a></div>
+                            <div class="closeWrap"><a href="javascript:void(0);" onclick="deleteRivalAlert({{ rival.id }});" class="icon icon_close"></a></div>
                         </td>
                     </tr>
                 {% endfor %}

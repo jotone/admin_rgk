@@ -41,9 +41,9 @@ class Code
 
     /**
      * @var boolean
-     * @ORM\Column(name="default", type="boolean")
+     * @ORM\Column(name="def", type="boolean")
      */
-    private $default=false;
+    private $def=false;
 
     /**
      * Get id
@@ -104,26 +104,26 @@ class Code
 
 
     /**
-     * Set default
+     * Set def
      *
-     * @param boolean $default
+     * @param boolean $def
      * @return Code
      */
-    public function setDefault($default)
+    public function setDef($def)
     {
-        $this->default = $default;
+        $this->def = $def;
 
         return $this;
     }
 
     /**
-     * Get default
+     * Get def
      *
      * @return boolean
      */
-    public function getDefault()
+    public function getDef()
     {
-        return $this->default;
+        return $this->def;
     }
 }
 

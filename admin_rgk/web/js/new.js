@@ -228,3 +228,71 @@ blockContextMenu();
 
 
 });
+
+/*
+* create rival form
+*
+* @param form
+*/
+function createRival(form) {
+    if(form.valid()){
+        var data = form.serialize();
+        $.ajax({
+            url : "/app_dev.php/actionRival",
+            dataType:"json",
+            data: data,
+            type:'POST',
+            success : function(data){
+                if(typeof data.error != 'undefined')
+                    form.find('.error').text(data.error).show();
+                else if (typeof data.success != 'undefined')
+                    location.reload();
+                else
+                    console.log(data);
+                debugger;
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr, ajaxOptions, thrownError);
+                debugger;
+                location.reload();
+            }
+        });
+    }
+}
+
+/*
+* delete rival
+*/
+function deleteRivalAlert(id) {
+    var content = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Вы уверены в этом действии? При подтверждении удалятся все цены этого конкурента.</div><div class="report-form zForm zNice"><form><div class="zForm-row"><button onclick="deleteRival('+id+'); return false;" class="submit-tmp" onsubmit="return false"><span>Подтвердить</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
+    $.fancybox.open({
+        content: content,
+        padding:0,
+        fitToView:false,
+        autoSize:true,
+        wrapCSS: 'classWrap'
+    });
+}
+
+function deleteRival(id) {
+    $.ajax({
+        url : "/app_dev.php/actionRival/"+id,
+        dataType:"json",
+        type:'DELETE',
+        success : function(data){
+            if(typeof data.error != 'undefined')
+                //error message
+                console.log(data.error);
+            else if (typeof data.success != 'undefined')
+                location.reload();
+            else
+                console.log(data);
+            debugger;
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr, ajaxOptions, thrownError);
+            debugger;
+            location.reload();
+        }
+    });
+}
