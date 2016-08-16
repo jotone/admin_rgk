@@ -66,6 +66,11 @@
                                     {% set one = false %}
                                 {% endif %}
                             {% endfor %}
+                            <select name="code" style="display: none;">
+                            {% for code in rival.code %}
+                                <option value="{{ code.id }}" {{ (code.def?'selected':'') }}>{{ code.code }}</option>
+                            {% endfor %}
+                            </select>
                             <div class="closeWrap"><a href="javascript:void(0);" onclick="deleteRivalAlert({{ rival.id }});" class="icon icon_close"></a></div>
                         </td>
                     </tr>

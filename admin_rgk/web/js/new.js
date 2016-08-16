@@ -361,8 +361,7 @@ function deleteRival(id) {
         type:'DELETE',
         success : function(data){
             if(typeof data.error != 'undefined')
-                //error message
-                console.log(data.error);
+                errorMessage(data.error);
             else if (typeof data.success != 'undefined')
                 location.reload();
             else
