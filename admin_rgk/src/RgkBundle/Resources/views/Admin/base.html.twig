@@ -41,18 +41,51 @@
 </head>
 <body>
 <div class="zHiddenBlock">
-    <div class="lPopup report" id="createGroup">
+    <div class="preloader"><img src="/images/default.svg" alt=""></div>
+
+    <div class="lPopup popTroll" id="deleteItem">
+        <div class="popupTitle">
+            Выуверены что хотите удалить <span class="item-name"></span> ?
+        </div>
+        <div class="report-form zForm zNice">
+                <div class="zForm-row">
+                    <button class="submit-tmp" onsubmit="return false"><span>Удалить</span></button>
+                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                </div>
+        </div>
+    </div>
+    <div class="lPopup popTroll" id="createGroup">
         <div class="popupTitle">
             Добавить группу
         </div>
         <div class="report-form zForm zNice">
             <form>
                 <div class="zForm-row">
-                    <input type="text" required="required" name="newGroup" placeholder="Название группы"/>
+                    <input type="text" required="required" name="newGroup" class="newGroup" placeholder="Название группы"/>
                 </div>
 
                 <div class="zForm-row">
-                    <input type="submit" class="sm-btn" value="Добавить"/>
+                    <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
+                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="lPopup popTroll" id="createItem">
+        <div class="popupTitle">
+            Добавить товар
+        </div>
+        <div class="report-form zForm zNice">
+            <form>
+                <div class="zForm-row">
+                    <input type="text" required="required" name="newItem" class="newItem" placeholder="Название товара"/>
+                </div>
+                <div class="zForm-row">
+                    <input type="text" required="required" name="priceItem" class="priceItem" placeholder="Цена товара"/>
+                </div>
+
+                <div class="zForm-row">
+                    <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
                     <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
                 </div>
             </form>
