@@ -85,9 +85,11 @@
                 $('.catalogList ul a').removeClass('active');
                 $(this).addClass('active');
                 $('.modalWindow').css({'display':'block','left':Xinner,'top':Yinner}).attr('data-id',itemId);
+                createItem(itemId);
                 createGroup(itemId);
                 editItem($(this), itemId, parentId);
                 moveItem(itemId, title);
+                deleteItem(itemId);
 
                 return false;
             }, false);
@@ -146,7 +148,11 @@
                         type:'get',
                         url:'/app_dev.php/sectionList',
                         data:{id:id},
+                        beforeSend:function () {
+                          showPreloader();
+                        },
                         success:function (data) {
+                            hidePreloader();
                             var content = generatePopUpContent(data, id);
                             $.fancybox.open({
                                 content: content,
@@ -155,7 +161,7 @@
                                 autoSize:true,
                                 wrapCSS: 'classWrap',
                                 afterShow: function () {
-                                    var element = document.getElementsByClassName('submit-tmp');
+
                                     //$('.tzNice').styler();
                                         $('.submit-tmp').click(function () {
                                             var newId = $('.popTroll form select').val();
@@ -195,13 +201,20 @@
                         }
                     },
                     type:'POST',
+                    beforeSend:function () {
+                        showPreloader();
+                    },
                     success : function(data){
-                        if(typeof data.error != 'undefined')
-                           errorMessage(data.error);
-                        else if (typeof data.success != 'undefined')
+                        $.fancybox.close();
+                        if(typeof data.error != 'undefined'){
+                            hidePreloader();
+                            errorMessage(data.error);
+                        } else if (typeof data.success != 'undefined'){
                             location.reload();
-                        else
-                            console.log(data);
+                        } else{
+                            errorMessage(data);
+                        }
+
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         location.reload();
@@ -245,11 +258,7 @@
                     document.onkeyup = function (e) {
                         e = e || window.event;
                         if (e.keyCode === 13) {
-                            var text = parent.find('input').val();
-                            parent.find('input').remove();
-                            old.text(text).appendTo(parent);
-                            parent.prepend(icon);
-                            finalAjaxEdit(itemId, parentId, text);
+                            parent.find('input').blur();
                         }
                         return false;
                     }
@@ -267,7 +276,11 @@
                         }
                     },
                     type:'POST',
+                    beforeSend:function () {
+                        showPreloader();
+                    },
                     success : function(data){
+                        hidePreloader();
                         if(typeof data.error != 'undefined')
                             errorMessage(data.error);
                         else if (typeof data.success != 'undefined')
@@ -283,16 +296,173 @@
         //END functional edit item
         // functional create itemGroup
             function createGroup(parentId) {
-                $(document).on('click', '.createGroup .button', function (e) {
+                $(document).on('click', '#createGroup button', function (e) {
+
+                    var text = $('#createGroup input[name="newGroup"]').val();
+                    if (text != ""){
+                        finalAjaxCreateGroup(parentId, text);
+                        e.preventDefault();
+                        return false;
+                    }
+                    $('#createGroup input[name="newGroup"]').prev().css('border-color','red');
                     e.preventDefault();
-                    var text = $('input[name="newGroup"]').val();
-                    console.log(text);
                     return false;
                 });
             }
+            function finalAjaxCreateGroup(parentId, title) {
+                $.ajax({
+                    url : "/app_dev.php/actionSection",
+                    dataType:"json",
+                    data: {
+                        product:{
+                            title: title,
+                            section: parentId
+                        }
+                    },
+                    type:'POST',
+                    beforeSend:function () {
+                        showPreloader();
+                    },
+                    success : function(data){
+                        $.fancybox.close();
+                        if(typeof data.error != 'undefined') {
+                            hidePreloader();
+                            errorMessage(data.error);
+                        }else if (typeof data.success != 'undefined') {
+                            console.log('succes creating Group ' + title);
+                            location.reload();
+                        }else{
+                            hidePreloader();
+                            errorMessage(data);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
+                        location.reload();
+
+                    }
+                });
+            }
         // END functional create itemGroup
+        // functional create item
+                function createItem(parentId) {
+                    $(document).on('click', '#createItem button', function (e) {
+                        var inputs = $('#createItem input');
+                        if (checkInput(inputs)){
+                            var price = $('#createItem input[name="priceItem"]').val();
+                            var text = $('#createItem input[name="newItem"]').val();
+                            finalAjaxCreateItem(parentId, text, price);
+                            e.preventDefault();
+                            return false;
+                        }
+                        e.preventDefault();
+                        return false;
+                    });
+                }
+                function checkInput(inputs) {
+                    var result = true;
+                    inputs.each(function () {
+                        var text = $(this).val();
+                        if (text == ""){
+                           $(this).prev().css('border-color','red');
+                            result = false;
+                        }
+                    });
+                    return result;
+
+
+                }
+                function finalAjaxCreateItem(parentId, title, price) {
+                    $.ajax({
+                        url : "/app_dev.php/actionProduct",
+                        dataType:"json",
+                        data: {
+                            product:{
+                                title: title,
+                                price: 1,
+                                section: parentId
+                            }
+                        },
+                        type:'POST',
+                        beforeSend:function () {
+                            showPreloader();
+                        },
+                        success : function(data){
+                            $.fancybox.close();
+                            if(typeof data.error != 'undefined') {
+                                hidePreloader();
+                                errorMessage(data.error);
+                            }else if (typeof data.success != 'undefined') {
+                                console.log('succes creating item--> ' + title);
+                                location.reload();
+                            }else{
+                                hidePreloader();
+                                errorMessage(data);
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+
+                            console.log(xhr);
+                            console.log(ajaxOptions);
+                            console.log(thrownError);
+                            location.reload();
+
+                        }
+                    });
+                }
+        // END functional create item
+        // functional delete item
+            function deleteItem(parentId) {
+                $(document).on('click', '#deleteItem button', function (e) {
+                    finalAjaxDeleteItem(parentId);
+                    e.preventDefault();
+                    return false;
+                });
+            }
             
+            function finalAjaxDeleteItem(id) {
+                $.ajax({
+                    url : "/app_dev.php/actionProduct/"+id,
+                    dataType:"json",
+                    type:'DELETE',
+                    beforeSend:function () {
+                        showPreloader();
+                    },
+                    success : function(data){
+                        $.fancybox.close();
+                        if(typeof data.error != 'undefined') {
+                            hidePreloader();
+                            errorMessage(data.error);
+                        }else if (typeof data.success != 'undefined') {
+                            console.log('succes deleted id--> ' + id);
+                            location.reload();
+                        }else{
+                            hidePreloader();
+                            errorMessage(data);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+            
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
+                        location.reload();
+            
+                    }
+                });
+            }
+        // END functional create item
+
 /*END smart search*/
+function showPreloader() {
+    $('.preloader').css('display','block');
+}
+function hidePreloader() {
+    $('.preloader').css('display','none');
+}
 $(document).ready(function () {
 
     hoverTableRow();
