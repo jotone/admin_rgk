@@ -354,6 +354,7 @@
                         if (checkInput(inputs)){
                             var price = $('#createItem input[name="priceItem"]').val();
                             var text = $('#createItem input[name="newItem"]').val();
+
                             finalAjaxCreateItem(parentId, text, price);
                             e.preventDefault();
                             return false;
@@ -382,16 +383,18 @@
                         data: {
                             product:{
                                 title: title,
-                                price: 1,
+                                price: price,
                                 section: parentId
                             }
                         },
                         type:'POST',
                         beforeSend:function () {
                             showPreloader();
+
                         },
                         success : function(data){
                             $.fancybox.close();
+
                             if(typeof data.error != 'undefined') {
                                 hidePreloader();
                                 errorMessage(data.error);
@@ -416,6 +419,7 @@
         // END functional create item
         // functional delete item
             function deleteItem(parentId) {
+                $('#deleteItem .item-name').text(' c id: '+parentId);
                 $(document).on('click', '#deleteItem button', function (e) {
                     finalAjaxDeleteItem(parentId);
                     e.preventDefault();
@@ -425,7 +429,7 @@
             
             function finalAjaxDeleteItem(id) {
                 $.ajax({
-                    url : "/app_dev.php/actionProduct/"+id,
+                    url : "/app_dev.php/actionSection/"+id,
                     dataType:"json",
                     type:'DELETE',
                     beforeSend:function () {
