@@ -138,9 +138,11 @@
                                                         <div class="table-td editablePopup"
                                                              data-rivalid="{{ rival.id }}"
                                                              data-priceid="{{ price.id }}"
-                                                             data-pricetitle="{{ price.title }}"
-                                                             data-priceurl="{{ price.url }}"
-                                                             data-pricedate="{{ price.date|date("m.d.Y") }}"
+                                                             data-priceTitle="{{ price.title }}"
+                                                             data-priceUrl="{{ price.url }}"
+                                                             data-priceDate="{{ price.date|date("m.d.Y") }}"
+                                                             data-priceCode="{{ price.code.id }}"
+                                                             data-pricePrice="{{ (price.price?price.price:'-') }}"
                                                         >
                                                             {% if price.price %}
                                                                 {{ price.price|number_format(0,',',' ') }}

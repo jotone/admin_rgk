@@ -586,6 +586,18 @@ function deleteRival(id) {
         });
     }
 //END  edit active Section
+// EDITING concurent price table
+    function infoCell() {
+        $(document).on('click', '.editablePopup', function () {
+            var title = $(this).data('priceTitle');
+            var url = $(this).data('priceUrl');
+            var codeId = $(this).data('priceCode');
+            
+        });
+    }
+//  END END EDITING concurent price table
+
+
 editActiveSection();
 $(document).ready(function () {
 
