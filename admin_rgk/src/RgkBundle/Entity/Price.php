@@ -24,15 +24,13 @@ class Price
 
     /**
      * @var \DateTime
-     * @Assert\NotBlank()
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="date", type="datetime",nullable=true)
      */
     private $date;
 
     /**
      * @var float
-     * @Assert\NotBlank()
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="float",nullable=true)
      */
     private $price;
 
@@ -62,6 +60,13 @@ class Price
      * @ORM\Column(name="url", type="string", length=4096)
      */
     private $url;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
 
     /**
      * Get id
@@ -200,6 +205,30 @@ class Price
             return 0;
 
         return round(($this->getPrice()/$this->getProduct()->getPrice() - 1)*100);
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Price
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**
