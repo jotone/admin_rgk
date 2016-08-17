@@ -18,7 +18,7 @@
                     <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]"/>
                 </div>
                 <div class="zForm-row radioRow">
-                    <input type="text" minlength="5" required="required" placeholder="Код" name="rival[codeText]"/>
+                    <input type="text" minlength="3" required="required" placeholder="Код" name="rival[codeText]"/>
                 </div>
                 <div class="zForm-row">
                     <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#addSite form')); return false;"/>
@@ -87,7 +87,7 @@
                                                     <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]" value="{{ rival.url }}"/>
                                                 </div>
                                                 <div class="zForm-row ">
-                                                    <select name="code" class="formstyler">
+                                                    <select name="rival[code]" class="formstyler">
                                                         {% for code in rival.code %}
                                                             <option value="{{ code.id }}" {{ (code.def?'selected':'') }}>{{ code.code }}</option>
                                                         {% endfor %}

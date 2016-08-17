@@ -497,11 +497,11 @@ function createRival(form) {
                     console.log(data);
                 }
 
-                debugger;
+
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr, ajaxOptions, thrownError);
-                debugger;
+
                 location.reload();
             }
         });
@@ -527,18 +527,29 @@ function deleteRival(id) {
         url : "/app_dev.php/actionRival/"+id,
         dataType:"json",
         type:'DELETE',
+        beforeSend:function () {
+            showPreloader();
+        },
         success : function(data){
+            $.fancybox.close();
             if(typeof data.error != 'undefined')
+            {
+                hidePreloader();
                 errorMessage(data.error);
+
+            }
             else if (typeof data.success != 'undefined')
                 location.reload();
-            else
+            else{
+                hidePreloader();
                 console.log(data);
-            debugger;
+            }
+
+
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr, ajaxOptions, thrownError);
-            debugger;
+
             location.reload();
         }
     });
