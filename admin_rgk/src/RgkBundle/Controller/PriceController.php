@@ -43,6 +43,8 @@ class PriceController extends BaseController
             foreach ($params['sections'] as &$a){
                 if($a->getId() == $id) {
                     $params['active_section_title'] = $a->getTitle();
+                    $params['active_section_parent_id'] = ($a->getParentSection()?$a->getParentSection()->getId():'');
+
                     break;
                 }
             }

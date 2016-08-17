@@ -244,7 +244,7 @@
                     var old = item;
                     var icon = item.prev();
                     item.remove();
-                    parent.html(' <input type="text" required="required" class="zNice" placeholder="'+placeholder+'" name="editName" id="editName" />');
+                    parent.html(' <input type="text" required="required" class="zNice" placeholder="'+placeholder+'" value="'+placeholder+'" name="editName" id="editName" />');
                     $('.smartSearch-modal').css('display','none');
 
                     parent.find('input').focus().blur(function () {
@@ -554,7 +554,39 @@ function deleteRival(id) {
         }
     });
 }
+// edit active Section
+    function editActiveSection() {
+        $(document).on('click', '.editActiveSection', function (e) {
+            e.preventDefault();
+            var span = $(this).prev();
+            var parent = $(this).parent();
+            var placeholder = span.text();
+            console.log(parent);
+            parent.prepend(' <input type="text" required="required" class="zNice" placeholder="'+placeholder+'" value="'+placeholder+'" name="editName"/>');
+            $(this).prev().remove();
+            var parentId = $(this).data('parentid');
+            var itemId = $(this).data('id');
+            parent.find('input').focus().blur(function () {
 
+                var text = $(this).val();
+                parent.find('input').remove();
+                span.text(text).prependTo(parent);
+                $('.catalogList a[data-id="'+itemId+'"]').text(text);
+                finalAjaxEdit(itemId, parentId, text);
+            });
+            document.onkeyup = function (e) {
+                e = e || window.event;
+                if (e.keyCode === 13) {
+                    parent.find('input').blur();
+                }
+                return false;
+            }
+
+
+        });
+    }
+//END  edit active Section
+editActiveSection();
 $(document).ready(function () {
 
     hoverTableRow();
