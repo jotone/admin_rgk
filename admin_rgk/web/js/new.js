@@ -89,7 +89,7 @@
                 createGroup(itemId);
                 editItem($(this), itemId, parentId);
                 moveItem(itemId, title);
-                deleteItem(itemId);
+                deleteItem(itemId, title);
 
                 return false;
             }, false);
@@ -233,7 +233,7 @@
                         location.reload();
                     }
                 })
-            };
+            }
         //END functional move Item
         // functional edit item
             function editItem(item, itemId, parentId) {
@@ -418,8 +418,8 @@
                 }
         // END functional create item
         // functional delete item
-            function deleteItem(parentId) {
-                $('#deleteItem .item-name').text(' c id: '+parentId);
+            function deleteItem(parentId, text) {
+                $('#deleteItem .item-name').text('"'+text+'"');
                 $(document).on('click', '#deleteItem button', function (e) {
                     finalAjaxDeleteItem(parentId);
                     e.preventDefault();
@@ -467,21 +467,7 @@ function showPreloader() {
 function hidePreloader() {
     $('.preloader').css('display','none');
 }
-$(document).ready(function () {
 
-    hoverTableRow();
-    oneWidth();
-    setTimeout(function () {
-        oneHeight();
-    },100);
-    clickOnPlus();
-blockContextMenu();
-    search();
-
-
-
-
-});
 
 /*
 * create rival form
@@ -492,17 +478,25 @@ function createRival(form) {
     if(form.valid()){
         var data = form.serialize();
         $.ajax({
-            url : "/app_dev.php/actionRival",
+            url : form.data('action'),
             dataType:"json",
             data: data,
             type:'POST',
+            beforeSend:function () {
+                showPreloader();
+            },
             success : function(data){
-                if(typeof data.error != 'undefined')
-                    form.find('.error').text(data.error).show();
-                else if (typeof data.success != 'undefined')
+                $.fancybox.close();
+                if(typeof data.error != 'undefined'){
+                    hidePreloader();
+                    errorMessage(data.error);
+                }else if (typeof data.success != 'undefined'){
                     location.reload();
-                else
+                } else{
+                    hidePreloader();
                     console.log(data);
+                }
+
                 debugger;
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -518,7 +512,7 @@ function createRival(form) {
 * delete rival
 */
 function deleteRivalAlert(id) {
-    var content = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Вы уверены в этом действии? При подтверждении удалятся все цены этого конкурента.</div><div class="report-form zForm zNice"><form><div class="zForm-row"><button onclick="deleteRival('+id+'); return false;" class="submit-tmp" onsubmit="return false"><span>Подтвердить</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
+    var content = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle"><p>Вы уверены в этом действии?</p><p><span class="subtitle"> При подтверждении удалятся все цены этого конкурента.</span></p></div><div class="zForm zNice"><form><div class="zForm-row"><button onclick="deleteRival('+id+'); return false;" class="submit-tmp" onsubmit="return false"><span>Подтвердить</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
     $.fancybox.open({
         content: content,
         padding:0,
@@ -549,3 +543,19 @@ function deleteRival(id) {
         }
     });
 }
+
+$(document).ready(function () {
+
+    hoverTableRow();
+    oneWidth();
+    setTimeout(function () {
+        oneHeight();
+    },100);
+    clickOnPlus();
+    blockContextMenu();
+    search();
+
+
+
+
+});
