@@ -23,4 +23,11 @@ class ReportController extends BaseController
        // exit();
         return $this->render('RgkBundle:Admin:base.html.twig',$params);
     }
+
+    /**
+     * @Route("/getReport")
+     */
+    public function getReportAction(){
+        
+    }
 }

@@ -114,18 +114,22 @@
                                     <div class="table-head  cfix wdth">
                                         {% for rival in rivals %}
                                             <div class="table-td">{{ rival.name }}</div>
-                                            <script>
-                                                var revalCodes{{ rival.id }} = [
-                                                    {% for code in rival.code %}
-                                                    {{ (loop.first?'':',') }}{
-                                                            id: {{ code.id }},
-                                                            title: '{{ code.code }}',
-                                                            selected: {{ (code.def?1:0) }}
-                                                        }
-                                                    {% endfor %}
-                                                ];
-                                            </script>
+
                                         {% endfor %}
+                                        <script>
+                                            var revalCodes = {
+                                                {% for rival in rivals %}
+                                                    {{ (loop.first?'':',') }}{{ rival.id }}: {
+                                                        {% for code in rival.code %}
+                                                            {{ (loop.first?'':',') }}{{ code.id }}: {
+                                                                title: '{{ code.code }}',
+                                                                selected: {{ (code.def?1:0) }}
+                                                            }
+                                                        {% endfor %}
+                                                    }
+                                                {% endfor %}
+                                            };
+                                        </script>
                                     </div>
                                     {% for product in products %}
                                         <div class="table-row cfix wdth" data-id="{{ product.id }}" data-section="{{ product.section.title }}">

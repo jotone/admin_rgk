@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Sonata\TranslationBundle\SonataTranslationBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new ParseBundle\ParseBundle(),
             new RgkBundle\RgkBundle(),
         );
