@@ -6,7 +6,7 @@
             Добавить конкурента
         </div>
         <div class="report-form zForm zNice">
-            <form>
+            <form data-action="/app_dev.php/actionRival">
                 <div class="zForm-row error" style="display: none; color: #ff0000;">
 
                 </div>
@@ -18,7 +18,7 @@
                     <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]"/>
                 </div>
                 <div class="zForm-row radioRow">
-                    <input type="text" minlength="5" required="required" placeholder="Код" name="rival[codeText]"/>
+                    <input type="text" minlength="3" required="required" placeholder="Код" name="rival[codeText]"/>
                 </div>
                 <div class="zForm-row">
                     <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#addSite form')); return false;"/>
@@ -56,7 +56,13 @@
                 <tbody>
                 {% for rival in rivals %}
                     <tr data-id="{{ rival.id }}">
-                        <td>{{ rival.name }}</td>
+                        <td>
+                            <div class="closeWrap">
+                                <a href="#modal{{ rival.id }}"  class="icon icon_edit rowEditing fancybox-popup"></a>
+                            </div>
+                            {{ rival.name }}
+
+                        </td>
                         <td><a href="{{ rival.url }}" target="_blank" class="linkProduct">{{ rival.url }}</a> </td>
                         <td>
                             {% set one = true %}
@@ -66,12 +72,42 @@
                                     {% set one = false %}
                                 {% endif %}
                             {% endfor %}
-                            <select name="code" style="display: none;">
-                            {% for code in rival.code %}
-                                <option value="{{ code.id }}" {{ (code.def?'selected':'') }}>{{ code.code }}</option>
-                            {% endfor %}
-                            </select>
-                            <div class="closeWrap"><a href="javascript:void(0);" onclick="deleteRivalAlert({{ rival.id }});" class="icon icon_close"></a></div>
+
+
+                            <div class="closeWrap">
+                                <div class="zHiddenBlock">
+                                    <div class="row-modal-window" id="modal{{ rival.id }}">
+                                        <div class="zForm zNice">
+                                            <form data-action="/app_dev.php/actionRival/{{ rival.id }}">
+                                                <div class="zForm-row">
+                                                    <input type="text" required="required" placeholder="Название" name="rival[name]" value="{{ rival.name }}"/>
+                                                </div>
+
+                                                <div class="zForm-row">
+                                                    <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]" value="{{ rival.url }}"/>
+                                                </div>
+                                                <div class="zForm-row ">
+                                                    <select name="rival[code]" class="formstyler">
+                                                        {% for code in rival.code %}
+                                                            <option value="{{ code.id }}" {{ (code.def?'selected':'') }}>{{ code.code }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="zForm-row ">
+                                                    <input type="text" minlength="3"  placeholder="Новый код" name="rival[codeText]"/>
+
+                                                </div>
+                                                <div class="zForm-row">
+                                                    <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#modal{{ rival.id }} form')); return false;"/>
+                                                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0);" onclick="deleteRivalAlert({{ rival.id }});" class="close-conc"><span class="icon icon_close"></span></a>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
