@@ -124,7 +124,7 @@
 
                                                 {% for price in product.prices %}
                                                     {% if noValue and price.code.rival.id == rival.id %}
-                                                        <div class="table-td">
+                                                        <div class="table-td editablePopup">
                                                             {{ price.price|number_format(0,',',' ') }}
                                                             {% if price.percent != 0 %}
                                                                 <span class="Bgmonitoring" style="background: {{ price.label }};">{{ price.percent }}%</span>
@@ -135,7 +135,7 @@
                                                 {% endfor %}
 
                                                 {% if noValue %}
-                                                    <div class="table-td">-</div>
+                                                    <div class="table-td creatingPopup">-</div>
                                                 {% endif %}
                                             {% endfor %}
                                         </div>
