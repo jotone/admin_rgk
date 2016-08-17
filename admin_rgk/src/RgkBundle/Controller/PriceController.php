@@ -236,15 +236,8 @@ class PriceController extends BaseController
 
         $price->setCode($code)
              ->setUrl((isset($data['url'])?$data['url']:''))
-             ->setDate(new \DateTime());
-        //check parce
-        $parse = new ParseController();
-        $priceValue = $parse->get_price($price->getUrl(),$price->getCode()->getCode());
-
-        if(!$priceValue)
-            $this->renderApiJson(['error' => 'Ошибка передачи кода']);
-
-        $price->setPrice($priceValue);
+             ->setTitle((isset($data['title'])?$data['title']:''))
+        ;
 
         $errors = $this->get('validator')->validate($price);
         if (count($errors) > 0)
@@ -255,6 +248,40 @@ class PriceController extends BaseController
         $manager->flush();
 
         $this->productCheckPrices($price->getProduct());
+
+        $this->renderApiJson(['success'=>true]);
+    }
+
+    /**
+     * @Route("/actionPriceParse/{id}", name="rgk_action_price_parse")
+     */
+    public function priceParseAction(Request $request,$id=0)
+    {
+        if ($request->getMethod() != 'POST')
+            return $this->redirectToRoute('rgk_price_index');
+
+        /**
+         * @var Price $price
+         */
+        $price = $this->getDoctrine()
+            ->getRepository('RgkBundle:Price')
+            ->find(intval($id));
+        if(!$price)
+            $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+        //check parce
+        $parse = new ParseController();
+        $priceValue = $parse->get_price($price->getUrl(), $price->getCode()->getCode());
+
+        if (!$priceValue)
+            $this->renderApiJson(['error' => 'Ошибка парсинга кода']);
+
+        $price->setPrice($priceValue)
+              ->setDate(new \DateTime());
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($price);
+        $manager->flush();
 
         $this->renderApiJson(['success'=>true]);
     }

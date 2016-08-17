@@ -98,7 +98,7 @@
                                 </div>
                                 {% for product in products %}
                                     <div class="table-row wdth" data-id="{{ product.id }}">
-                                        <div class="table-td" >{{ product.title }}</div>
+                                        <div class="table-td" >{{ product.title }}<p>{{ product.section.title }}</p></div>
                                         <div class="table-td" >{{ product.price|number_format(0,',',' ') }}
                                             {% if product.percent != 0 %}
                                                 <span class="Bgmonitoring" style="background: {{ product.label }};">{{ product.percent }}%</span>
@@ -114,20 +114,41 @@
                                     <div class="table-head  cfix wdth">
                                         {% for rival in rivals %}
                                             <div class="table-td">{{ rival.name }}</div>
+                                            <script>
+                                                var revalCodes{{ rival.id }} = [
+                                                    {% for code in rival.code %}
+                                                    {{ (loop.first?'':',') }}{
+                                                            id: {{ code.id }},
+                                                            title: '{{ code.code }}',
+                                                            selected: {{ (code.def?1:0) }}
+                                                        }
+                                                    {% endfor %}
+                                                ];
+                                            </script>
                                         {% endfor %}
                                     </div>
                                     {% for product in products %}
-                                        <div class="table-row cfix wdth" data-id="{{ product.id }}">
+                                        <div class="table-row cfix wdth" data-id="{{ product.id }}" data-section="{{ product.section.title }}">
                                             {% for rival in rivals %}
 
                                                 {% set noValue = true %}
 
                                                 {% for price in product.prices %}
                                                     {% if noValue and price.code.rival.id == rival.id %}
-                                                        <div class="table-td editablePopup">
-                                                            {{ price.price|number_format(0,',',' ') }}
-                                                            {% if price.percent != 0 %}
-                                                                <span class="Bgmonitoring" style="background: {{ price.label }};">{{ price.percent }}%</span>
+                                                        <div class="table-td editablePopup"
+                                                             data-rivalid="{{ rival.id }}"
+                                                             data-priceid="{{ price.id }}"
+                                                             data-pricetitle="{{ price.title }}"
+                                                             data-priceurl="{{ price.url }}"
+                                                             data-pricedate="{{ price.date|date("m.d.Y") }}"
+                                                        >
+                                                            {% if price.price %}
+                                                                {{ price.price|number_format(0,',',' ') }}
+                                                                {% if price.percent != 0 %}
+                                                                    <span class="Bgmonitoring" style="background: {{ price.label }};">{{ price.percent }}%</span>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                -
                                                             {% endif %}
                                                         </div>
                                                         {% set noValue = false %}
@@ -135,7 +156,7 @@
                                                 {% endfor %}
 
                                                 {% if noValue %}
-                                                    <div class="table-td creatingPopup">-</div>
+                                                    <div class="table-td creatingPopup" data-rivalid="{{ rival.id }}">-</div>
                                                 {% endif %}
                                             {% endfor %}
                                         </div>
