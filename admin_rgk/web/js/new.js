@@ -416,6 +416,70 @@
                         }
                     });
                 }
+                function editTovar(obj) {
+                    var id = obj.data('id');
+                    var parentid = obj.data('section');
+                    var title = obj.data('name');
+                    var price = obj.data('price');
+                    
+                    var popup = $('#editTovar');
+                    popup.find('input[name=name]').val(title);
+                    popup.find('input[name=id]').val(id);
+                    popup.find('input[name=parentid]').val(parentid);
+                    popup.find('input[name=price]').val(price);
+                    console.log(popup);
+                    $.fancybox.open(popup);
+
+                }
+                function editTovarAjax() {
+                    $(document).on('click', '#editTovar button', function (e) {
+                        var popup = $('#editTovar');
+                        var title = popup.find('input[name=name]').val();
+                        var id = popup.find('input[name=id]').val();
+                        var parentid = popup.find('input[name=parentid]').val();
+                        var price = popup.find('input[name=price]').val();
+                        $.ajax({
+                            url: "/app_dev.php/actionProduct/" + id,
+                            dataType: "json",
+                            data: {
+                                product: {
+                                    title: title,
+                                    price: price,
+                                    section: parentid
+                                }
+                            },
+                            type: 'POST',
+                            beforeSend: function () {
+                                showPreloader();
+
+                            },
+                            success: function (data) {
+                                $.fancybox.close();
+
+                                if (typeof data.error != 'undefined') {
+                                    hidePreloader();
+                                    errorMessage(data.error);
+                                } else if (typeof data.success != 'undefined') {
+                                    console.log('succes editing item--> ' + title);
+                                    location.reload();
+                                } else {
+                                    hidePreloader();
+                                    errorMessage(data);
+                                }
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+
+                                console.log(xhr);
+                                console.log(ajaxOptions);
+                                console.log(thrownError);
+                                location.reload();
+
+                            }
+                        });
+                        e.preventDefault();
+                        return false;
+                    });
+                }
         // END functional create item
         // functional delete item
             function deleteItem(parentId, text) {
@@ -633,6 +697,7 @@ function deleteRival(id) {
             popup.find('input[name=priceid]').val(priceid);
             popup.find('.select').html(options);
             popup.find('select').styler();
+            popup.find('.popupTitle').text('Редактировать цену');
             $.fancybox.open(popup,{
                 wrapCSS: 'selected-fancybox'
             });
@@ -658,7 +723,7 @@ function deleteRival(id) {
                         hidePreloader();
                         errorMessage(data.error);
                     }else if (typeof data.success != 'undefined') {
-                       
+
                         location.reload();
                     }else{
                         hidePreloader();
@@ -697,7 +762,7 @@ function deleteRival(id) {
             $.fancybox.open(popup,{
                 wrapCSS: 'selected-fancybox'
             });
-            console.log(options);
+
             
 
         });
@@ -736,7 +801,7 @@ function deleteRival(id) {
                         hidePreloader();
                         errorMessage(data.error);
                     }else if (typeof data.success != 'undefined') {
-                        console.log('succes creating item--> ' + title);
+                        console.log('succes creating price--> ' + title);
                         location.reload();
                     }else{
                         hidePreloader();
@@ -758,6 +823,8 @@ function deleteRival(id) {
     }
 
 //  END END EDITING concurent price table
+
+editTovarAjax();
 createCell();
 createPrice();
 infoCell();

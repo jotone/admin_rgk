@@ -54,12 +54,21 @@
         <div class="report-form zForm zNice">
             <form>
                 <div class="zForm-row">
+                    Название товара:
+                </div>
+                <div class="zForm-row">
                     <input type="text" required="required" name="name" placeholder="Название товара"/>
                     <input type="hidden"  name="product" value=""/>
                     <input type="hidden"  name="priceid" value=""/>
                 </div>
                 <div class="zForm-row">
+                    URL товара:
+                </div>
+                <div class="zForm-row">
                     <input type="text" required="required" name="url" placeholder="URL товара"/>
+                </div>
+                <div class="zForm-row">
+                    Код товара:
                 </div>
                 <div class="zForm-row select">
 
@@ -127,129 +136,37 @@
             </form>
         </div>
     </div>
-    <div class="tablePopup" id="keyWord">
-        <div class="popupTitle">
-            Ключевое слово
-        </div>
-        <div class="sTable">
-            <table>
-                <thead>
-                <tr>
-                    <td>
-                        <div class="sTable-inner grayBg">Дата</div>
-                    </td>
-                    <td>
-                        <div class="sTable-inner">Р</div>
-                    </td>
-                    <td>
-                        <div class="sTable-inner">"Р"</div>
-                    </td>
-                    <td>
-                        <div class="sTable-inner">М</div>
-                    </td>
-                    <td>
-                        <div class="sTable-inner">"М"</div>
-                    </td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>21.02.15</td>
-                    <td>5 000</td>
-                    <td>1 000</td>
-                    <td>4 000</td>
-                    <td>1 000</td>
-                </tr>
-                <tr>
-                    <td>21.02.15</td>
-                    <td>5 000</td>
-                    <td>1 000</td>
-                    <td>4 000</td>
-                    <td>1 000</td>
-                </tr>
-                <tr>
-                    <td>21.02.15</td>
-                    <td>5 000</td>
-                    <td>1 000</td>
-                    <td>4 000</td>
-                    <td>1 000</td>
-                </tr>
-                <tr>
-                    <td>21.02.15</td>
-                    <td>5 000</td>
-                    <td>1 000</td>
-                    <td>4 000</td>
-                    <td>1 000</td>
-                </tr>
-                <tr>
-                    <td>21.02.15</td>
-                    <td>5 000</td>
-                    <td>1 000</td>
-                    <td>4 000</td>
-                    <td>1 000</td>
-                </tr>
-                <tr>
-                    <td>21.02.15</td>
-                    <td>5 000</td>
-                    <td>1 000</td>
-                    <td>4 000</td>
-                    <td>1 000</td>
-                </tr>
-                <tr>
-                    <td>21.02.15</td>
-                    <td>5 000</td>
-                    <td>1 000</td>
-                    <td>4 000</td>
-                    <td>1 000</td>
-                </tr>
-                <tr>
-                    <td>21.02.15</td>
-                    <td>5 000</td>
-                    <td>1 000</td>
-                    <td>4 000</td>
-                    <td>1 000</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+        <div class="lPopup popTroll" id="editTovar">
+            <div class="popupTitle">
+                Редактировать товар
+            </div>
+            <div class="report-form zForm zNice">
+                <form>
+                    <div class="zForm-row">
+                        Название товара:
+                    </div>
+                    <div class="zForm-row">
+                        <input type="text" required="required" name="name" class="newItem" placeholder="Название товара"/>
+                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="parentid" value="">
+                    </div>
+                    <div class="zForm-row">
+                        Цена товара:
+                    </div>
+                    <div class="zForm-row">
+                        <input type="text" required="required" name="price" class="priceItem" placeholder="Цена товара"/>
+                    </div>
 
-    <div class="lPopup report" id="report">
-        <div class="popupTitle">
-            Вывести отчет
-        </div>
-        <div class="report-form zForm zNice">
-            <form>
-                <div class="zForm-row">
-                    <div class="zForm-col">
-                        <div class="report-form-left pull-left">От</div>
-                        <div class="report-form-right pull-left">
-                            <input type="text" required="required" class="inputDate" name="date_inp" id="dateFrom" data-image="images/input_date.png"/>
-                        </div>
+                    <div class="zForm-row">
+                        <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
+                        <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
                     </div>
-                    <div class="zForm-col">
-                        <div class="report-form-left pull-left">До</div>
-                        <div class="report-form-right pull-left">
-                            <input type="text" required="required" class="inputDate" name="date_inp2" id="dateTo" data-image="images/input_date.png"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="zForm-row radioRow">
-                    <div class="zForm-text">Формат:</div>
-                    <label class="zForm-radio">
-                        <input type="radio" name="format" checked="checked"/><span class="zForm-text">html</span>
-                    </label>
-                    <label class="zForm-radio">
-                        <input type="radio" name="format"/><span class="zForm-text">xls</span>
-                    </label>
-                </div>
-                <div class="zForm-row">
-                    <input type="submit" class="sm-btn" value="ВЫВЕСТИ"/>
-                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
+
+
+
     <div class="lPopup report" id="addKonk">
         <div class="popupTitle">
             Добавить конкурента
