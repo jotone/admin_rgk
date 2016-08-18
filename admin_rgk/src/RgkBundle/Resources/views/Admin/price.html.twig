@@ -93,8 +93,13 @@
                                     <div class="table-td"><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">Цена</a></div>
                                 </div>
                                 {% for product in products %}
-                                    <div class="table-row wdth" data-id="{{ product.id }}">
-                                        <div class="table-td" >{{ product.title }}<p>{{ product.section.title }}</p></div>
+                                    <div class="table-row wdth" data-id="{{ product.id }}" data-section="{{ product.section?product.section.id:'' }}" data-name="{{ product.title }}" data-price="{{ product.price }}">
+                                        <div class="table-td">
+                                            <div class="closeWrap">
+                                                <a href="javascript:void (0)" onclick="editTovar($('.table-row[data-id={{ product.id }}]')); return false;" class="icon icon_edit rowEditing"></a>
+                                            </div>
+                                            {{ product.title }}<p class="section-titlus">/{{ product.section?product.section.title:'' }}/</p>
+                                        </div>
                                         <div class="table-td" >{{ product.price|number_format(0,',',' ') }}
                                             {% if product.percent != 0 %}
                                                 <span class="Bgmonitoring" style="background: {{ product.label }};">{{ product.percent }}%</span>
