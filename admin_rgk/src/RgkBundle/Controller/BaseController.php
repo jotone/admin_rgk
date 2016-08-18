@@ -32,6 +32,12 @@ class BaseController extends Controller
             'sub_links'=>[],
             'class'=>'icon_menu7',
             'title'=>'Конкуренты'
+        ],
+        3 => [
+            'link'=>'rgk_user_index',
+            'sub_links'=>[],
+            'class'=>'icon_menu7',
+            'title'=>'Администрация'
         ]
     ];
 

@@ -30,6 +30,14 @@ class User extends BaseUser
      */
     private $createTokenAt;
 
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parentUser", referencedColumnName="id",nullable=true,onDelete="SET NULL")
+     * })
+     */
+    private $parentUser;
 
     public function __construct()
     {
@@ -67,6 +75,29 @@ class User extends BaseUser
     public function getCreateTokenAt()
     {
         return $this->createTokenAt;
+    }
+
+    /**
+     * Set parentUser
+     *
+     * @param User $target
+     * @return User
+     */
+    public function setParentSection(User $target = null)
+    {
+        $this->parentUser = $target;
+
+        return $this;
+    }
+
+    /**
+     * Get parentUser
+     *
+     * @return User
+     */
+    public function getParentUser()
+    {
+        return $this->parentUser;
     }
 }
 

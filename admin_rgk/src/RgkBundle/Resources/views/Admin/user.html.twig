@@ -1,0 +1,46 @@
+{% extends 'RgkBundle:Admin:base.html.twig' %}
+
+{% block content %}
+<form method="post">
+    <div style="color:#ff0000;">
+        {% for error in form_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    <div>
+        {% for info in form_info %}
+            <p>{{ info }}</p>
+        {% endfor %}
+    </div>
+    Email
+    <input type="email" name="user[email]" value="{{ registration.email }}" required="required" />
+    Имя пользователя
+    <input type="text" minlength="5" name="user[username]" value="{{ registration.username }}" required="required" />
+    Пароль
+    <input type="password" minlength="8" name="user[password]" required="required" />
+    Повторыть пароль
+    <input type="password" minlength="8" name="user[repassword]" required="required" />
+    <input type="submit" value="GO">
+</form>
+
+<div>
+    {% if user_list is not empty %}
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>Имя пользователя</td>
+                <td>Дата активности</td>
+                <td>Кем создан</td>
+            </tr>
+            {% for user in user_list %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.last_login }}</td>
+                    <td>{{ user.parent }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</div>
+{% endblock %}
