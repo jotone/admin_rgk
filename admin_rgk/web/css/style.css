@@ -236,6 +236,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .sTable thead tr td:first-child{width: 103px;}
 .sTable table tbody tr td{padding: 11px 5px;}
 .sTable tbody tr:hover td,.sTable tbody tr.active td{background: #d4e8f1;}
+.sTable tbody tr td:hover{    background: #86a4b1;}
 .sTable tbody tr:hover .closeWrap .icon,.sTable tbody tr.active .closeWrap .icon{display: block;}
 .grayBg{background: #d1d2d4;}
 .sTable-inner{padding: 11px 5px;text-decoration: none;display: block; color: #000;}
