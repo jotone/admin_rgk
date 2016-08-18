@@ -16,27 +16,27 @@ class BaseController extends Controller
 {
     private $menu = [
         0 => [
-            'link'=>'rgk_report_xls',
-            'sub_links'=>[],
-            'class'=>'icon_menu3',
-            'title'=>'Отчет'
-        ],
-        1 => [
             'link'=>'rgk_price_index',
             'sub_links'=>['rgk_price_section'],
             'class'=>'icon_menu6',
             'title'=>'Цены'
         ],
-        2 => [
+        1 => [
             'link'=>'rgk_code_index',
             'sub_links'=>[],
             'class'=>'icon_menu7',
             'title'=>'Конкуренты'
         ],
+        2 => [
+            'link'=>'rgk_report_xls',
+            'sub_links'=>[],
+            'class'=>'icon_menu4',
+            'title'=>'Отчет'
+        ],
         3 => [
             'link'=>'rgk_user_index',
             'sub_links'=>[],
-            'class'=>'icon_menu7',
+            'class'=>'icon_menu3',
             'title'=>'Администрация'
         ]
     ];

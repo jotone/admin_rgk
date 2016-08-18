@@ -89,8 +89,8 @@
                         <div class="sTable bTable Add-on_price">
                             <div class="table-new-one">
                                 <div class="table-head wdth">
-                                    <div class="table-td"><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">ТОВАР <span class="pull-right RightMar">↓</span></a></div>
-                                    <div class="table-td"><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">Цена <span class="pull-right RightMar">↓</span></a></div>
+                                    <div class="table-td"><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">ТОВАР</a></div>
+                                    <div class="table-td"><a href="#keyWord" class="sTable-inner grayBg fancybox-popup">Цена</a></div>
                                 </div>
                                 {% for product in products %}
                                     <div class="table-row wdth" data-id="{{ product.id }}" data-section="{{ product.section?product.section.id:'' }}" data-name="{{ product.title }}" data-price="{{ product.price }}">
@@ -115,7 +115,6 @@
                                     <div class="table-head  cfix wdth">
                                         {% for rival in rivals %}
                                             <div class="table-td">{{ rival.name }}</div>
-
                                         {% endfor %}
                                         <script>
                                             var revalCodes = {
