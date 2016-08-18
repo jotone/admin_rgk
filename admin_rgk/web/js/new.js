@@ -602,7 +602,7 @@ function deleteRival(id) {
             var popup = $('#productEdit');
 
             popup.find('input[name=name]').val(title);
-            popup.find('input[name=code]').val(codeId);
+            popup.find('input[name=code]').val(code);
             popup.find('input[name=url]').val(url);
             popup.find('.productEdit-date').text(date);
             popup.find('input[name=product]').val(productId);
@@ -614,6 +614,7 @@ function deleteRival(id) {
     }
     function editInfoCell(obj, priceid) {
         $(document).on('click', '.productEdit .editButton', function (e) {
+            var codeId = obj.data('price-code');
             var rival = obj.data('rival-id');
             var url = obj.data('price-url');
             var mass = revalCodes[rival];
@@ -622,7 +623,7 @@ function deleteRival(id) {
             var productId = obj.closest('.table-row').data('id');
             for (var key in mass) {
 
-                options = options + '<option value="'+key+'" '+(mass[key].selected>0?'selected':'')+'>'+mass[key].title+'</option>';
+                options = options + '<option value="'+key+'" '+(key==codeId?'selected':'')+'>'+mass[key].title+'</option>';
             }
             options = '<select>'+options+'</select>';
             var popup = $('#creting-price');
@@ -657,7 +658,7 @@ function deleteRival(id) {
                         hidePreloader();
                         errorMessage(data.error);
                     }else if (typeof data.success != 'undefined') {
-                        console.log('succes creating item--> ' + title);
+                       
                         location.reload();
                     }else{
                         hidePreloader();

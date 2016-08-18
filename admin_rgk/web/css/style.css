@@ -470,3 +470,15 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .selected-fancybox .fancybox-inner{overflow: visible!important;}
 .selected-fancybox .jq-selectbox ul{ text-align: left;}
 .jq-selectbox{ width: 100%;}
+.tabs-window{ padding-top: 20px;}
+.admin-create{padding: 20px; text-align: center;}
+.admin-table{}
+.admin-table tr:first-child td{background: #d1d2d4;}
+.admin-table  tr{border-bottom: 1px solid #d1d2d2;}
+.admin-table  td{
+    text-align: center;
+
+    padding: 11px 15px;
+    vertical-align: top;
+    position: relative;
+}
