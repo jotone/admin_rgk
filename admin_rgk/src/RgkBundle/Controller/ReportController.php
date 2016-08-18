@@ -42,9 +42,9 @@ class ReportController extends BaseController
     }
 
     /**
-     * @Route("/getReport")
+     * @Route("/xls")
      */
-    public function getReportAction(){
+    public function xlsAction(){
         // ask the service for a Excel5
         /**
          * @var PHPExcel $phpExcelObject

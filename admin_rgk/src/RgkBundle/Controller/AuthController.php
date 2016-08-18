@@ -103,7 +103,7 @@ class AuthController extends Controller
                     $params['form_pass']['token'] = $userPass['token'];
                     $pass = $userPass['password'];
                     if($userPass['password'] != $userPass['repassword']) {
-                        $params['form_pass']['error'] = 'Пароли не совкадают';
+                        $params['form_pass']['error'] = 'Пароли не совпадают';
                         $pass = false;
                     }
 
