@@ -37,7 +37,7 @@ class BaseController extends Controller
             'link'=>'rgk_user_index',
             'sub_links'=>[],
             'class'=>'icon_menu3',
-            'title'=>'Администрация'
+            'title'=>'Пользователи'
         ]
     ];
 
