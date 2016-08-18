@@ -16,7 +16,7 @@ class BaseController extends Controller
 {
     private $menu = [
         0 => [
-            'link'=>'rgk_report_index',
+            'link'=>'rgk_report_xls',
             'sub_links'=>[],
             'class'=>'icon_menu3',
             'title'=>'Отчет'

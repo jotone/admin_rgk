@@ -25,7 +25,13 @@
                             </div>
                         {% endif %}
                         <div class="zForm-row">
+                            Введите новый пароль:
+                        </div>
+                        <div class="zForm-row">
                             <input type="password" minlength="8" name="{{ form_pass.key }}[password]" placeholder="Введите новый пароль"/>
+                        </div>
+                        <div class="zForm-row">
+                            Повторите пароль:
                         </div>
                         <div class="zForm-row">
                             <input type="password" minlength="8" name="{{ form_pass.key }}[repassword]" placeholder="Повторите пароль"/>
@@ -46,21 +52,25 @@
                         <div class="zForm-row">
                             <p>{{ form_user.ms }}</p>
                         </div>
-                    {% endif %}
-                    <div class="zForm-row">
-                        Введите логин или адрес электронной почты
-                    </div>
-                    {% if form_user.fields.user.error is defined and form_user.fields.user.error is not empty%}
-                        <div class="zForm-row">
-                            <p style="color: #dc6263;">{{ form_user.fields.user.error }}</p>
+                        <div class="zForm-row text-center">
+                            <input type="submit" value="На главную" class="allWidth btn-lg" onclick="location.href='/login';"/>
                         </div>
+                    {% else %}
+                        <div class="zForm-row">
+                            Введите логин или адрес электронной почты
+                        </div>
+                        {% if form_user.fields.user.error is defined and form_user.fields.user.error is not empty%}
+                            <div class="zForm-row">
+                                <p style="color: #dc6263;">{{ form_user.fields.user.error }}</p>
+                            </div>
+                        {% endif %}
+                         <div class="zForm-row">
+                             <input type="text" minlength="5" required="required" name="{{ form_user.key }}[user]" value="{{ form_user.fields.user.value }}">
+                         </div>
+                         <div class="zForm-row text-center">
+                             <input type="submit" value="Отправить" class="allWidth btn-lg"/>
+                         </div>
                     {% endif %}
-                     <div class="zForm-row">
-                         <input type="text" minlength="5" required="required" name="{{ form_user.key }}[user]" value="{{ form_user.fields.user.value }}">
-                     </div>
-                     <div class="zForm-row text-center">
-                         <input type="submit" value="Отправить" class="allWidth btn-lg"/>
-                     </div>
                  </form>
             </div>
         {% endif %}
