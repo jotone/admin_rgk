@@ -110,6 +110,16 @@ class CodeController extends BaseController
             $this->renderApiJson(['error' => 'Ошибка передачи данных конкурента']);
 
         $manager = $this->getDoctrine()->getManager();
+
+        /**
+         * @var Code $subCode
+         */
+        foreach ($rival->getCode()->toArray() as $subCode){
+            if($subCode->getId() != $code->getId()){
+                $subCode->setDef(false);
+                $rival->addCode($subCode);
+            }
+        }
         $manager->persist($rival);
         $manager->flush();
         $code->setRival($rival)
@@ -117,6 +127,7 @@ class CodeController extends BaseController
 
         $manager->persist($code);
         $manager->flush();
+
 
         $this->renderApiJson(['success'=>true]);
     }
