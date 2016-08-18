@@ -1,6 +1,6 @@
 {% extends 'RgkBundle:Auth:base.html.twig' %}
 {% block content %}
-    <div class="grayForm zForm zNice bigMg-form">
+    <div class="remind-wrap zForm zNice bigMg-form">
         {% if form_pass is defined %}
             {% if form_pass.ms is not empty %}
                 <form>
@@ -12,7 +12,7 @@
                     </div>
                 </form>
             {% else %}
-                <div class="grayForm zForm zNice bigMg-form">
+                <div class="remind zForm zNice bigMg-form">
                     <form method="post">
                         <input type="hidden" name="{{ form_pass.key }}[token]" value="{{ form_pass.token }}" />
 
@@ -37,7 +37,7 @@
                 </div>
             {% endif %}
         {% else %}
-            <div class="grayForm zForm zNice bigMg-form">
+            <div class="remind zForm zNice bigMg-form">
                 <form class="register-form" method="post" >
                     <div class="zForm-row">
                         <h2 style="font-size: 19px;">Востановление пароля</h2>

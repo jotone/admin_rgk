@@ -482,3 +482,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
     vertical-align: top;
     position: relative;
 }
+.remind-wrap{
+    padding: 20px;
+    background-color: #f7f7f7;
+}
