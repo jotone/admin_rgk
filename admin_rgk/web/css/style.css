@@ -465,3 +465,8 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .selectinput{ position: relative;}
 .inputstyle{width: calc(100% - 35px);}
 .select-styler{ position: absolute; top: 0; left: 0;}
+
+.fancybox-close{ right: -5px;}
+.selected-fancybox .fancybox-inner{overflow: visible!important;}
+.selected-fancybox .jq-selectbox ul{ text-align: left;}
+.jq-selectbox{ width: 100%;}

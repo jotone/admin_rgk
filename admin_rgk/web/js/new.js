@@ -159,10 +159,10 @@
                                 padding:0,
                                 fitToView:false,
                                 autoSize:true,
-                                wrapCSS: 'classWrap',
+                                wrapCSS: 'selected-fancybox',
                                 afterShow: function () {
 
-                                    //$('.tzNice').styler();
+                                    $('.tzNice').styler();
                                         $('.submit-tmp').click(function () {
                                             var newId = $('.popTroll form select').val();
                                             finalAjax(id, newId, title);
@@ -179,13 +179,13 @@
                     parseData(data, depth);
                     function parseData(mass, depth) {
                         var nbsp = '';
-                        for (var j=0; j<depth; j++){nbsp = nbsp + '&nbsp;';}
+                        for (var j=0; j<depth; j++){nbsp = nbsp + '&nbsp;&nbsp;';}
                         for (var i= 0; i < mass.length; i++){
                             content = content + '<option value="'+mass[i].id+'" '+(mass[i].id==id?'selected':'')+'>'+nbsp+mass[i].title+'</option>';
                             if(mass[i].children.length > 0){ parseData(mass[i].children, ++depth); }
                         }
                     }
-                    result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="report-form zForm zNice"><form><div class="zForm-row select"><select class="tzNice" data-smart-positioning ="-1" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
+                    result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="zForm zNice"><form><div class="zForm-row select"><select class="tzNice" data-smart-positioning ="-1" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
                     return result;
                 }
         
@@ -589,15 +589,177 @@ function deleteRival(id) {
 // EDITING concurent price table
     function infoCell() {
         $(document).on('click', '.editablePopup', function () {
-            var title = $(this).data('priceTitle');
-            var url = $(this).data('priceUrl');
-            var codeId = $(this).data('priceCode');
             
+            
+            var codeId = $(this).data('price-code');
+            var rival = $(this).data('rival-id');
+            var code = revalCodes[rival][codeId].title;
+            var title = $(this).data('price-title');
+            var url = $(this).data('price-url');
+            var date =$(this).data('price-date');
+            var priceid =$(this).data('price-id');
+            var productId = $(this).closest('.table-row').data('id');
+            var popup = $('#productEdit');
+
+            popup.find('input[name=name]').val(title);
+            popup.find('input[name=code]').val(codeId);
+            popup.find('input[name=url]').val(url);
+            popup.find('.productEdit-date').text(date);
+            popup.find('input[name=product]').val(productId);
+             $.fancybox.open(popup);
+            editInfoCell($(this), priceid);
+            refreshPrice(priceid);
+
         });
     }
+    function editInfoCell(obj, priceid) {
+        $(document).on('click', '.productEdit .editButton', function (e) {
+            var rival = obj.data('rival-id');
+            var url = obj.data('price-url');
+            var mass = revalCodes[rival];
+            var options = '';
+            var productName = obj.closest('.table-row').data('product-name');
+            var productId = obj.closest('.table-row').data('id');
+            for (var key in mass) {
+
+                options = options + '<option value="'+key+'" '+(mass[key].selected>0?'selected':'')+'>'+mass[key].title+'</option>';
+            }
+            options = '<select>'+options+'</select>';
+            var popup = $('#creting-price');
+            popup.find('input[name=url]').val(url);
+            popup.find('input[name=name]').val(productName);
+            popup.find('input[name=product]').val(productId);
+            popup.find('input[name=priceid]').val(priceid);
+            popup.find('.select').html(options);
+            popup.find('select').styler();
+            $.fancybox.open(popup,{
+                wrapCSS: 'selected-fancybox'
+            });
+
+            e.preventDefault();
+
+        });
+    }
+    function refreshPrice(id) {
+        $(document).on('click', '.productEdit .refreshButton', function () {
+            $.ajax({
+                url : "/app_dev.php/actionPriceParse/"+id,
+                dataType:"json",
+                type:'POST',
+                beforeSend:function () {
+                    showPreloader();
+
+                },
+                success : function(data){
+                    $.fancybox.close();
+
+                    if(typeof data.error != 'undefined') {
+                        hidePreloader();
+                        errorMessage(data.error);
+                    }else if (typeof data.success != 'undefined') {
+                        console.log('succes creating item--> ' + title);
+                        location.reload();
+                    }else{
+                        hidePreloader();
+                        errorMessage(data);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                    console.log(xhr);
+                    console.log(ajaxOptions);
+                    console.log(thrownError);
+                    //location.reload();
+
+                }
+            });
+        });
+    }
+    function createCell() {
+        $(document).on('click', '.creatingPopup', function () {
+
+            var rival = $(this).data('rival-id');
+            var mass = revalCodes[rival];
+            var options = '';
+            var productName = $(this).closest('.table-row').data('product-name');
+            var productId = $(this).closest('.table-row').data('id');
+            for (var key in mass) {
+
+                    options = options + '<option value="'+key+'" '+(mass[key].selected>0?'selected':'')+'>'+mass[key].title+'</option>';
+            }
+            options = '<select>'+options+'</select>';
+            var popup = $('#creting-price');
+            popup.find('input[name=name]').val(productName);
+            popup.find('input[name=product]').val(productId);
+            popup.find('.select').html(options);
+            popup.find('select').styler();
+            $.fancybox.open(popup,{
+                wrapCSS: 'selected-fancybox'
+            });
+            console.log(options);
+            
+
+        });
+    }
+    function createPrice() {
+
+        $(document).on('click', '#creting-price button', function (e) {
+            var popup = $('#creting-price');
+            var product = popup.find('input[name="product"]').val();
+            var title = popup.find('input[name="name"]').val();
+            var url = popup.find('input[name="url"]').val();
+            var code = popup.find('select').val();
+            var priceid = popup.find('input[name="priceid"]').val();
+            var ajaxurl = (priceid.length>0?"/app_dev.php/actionPrice/"+priceid:"/app_dev.php/actionPrice");
+            console.log(ajaxurl);
+            $.ajax({
+                url : ajaxurl,
+                dataType:"json",
+                data: {
+                    price: {
+                        product: product,
+                        code: code,
+                        url: url,
+                        title: title
+                    }
+                },
+                type:'POST',
+                beforeSend:function () {
+                    showPreloader();
+
+                },
+                success : function(data){
+                    $.fancybox.close();
+
+                    if(typeof data.error != 'undefined') {
+                        hidePreloader();
+                        errorMessage(data.error);
+                    }else if (typeof data.success != 'undefined') {
+                        console.log('succes creating item--> ' + title);
+                        location.reload();
+                    }else{
+                        hidePreloader();
+                        errorMessage(data);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                    console.log(xhr);
+                    console.log(ajaxOptions);
+                    console.log(thrownError);
+                    location.reload();
+
+                }
+            });
+            e.preventDefault();
+            return false;
+        });
+    }
+
 //  END END EDITING concurent price table
-
-
+createCell();
+createPrice();
+infoCell();
 editActiveSection();
 $(document).ready(function () {
 

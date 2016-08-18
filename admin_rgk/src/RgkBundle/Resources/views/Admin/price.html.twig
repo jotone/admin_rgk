@@ -132,7 +132,7 @@
                                         </script>
                                     </div>
                                     {% for product in products %}
-                                        <div class="table-row cfix wdth" data-id="{{ product.id }}" data-section="{{ product.section.title }}">
+                                        <div class="table-row cfix wdth" data-id="{{ product.id }}" data-section="{{ product.section.title }}" data-product-name="{{ product.title }}">
                                             {% for rival in rivals %}
 
                                                 {% set noValue = true %}
@@ -140,13 +140,13 @@
                                                 {% for price in product.prices %}
                                                     {% if noValue and price.code.rival.id == rival.id %}
                                                         <div class="table-td editablePopup"
-                                                             data-rivalid="{{ rival.id }}"
-                                                             data-priceid="{{ price.id }}"
-                                                             data-priceTitle="{{ price.title }}"
-                                                             data-priceUrl="{{ price.url }}"
-                                                             data-priceDate="{{ price.date|date("m.d.Y") }}"
-                                                             data-priceCode="{{ price.code.id }}"
-                                                             data-pricePrice="{{ (price.price?price.price:'-') }}"
+                                                             data-rival-id="{{ rival.id }}"
+                                                             data-price-id="{{ price.id }}"
+                                                             data-price-title="{{ price.title }}"
+                                                             data-price-url="{{ price.url }}"
+                                                             data-price-date="{{ price.date|date("m.d.Y") }}"
+                                                             data-price-code="{{ price.code.id }}"
+                                                             data-price-price="{{ (price.price?price.price:'-') }}"
                                                         >
                                                             {% if price.price %}
                                                                 {{ price.price|number_format(0,',',' ') }}
@@ -162,7 +162,7 @@
                                                 {% endfor %}
 
                                                 {% if noValue %}
-                                                    <div class="table-td creatingPopup" data-rivalid="{{ rival.id }}">-</div>
+                                                    <div class="table-td creatingPopup" data-rival-id="{{ rival.id }}">-</div>
                                                 {% endif %}
                                             {% endfor %}
                                         </div>

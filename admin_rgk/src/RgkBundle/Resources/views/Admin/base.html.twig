@@ -44,6 +44,39 @@
     {% block zhidden %}
     <div class="preloader"><img src="/images/default.svg" alt=""></div>
 
+
+
+
+    <div class="lPopup popTroll" id="creting-price">
+        <div class="popupTitle">
+            Добавить цену
+        </div>
+        <div class="report-form zForm zNice">
+            <form>
+                <div class="zForm-row">
+                    <input type="text" required="required" name="name" placeholder="Название товара"/>
+                    <input type="hidden"  name="product" value=""/>
+                    <input type="hidden"  name="priceid" value=""/>
+                </div>
+                <div class="zForm-row">
+                    <input type="text" required="required" name="url" placeholder="URL товара"/>
+                </div>
+                <div class="zForm-row select">
+
+                </div>
+                <div class="zForm-row">
+                    <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
+                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+
+
+
     <div class="lPopup popTroll" id="deleteItem">
         <div class="popupTitle">
             <p>Выуверены что хотите удалить раздел <span class="item-name"></span> ?</p>
@@ -244,18 +277,18 @@
             </div>
             <div class="productEdit-line">
                 <div class="productEdit-line-tabel">
-                    Товар:
+                    Название товара:
                 </div>
                 <div class="productEdit-line-text productEdit-name">
-                    <input type="text" class="editInput" readonly="readonly" value="RGK UL-41" required="required"/>
+                    <input type="text" class="editInput" readonly="readonly" name="name" value="" required="required"/>
                 </div>
             </div>
             <div class="productEdit-line">
                 <div class="productEdit-line-tabel">
-                    Категория:
+                    Код товара:
                 </div>
                 <div class="productEdit-line-text productEdit-cat">
-                    <input type="text" class="editInput" readonly="readonly" value="Лазерный уровень" required="required"/>
+                    <input type="text" class="editInput" readonly="readonly" value="" name="code" required="required"/>
                 </div>
             </div>
             <div class="productEdit-line">
@@ -263,7 +296,7 @@
                     URL товара:
                 </div>
                 <div class="productEdit-line-text productEdit-url">
-                    <input type="text" class="editInput" readonly="readonly" value="www.220-volt.ru/rgk-ui-41" required="required"/>
+                    <input type="text" class="editInput" readonly="readonly" value="" name="url" required="required"/>
                 </div>
             </div>
             <div class="productEdit-line">
@@ -274,7 +307,7 @@
                     01.11.2015
                 </div>
             </div>
-            <input type="hidden" id="productId">
+            <input type="hidden" name="product" value="">
         </form>
     </div>
     {% endblock %}
