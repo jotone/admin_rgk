@@ -125,19 +125,20 @@
                 if(val == ""){
                    
                     resetView();
-                    chekForActive();
+
+                    plusMinusImg();
                 }
                 if(flag == false){resetView();}
             },100);
         });
         function resetView(){
             $('.catalogList ul>li ul').removeClass('active');
-            $('.catalogList ul li ').removeClass('active');
+            $('.catalogList ul>li li ').removeClass('active');
         }
         function plusMinusImg(){
             $('.icon_lplus').each(
                 function () {
-                    if($(this).parent().next().hasClass('active')){$(this).addClass('active');}
+                    if($(this).parent().next().hasClass('active')){$(this).addClass('active');}else{$(this).removeClass('active');}
                 }
             );
         }

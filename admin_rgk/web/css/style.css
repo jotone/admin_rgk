@@ -203,8 +203,6 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .catalogList .icon_lplus{margin-right: 6px;}
 .catalogList a{font-size: 12px;color: #455159;text-decoration: none;font-weight: 500;}
 .catalogList.active >a{font-weight: 700;}
-
-
 .catalogList ul li.active{ display: block;}
 .catalogList ul.active{ display: block;}
 .catalogList ul{ padding-left: 15px; display: none; margin-bottom: 10px;}
@@ -518,3 +516,4 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 #createMainGroup .zForm-row{ width: 49%;display: inline-block; margin-bottom: 0;  text-align: left;}
 #createMainGroup.popTroll button{ height: 27px; line-height: 27px; margin-left: -4px;}
 .title-main-group{ font-size: 10px; border-top: 1px solid #d1d2d2;    padding: 10px 0 5px 2px;}
+
