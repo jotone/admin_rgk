@@ -146,7 +146,7 @@
                     e.preventDefault();
                     $.ajax({
                         type:'get',
-                        url:'/app_dev.php/sectionList',
+                        url:'/sectionList',
                         data:{id:id},
                         beforeSend:function () {
                           showPreloader();
@@ -192,7 +192,7 @@
             }
             function finalAjax(id, newId, title) {
                 $.ajax({
-                    url : "/app_dev.php/actionSection/"+id,
+                    url : "/actionSection/"+id,
                     dataType:"json",
                     data: {
                         product:{
@@ -267,7 +267,7 @@
             }
             function finalAjaxEdit(id, newId, title) {
                 $.ajax({
-                    url : "/app_dev.php/actionSection/"+id,
+                    url : "/actionSection/"+id,
                     dataType:"json",
                     data: {
                         product:{
@@ -311,7 +311,7 @@
             }
             function finalAjaxCreateGroup(parentId, title) {
                 $.ajax({
-                    url : "/app_dev.php/actionSection",
+                    url : "/actionSection",
                     dataType:"json",
                     data: {
                         product:{
@@ -378,7 +378,7 @@
                 }
                 function finalAjaxCreateItem(parentId, title, price) {
                     $.ajax({
-                        url : "/app_dev.php/actionProduct",
+                        url : "/actionProduct",
                         dataType:"json",
                         data: {
                             product:{
@@ -439,7 +439,7 @@
                         var parentid = popup.find('input[name=parentid]').val();
                         var price = popup.find('input[name=price]').val();
                         $.ajax({
-                            url: "/app_dev.php/actionProduct/" + id,
+                            url: "/actionProduct/" + id,
                             dataType: "json",
                             data: {
                                 product: {
@@ -493,7 +493,7 @@
             
             function finalAjaxDeleteItem(id) {
                 $.ajax({
-                    url : "/app_dev.php/actionSection/"+id,
+                    url : "/actionSection/"+id,
                     dataType:"json",
                     type:'DELETE',
                     beforeSend:function () {
@@ -588,7 +588,7 @@ function deleteRivalAlert(id) {
 
 function deleteRival(id) {
     $.ajax({
-        url : "/app_dev.php/actionRival/"+id,
+        url : "/actionRival/"+id,
         dataType:"json",
         type:'DELETE',
         beforeSend:function () {
@@ -709,7 +709,7 @@ function deleteRival(id) {
     function refreshPrice(id) {
         $(document).on('click', '.productEdit .refreshButton', function () {
             $.ajax({
-                url : "/app_dev.php/actionPriceParse/"+id,
+                url : "/actionPriceParse/"+id,
                 dataType:"json",
                 type:'POST',
                 beforeSend:function () {
@@ -776,7 +776,7 @@ function deleteRival(id) {
             var url = popup.find('input[name="url"]').val();
             var code = popup.find('select').val();
             var priceid = popup.find('input[name="priceid"]').val();
-            var ajaxurl = (priceid.length>0?"/app_dev.php/actionPrice/"+priceid:"/app_dev.php/actionPrice");
+            var ajaxurl = (priceid.length>0?"/actionPrice/"+priceid:"/actionPrice");
             console.log(ajaxurl);
             $.ajax({
                 url : ajaxurl,
