@@ -74,32 +74,39 @@
             el[i].addEventListener('contextmenu', function(event) {
                 event = event || window.event;
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
-                var itemId = $(this).attr('data-id');
-                var parentId = $(this).attr('data-parentid');
-                var title = $(this).text();
+                var itemId = $(this).attr('data-id'),
+                    parentId = $(this).attr('data-parentid'),
+                    title = $(this).text(),
+                    object = $(this);
                 var pos = $('.catalogList-wrap').offset(),
                     elem_left = pos.left,
                     elem_top = pos.top,
                     Xinner = event.pageX - elem_left,
                     Yinner = event.pageY - elem_top;
-                $('.catalogList ul a').removeClass('active');
-                $(this).addClass('active');
+                if(!$(this).hasClass('activeCont')){
+                    starterContextFunctional(itemId, object, parentId, title);
+                }
+                $('.catalogList ul a').removeClass('activeCont');
+                $(this).addClass('activeCont');
                 $('.modalWindow').css({'display':'block','left':Xinner,'top':Yinner}).attr('data-id',itemId);
-                createItem(itemId);
-                createGroup(itemId);
-                editItem($(this), itemId, parentId);
-                moveItem(itemId, title);
-                deleteItem(itemId, title);
+
 
                 return false;
             }, false);
         }
     }
+    function starterContextFunctional(itemId, object, parentId, title) {
+        createItem(itemId);
+        createGroup(itemId);
+        editItem(object, itemId, parentId);
+        moveItem(itemId, title);
+        deleteItem(itemId, title);
+    }
     function search() {
         chekForActive();
         plusMinusImg();
         var input = $('#smartSearch');
-        input.keypress( function () {
+        input.keyup( function () {
             setTimeout(function () {
                 var val = input.val();
                 var reg=new RegExp(val,"i");
@@ -115,6 +122,11 @@
                     }
                 });
                 plusMinusImg();
+                if(val == ""){
+                   
+                    resetView();
+                    chekForActive();
+                }
                 if(flag == false){resetView();}
             },100);
         });
@@ -235,7 +247,7 @@
                 })
             }
         //END functional move Item
-        // functional edit item
+        // functional edit group
             function editItem(item, itemId, parentId) {
                 $(document).on('click', '.editItem', function (e) {
                     e.preventDefault();
@@ -480,6 +492,47 @@
                         return false;
                     });
                 }
+                function deleteTovar(id, text) {
+                    $('#deleteTovar .item-name').text('"'+text+'"');
+                    $(document).on('click', '#deleteTovar button', function (e) {
+                        finalAjaxDeleteTovar(id);
+                        e.preventDefault();
+                        return false;
+                    });
+                }
+                function finalAjaxDeleteTovar(id) {
+                    $.ajax({
+                        url : "/app_dev.php/actionProduct/"+id,
+                        dataType:"json",
+                        type:'DELETE',
+                        beforeSend:function () {
+                            showPreloader();
+                
+                        },
+                        success : function(data){
+                            $.fancybox.close();
+                
+                            if(typeof data.error != 'undefined') {
+                                hidePreloader();
+                                errorMessage(data.error);
+                            }else if (typeof data.success != 'undefined') {
+                                console.log('succes deleting item id--> ' + id);
+                                location.reload();
+                            }else{
+                                hidePreloader();
+                                errorMessage(data);
+                            }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                
+                            console.log(xhr);
+                            console.log(ajaxOptions);
+                            console.log(thrownError);
+                            location.reload();
+                
+                        }
+                    });
+                }
         // END functional create item
         // functional delete item
             function deleteItem(parentId, text) {
@@ -538,7 +591,22 @@ function hidePreloader() {
 *
 * @param form
 */
+function selectToInput(popup) {
+
+    var select = popup.find('select');
+    var input = popup.find('input[name="rival[codeText]"]');
+    input.val(select.find('[selected]').text());
+    select.change(function () {
+
+        var id = select.val();
+        var txt = select.find('option[value='+id+']').text();
+
+        input.val(txt);
+    });
+
+}
 function createRival(form) {
+    
     if(form.valid()){
         var data = form.serialize();
         $.ajax({
@@ -695,9 +763,11 @@ function deleteRival(id) {
             popup.find('input[name=name]').val(productName);
             popup.find('input[name=product]').val(productId);
             popup.find('input[name=priceid]').val(priceid);
+            popup.find('input[name=rival]').val(rival);
             popup.find('.select').html(options);
             popup.find('select').styler();
             popup.find('.popupTitle').text('Редактировать цену');
+            selectToInput(popup);
             $.fancybox.open(popup,{
                 wrapCSS: 'selected-fancybox'
             });
@@ -757,8 +827,10 @@ function deleteRival(id) {
             var popup = $('#creting-price');
             popup.find('input[name=name]').val(productName);
             popup.find('input[name=product]').val(productId);
+            popup.find('input[name=rival]').val(rival);
             popup.find('.select').html(options);
             popup.find('select').styler();
+            selectToInput(popup);
             $.fancybox.open(popup,{
                 wrapCSS: 'selected-fancybox'
             });
@@ -770,10 +842,12 @@ function deleteRival(id) {
     function createPrice() {
 
         $(document).on('click', '#creting-price button', function (e) {
+
             var popup = $('#creting-price');
             var product = popup.find('input[name="product"]').val();
             var title = popup.find('input[name="name"]').val();
             var url = popup.find('input[name="url"]').val();
+            var rival = popup.find('input[name="rival"]').val();
             var code = popup.find('select').val();
             var priceid = popup.find('input[name="priceid"]').val();
             var ajaxurl = (priceid.length>0?"/app_dev.php/actionPrice/"+priceid:"/app_dev.php/actionPrice");
@@ -783,6 +857,7 @@ function deleteRival(id) {
                 dataType:"json",
                 data: {
                     price: {
+                        rival:rival,
                         product: product,
                         code: code,
                         url: url,
@@ -801,7 +876,7 @@ function deleteRival(id) {
                         hidePreloader();
                         errorMessage(data.error);
                     }else if (typeof data.success != 'undefined') {
-                        console.log('succes creating price--> ' + title);
+                        console.log('succes creating item--> ' + title);
                         location.reload();
                     }else{
                         hidePreloader();

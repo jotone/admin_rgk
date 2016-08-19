@@ -60,6 +60,7 @@
                     <input type="text" required="required" name="name" placeholder="Название товара"/>
                     <input type="hidden"  name="product" value=""/>
                     <input type="hidden"  name="priceid" value=""/>
+                    <input type="hidden"  name="rival" value=""/>
                 </div>
                 <div class="zForm-row">
                     URL товара:
@@ -72,6 +73,9 @@
                 </div>
                 <div class="zForm-row select">
 
+                </div>
+                <div class="zForm-row">
+                    <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
                 </div>
                 <div class="zForm-row">
                     <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
@@ -88,7 +92,7 @@
 
     <div class="lPopup popTroll" id="deleteItem">
         <div class="popupTitle">
-            <p>Выуверены что хотите удалить раздел <span class="item-name"></span> ?</p>
+            <p>Вы уверены что хотите удалить раздел <span class="item-name"></span> ?</p>
             <p><span class="subtitle"> Все товары из даного раздела будут удалены </span></p>
             <p><span class="subtitle">Ну так что, удаляем?</span></p>
         </div>
@@ -97,6 +101,19 @@
                     <button class="submit-tmp" onsubmit="return false"><span>Удалить</span></button>
                     <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
                 </div>
+        </div>
+    </div>
+    <div class="lPopup popTroll" id="deleteTovar">
+        <div class="popupTitle">
+            <p>Вы уверены что хотите удалить товар <span class="item-name"></span> ?</p>
+
+            <p><span class="subtitle">Ну так что, удаляем?</span></p>
+        </div>
+        <div class="report-form zForm zNice">
+            <div class="zForm-row">
+                <button class="submit-tmp" onsubmit="return false"><span>Удалить</span></button>
+                <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+            </div>
         </div>
     </div>
     <div class="lPopup popTroll" id="createGroup">

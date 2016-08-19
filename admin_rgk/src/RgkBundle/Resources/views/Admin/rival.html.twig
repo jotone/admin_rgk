@@ -48,7 +48,7 @@
                 <thead>
                 <tr>
 
-                    <td><a href="#addSite" class="sTable-inner grayBg fancybox-popup"><span class="icon icon_litplus pull-left"></span>Название</a></td>
+                    <td><a href="#addSite"  class="sTable-inner grayBg fancybox-popup"><span class="icon icon_litplus pull-left"></span>Название</a></td>
                     <td><span class="sTable-inner grayBg">Сайт</span></td>
                     <td><span class="sTable-inner grayBg">Код</span></td>
                 </tr>
@@ -58,7 +58,7 @@
                     <tr data-id="{{ rival.id }}">
                         <td>
                             <div class="closeWrap">
-                                <a href="#modal{{ rival.id }}"  class="icon icon_edit rowEditing fancybox-popup-selected"></a>
+                                <a href="#modal{{ rival.id }}"  onclick="selectToInput($('#modal{{ rival.id }}'));" class="icon icon_edit rowEditing fancybox-popup-selected"></a>
                             </div>
                             {{ rival.name }}
 
@@ -80,11 +80,19 @@
                                         <div class="zForm zNice">
                                             <form data-action="/app_dev.php/actionRival/{{ rival.id }}">
                                                 <div class="zForm-row">
+                                                    Название:
+                                                </div>
+                                                <div class="zForm-row">
                                                     <input type="text" required="required" placeholder="Название" name="rival[name]" value="{{ rival.name }}"/>
                                                 </div>
-
+                                                <div class="zForm-row">
+                                                    URL:
+                                                </div>
                                                 <div class="zForm-row">
                                                     <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]" value="{{ rival.url }}"/>
+                                                </div>
+                                                <div class="zForm-row">
+                                                    Код:
                                                 </div>
                                                 <div class="zForm-row ">
                                                     <select name="rival[code]" class="formstyler">
@@ -94,7 +102,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="zForm-row ">
-                                                    <input type="text" minlength="3"  placeholder="Новый код" name="rival[codeText]"/>
+                                                    <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
 
                                                 </div>
                                                 <div class="zForm-row">

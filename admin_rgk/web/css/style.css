@@ -243,6 +243,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .greentext{color: #73c47a;}
 .redtext{color: #db4f55;}
 .Bgmonitoring{padding: 2px 1px;display: inline-block; text-align: center;  font-size: 7px;color: #fff;font-weight: normal;min-width: 25px; position: absolute; right: 5px; top: 3px;}
+.Bgmonitoring:hover{transform: scale(2) translate(-4px, 1px);}
 
 .bTable table tbody td:first-child{width: 194px;text-align: left;padding-left: 37px;}
 .bTable table tbody td:nth-child(2){width: 143px;text-align: left;}
@@ -420,6 +421,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .table-new-one .table-td{width: 85px; display: inline-block; margin-left: -2px;text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
 .table-new-one .table-td:first-child{width: 220px; }
 .table-new-one .table-head .table-td{ padding: 0; vertical-align: top;}
+.table-new-one .table-head .table-td.sTable-inner{ padding: 11px 5px; vertical-align: top;}
 
 
 #moveItem{ padding: 20px;}
@@ -497,4 +499,14 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
     font-weight: 400;
     color: #828282;
     padding-top: 2px;
+}
+.closeWrap .close-conc2 .icon{ background-position: right bottom;}
+.close-conc2 {
+    position: absolute;
+    right: 4px;
+    height: 35px;
+    width: 20px;
+    top: calc(50% - 5px);
+    display: block;
+    cursor: pointer;
 }
