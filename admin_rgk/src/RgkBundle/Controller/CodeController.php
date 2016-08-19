@@ -81,28 +81,22 @@ class CodeController extends BaseController
               ->setUrl((isset($data['url'])?$data['url']:''));
 
         //set default code
-        $codeId = (isset($data['code'])?intval($data['code']):0);
         $codeText = (isset($data['codeText'])?$data['codeText']:'');
 
-        if(!$rival->getId()) { //create code object
-            if(empty($codeText))
-                $this->renderApiJson(['error'=>'Ошибка передачи кода']);
+        if(empty($codeText))
+            $this->renderApiJson(['error'=>'Ошибка передачи кода']);
+
+        if($rival->getId()) { //create code object
+            $code = $this->getDoctrine()
+                ->getRepository('RgkBundle:Code')
+                ->findBy(['code'=>$codeText,'rival'=>$rival->getId()]);
+
+
+        }
+
+        if(!isset($code) || !$code){
             $code = new Code();
             $code->setCode($codeText);
-        } else {
-            /**
-             * @var Code $code
-             */
-            if(empty($codeText)) {
-                $code = $this->getDoctrine()
-                    ->getRepository('RgkBundle:Code')
-                    ->find($codeId);
-                if (!$code || $code->getRival()->getId() != $rival->getId())
-                    $this->renderApiJson(['error' => 'Ошибка передачи кода']);
-            } else {
-                $code = new Code();
-                $code->setCode($codeText);
-            }
         }
 
         $errors = $this->get('validator')->validate($rival);
@@ -122,6 +116,7 @@ class CodeController extends BaseController
         }
         $manager->persist($rival);
         $manager->flush();
+        
         $code->setRival($rival)
              ->setDef(true);
 
