@@ -23,7 +23,8 @@
 
 {% block content %}
     {% block sections %}
-        <div class="content-left pull-left litright">
+        <div class="content-left scroll-for-x pull-left litright">
+
         <div class="lsep"></div>
         <div class="tabs blueTabs">
 
@@ -40,6 +41,21 @@
                                 </div>
                             </form>
                         </div>
+                    </div>
+                </div>
+                <div class="lPopup popTroll" id="createMainGroup">
+                    <div class="title-main-group">
+                        Создать раздел верхнего уровня:
+                    </div>
+                    <div class="zForm zNice">
+                        <form>
+                            <div class="zForm-row">
+                                <input type="text" required="required" name="name" placeholder="Название раздела"/>
+                            </div>
+                            <div class="zForm-row">
+                                <button><span>Создать</span></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="catalogList-wrap">

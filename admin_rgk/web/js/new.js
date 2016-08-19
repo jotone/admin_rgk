@@ -174,7 +174,9 @@
                                 wrapCSS: 'selected-fancybox',
                                 afterShow: function () {
 
-                                    $('.tzNice').styler();
+                                    $('.tzNice').styler({
+                                        selectVisibleOptions:10
+                                    });
                                         $('.submit-tmp').click(function () {
                                             var newId = $('.popTroll form select').val();
                                             finalAjax(id, newId, title);
@@ -197,7 +199,7 @@
                             if(mass[i].children.length > 0){ parseData(mass[i].children, ++depth); }
                         }
                     }
-                    result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="zForm zNice"><form><div class="zForm-row select"><select class="tzNice" data-smart-positioning ="-1" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
+                    result = '<div class="lPopup popTroll" id="moveItem"><div class="popupTitle">Выберете раздел</div><div class="zForm zNice"><form><div class="zForm-row select"><select  class="tzNice" data-smart-positioning ="-1" name="moveItemTo">'+content+'</select></div><div class="zForm-row"><button class="submit-tmp" onsubmit="return false"><span>Выбрать</span></button><a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a></div></form></div></div>';
                     return result;
                 }
         
@@ -321,6 +323,13 @@
                     return false;
                 });
             }
+            function createMainGroup() {
+                $(document).on('click', '#createMainGroup button', function (e) {
+                    var parentid = "";
+                    var text = $('#createMainGroup input[name=name]').val();
+                    finalAjaxCreateGroup(parentid, text);
+                });
+            }
             function finalAjaxCreateGroup(parentId, title) {
                 $.ajax({
                     url : "/actionSection",
@@ -352,6 +361,7 @@
                         console.log(xhr);
                         console.log(ajaxOptions);
                         console.log(thrownError);
+                        debugger;
                         location.reload();
 
                     }
@@ -893,7 +903,7 @@ function deleteRival(id) {
     }
 
 //  END END EDITING concurent price table
-
+createMainGroup();
 editTovarAjax();
 createCell();
 createPrice();
