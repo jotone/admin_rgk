@@ -848,7 +848,7 @@ function deleteRival(id) {
             var title = popup.find('input[name="name"]').val();
             var url = popup.find('input[name="url"]').val();
             var rival = popup.find('input[name="rival"]').val();
-            var code = popup.find('select').val();
+            var code = popup.find('.forSelect').val();
             var priceid = popup.find('input[name="priceid"]').val();
             var ajaxurl = (priceid.length>0?"/actionPrice/"+priceid:"/actionPrice");
             console.log(ajaxurl);
