@@ -189,7 +189,7 @@
                     });
                 });
                 function generatePopUpContent(data, id) {
-                    var content = '';
+                    var content = '<option value="">Корневой раздел</option>';
                     var depth =0;
                     parseData(data, depth);
                     function parseData(mass, depth) {
