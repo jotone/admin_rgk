@@ -341,7 +341,6 @@
                             hidePreloader();
                             errorMessage(data.error);
                         }else if (typeof data.success != 'undefined') {
-                            console.log('succes creating Group ' + title);
                             location.reload();
                         }else{
                             hidePreloader();
@@ -411,7 +410,6 @@
                                 hidePreloader();
                                 errorMessage(data.error);
                             }else if (typeof data.success != 'undefined') {
-                                console.log('succes creating item--> ' + title);
                                 location.reload();
                             }else{
                                 hidePreloader();
@@ -439,7 +437,7 @@
                     popup.find('input[name=id]').val(id);
                     popup.find('input[name=parentid]').val(parentid);
                     popup.find('input[name=price]').val(price);
-                    console.log(popup);
+
                     $.fancybox.open(popup);
 
                 }
@@ -472,7 +470,6 @@
                                     hidePreloader();
                                     errorMessage(data.error);
                                 } else if (typeof data.success != 'undefined') {
-                                    console.log('succes editing item--> ' + title);
                                     location.reload();
                                 } else {
                                     hidePreloader();
@@ -848,9 +845,9 @@ function deleteRival(id) {
             var title = popup.find('input[name="name"]').val();
             var url = popup.find('input[name="url"]').val();
             var rival = popup.find('input[name="rival"]').val();
-            var code = popup.find('.forSelect').val();
+            var code = popup.find('input[name="rival[codeText]"]').val();
             var priceid = popup.find('input[name="priceid"]').val();
-            var ajaxurl = (priceid.length>0?"/actionPrice/"+priceid:"/actionPrice");
+            var ajaxurl = (priceid.length>0?"/app_dev.php/actionPrice/"+priceid:"/app_dev.php/actionPrice");
             console.log(ajaxurl);
             $.ajax({
                 url : ajaxurl,
@@ -871,12 +868,10 @@ function deleteRival(id) {
                 },
                 success : function(data){
                     $.fancybox.close();
-
                     if(typeof data.error != 'undefined') {
                         hidePreloader();
                         errorMessage(data.error);
                     }else if (typeof data.success != 'undefined') {
-                        console.log('succes creating item--> ' + title);
                         location.reload();
                     }else{
                         hidePreloader();

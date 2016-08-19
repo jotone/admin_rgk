@@ -234,12 +234,12 @@ class PriceController extends BaseController
         if(!isset($data['code']) || empty($data['code']))
             $this->renderApiJson(['error'=>'Ошибка передачи кода']);
 
-        $rival = (isset($data['rival'])?$this->getDoctrine()->getRepository('RgkBundle:Code')->find(intval($data['rival'])):null);
+        $rival = (isset($data['rival'])?$this->getDoctrine()->getRepository('RgkBundle:Rival')->find(intval($data['rival'])):null);
         if(!$rival)
             $this->renderApiJson(['error' => 'Ошибка передачи конкурента']);
 
         $manager = $this->getDoctrine()->getManager();
-        $code = $this->getDoctrine()->getRepository('RgkBundle:Code')->findBy(['code'=>$data['code'],'rival'=>$rival->getId()]);
+        $code = $this->getDoctrine()->getRepository('RgkBundle:Code')->findOneBy(['code'=>$data['code'],'rival'=>$rival->getId()]);
         if(!$code){
             $code = new Code();
             $code->setCode($data['code'])
