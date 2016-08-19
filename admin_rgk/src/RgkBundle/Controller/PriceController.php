@@ -10,6 +10,7 @@ namespace RgkBundle\Controller;
 
 use RgkBundle\Entity\Price;
 use RgkBundle\Entity\Product;
+use RgkBundle\Entity\Code;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -230,9 +231,21 @@ class PriceController extends BaseController
         }
 
         //check code
-        $code = (isset($data['code']) && $data['code']>0?$this->getDoctrine()->getRepository('RgkBundle:Code')->find(intval($data['code'])):null);
-        if(!$code)
-            $this->renderApiJson(['error' => 'Ошибка передачи кода']);
+        if(!isset($data['code']) || empty($data['code']))
+            $this->renderApiJson(['error'=>'Ошибка передачи кода']);
+
+        $rival = (isset($data['rival'])?$this->getDoctrine()->getRepository('RgkBundle:Code')->find(intval($data['rival'])):null);
+        if(!$rival)
+            $this->renderApiJson(['error' => 'Ошибка передачи конкурента']);
+
+        $manager = $this->getDoctrine()->getManager();
+        $code = $this->getDoctrine()->getRepository('RgkBundle:Code')->findBy(['code'=>$data['code'],'rival'=>$rival->getId()]);
+        if(!$code){
+            $code = new Code();
+            $code->setCode($data['code'])
+                 ->setRival($rival);
+            $manager->persist($code);
+        }
 
         $price->setCode($code)
              ->setUrl((isset($data['url'])?$data['url']:''))
@@ -243,7 +256,6 @@ class PriceController extends BaseController
         if (count($errors) > 0)
             $this->renderApiJson(['error' => 'Ошибка передачи данных цены']);
 
-        $manager = $this->getDoctrine()->getManager();
         $manager->persist($price);
         $manager->flush();
 
