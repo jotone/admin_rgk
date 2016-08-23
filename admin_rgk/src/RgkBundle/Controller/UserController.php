@@ -92,9 +92,9 @@ class UserController extends BaseController
             }
         }
 
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $connection = $em->getConnection();
-        $statement = $connection->prepare("SELECT u1.id, u1.username, u1.last_login, u2.username as parent FROM `user` as u1 LEFT JOIN `user` as u2 on u2.`id`=u1.parentUser WHERE 1 ORDER BY u1.id DESC;");
+        $statement = $connection->prepare("SELECT u1.id, u1.username, u1.last_login, u1.email_canonical, u2.username as parent FROM `user` as u1 LEFT JOIN `user` as u2 on u2.`id`=u1.parentUser WHERE 1 ORDER BY u1.id DESC;");
         $statement->execute();
         $ans = $statement->fetchAll();
         $dateTime = new \DateTime();
@@ -102,6 +102,7 @@ class UserController extends BaseController
             $arr = [
                 'id'=>$line['id'],
                 'username'=>$line['username'],
+                'email'=>$line['email_canonical'],
                 'parent'=>$line['parent'],
                 'last_login'=>'---'
             ];
