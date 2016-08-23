@@ -331,48 +331,7 @@ class PriceController extends BaseController
         return array_values($objects);
     }
 
-    private function menuStrict(&$objects,$parent=0)
-    {
-        $resp = [];
-        /**
-         * @var Section $object
-         */
-        if(!empty($objects)){
-            foreach ($objects as &$object){
-                $cPar = ($object->getParentSection()?$object->getParentSection()->getId():0);
-                if($cPar != $parent)
-                    continue;
 
-                $resp[] = [
-                    'id'=>$object->getId(),
-                    'title'=>$object->getTitle(),
-                    'children'=>$this->menuStrict($objects,$object->getId())
-                ];
-            }
-        }
-        return $resp;
-    }
 
-    private function getSectionChildTreeIds($id,$sectArray)
-    {
-        $resp = [];
-        foreach ($sectArray as $item){
-            if($id != $item['id'])
-            {
-                if(!empty($item['children'])){
-                    $resp = array_merge($resp,$this->getSectionChildTreeIds($id,$item['children']));
-                }
-                continue;
-            }
 
-            $resp[] = $item['id'];
-
-            if(!empty($item['children'])){
-                foreach ($item['children'] as $child){
-                    $resp = array_merge($resp,$this->getSectionChildTreeIds($child['id'],$item['children']));
-                }
-            }
-        }
-        return $resp;
-    }
 }

@@ -24,6 +24,16 @@ class CodeController extends BaseController
     {
         $params = $this->getTemplatteParams();
 
+        //get sections array
+        $params['sections'] = [];
+        foreach ($this->getDoctrine()
+            ->getRepository('RgkBundle:Section')
+            ->findBy(array(), array('title' => 'ASC')) as $section){
+            $params['sections'][$section->getId()] = $section;
+        };
+
+
+        //search
         $params['q'] = $request->query->get('q');
 
         $query = 'SELECT r.id FROM rival as r WHERE 1 ';
@@ -42,11 +52,34 @@ class CodeController extends BaseController
         $params['rivals'] = [];
         if(!empty($ideas)){
             $ideas = array_map(function($a){return $a['id'];},$ideas);
-            $params['rivals'] = $this->getDoctrine()
-                ->getRepository('RgkBundle:Rival')
-                ->findBy(['id'=>$ideas], array('name' => 'ASC'));
+            /**
+             * @var Rival $a
+             */
+            $params['rivals'] = array_map(
+                function(Rival $a) use ($params){
+                    $sections = [];
+                    $active_sect = json_decode($a->getSections(),true);
+                    if(is_array($active_sect) && !empty($active_sect)){
+                        foreach ($active_sect as $as){
+                            if(isset($params['sections'][$as]))
+                                $sections[$as] = $params['sections'][$as];
+                        }
+                    }
+                    return [
+                        'id'=>$a->getId(),
+                        'name'=>$a->getName(),
+                        'url'=>$a->getUrl(),
+                        'sections'=>$sections,
+                        'sectionsArrayId'=>json_decode($a->getSections(),true),
+                        'code'=>$a->getCode()
+                    ];
+                },$this->getDoctrine()
+                    ->getRepository('RgkBundle:Rival')
+                    ->findBy(['id'=>$ideas], array('name' => 'ASC'))
+            );
         }
 
+        $params['sections'] = $this->menuStrict($params['sections']);
         return $this->render('RgkBundle:Admin:rival.html.twig',$params);
     }
 
@@ -77,6 +110,9 @@ class CodeController extends BaseController
             $rival = new Rival();
 
         $data = $request->request->get('rival');
+        if(isset($data['section']) && is_array($data['section']) && !empty($data['section'])){
+            $rival->setSections($this->getSectionJson($data['section']));
+        }
         $rival->setName((isset($data['name'])?$data['name']:''))
               ->setUrl((isset($data['url'])?$data['url']:''));
 
@@ -89,7 +125,7 @@ class CodeController extends BaseController
         if($rival->getId()) { //create code object
             $code = $this->getDoctrine()
                 ->getRepository('RgkBundle:Code')
-                ->findBy(['code'=>$codeText,'rival'=>$rival->getId()]);
+                ->findOneBy(['code'=>$codeText,'rival'=>$rival->getId()]);
 
 
         }
@@ -108,7 +144,7 @@ class CodeController extends BaseController
         /**
          * @var Code $subCode
          */
-        foreach ($rival->getCode()->toArray() as $subCode){
+        foreach ($rival->getCode() as $subCode){
             if($subCode->getId() != $code->getId()){
                 $subCode->setDef(false);
                 $rival->addCode($subCode);

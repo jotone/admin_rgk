@@ -1,4 +1,15 @@
 {% extends 'RgkBundle:Admin:base.html.twig' %}
+{% macro recursiveSectionList(section,active=[],depth=0) %}
+    <div class="zForm-row">
+        <label><input type="checkbox" name="rival[section][]" value="{{ section.id }}" {{ (section.id in active?'checked="checked"':'') }} data-parent-id="{{ section.parent_id }}"/>{% for i in 0..depth %}&nbsp;{% endfor %}{{ section.title }}</label>
+    </div>
+    {% if section.children|length %}
+        {% set chaildDepth = depth + 1 %}
+        {% for child in section.children %}
+            {{ _self.recursiveSectionList(child,active,chaildDepth) }}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
 {% block zhidden %}
     {{ parent() }}
     <div class="lPopup report" id="addSite">
@@ -10,6 +21,7 @@
                 <div class="zForm-row error" style="display: none; color: #ff0000;">
 
                 </div>
+                {# col 1#}
                 <div class="zForm-row">
                     <input type="text" required="required" placeholder="Название" name="rival[name]"/>
                 </div>
@@ -20,6 +32,13 @@
                 <div class="zForm-row radioRow">
                     <input type="text" minlength="3" required="required" placeholder="Код" name="rival[codeText]"/>
                 </div>
+                {# col 2 #}
+                {% if sections is defined %}
+                    {% for section in sections %}
+                        {{ _self.recursiveSectionList(section) }}
+                    {% endfor %}
+                {% endif %}
+                {# col 2 end #}
                 <div class="zForm-row">
                     <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#addSite form')); return false;"/>
                     <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
@@ -51,11 +70,12 @@
                     <td><a href="#addSite"  class="sTable-inner grayBg fancybox-popup"><span class="icon icon_litplus pull-left"></span>Название</a></td>
                     <td><span class="sTable-inner grayBg">Сайт</span></td>
                     <td><span class="sTable-inner grayBg">Код</span></td>
+                    <td><span class="sTable-inner grayBg">Разделы</span></td>
                 </tr>
                 </thead>
                 <tbody>
                 {% for rival in rivals %}
-                    <tr data-id="{{ rival.id }}">
+                    <tr data-id="{{ rival.id }}" >
                         <td>
                             <div class="closeWrap">
                                 <a href="#modal{{ rival.id }}"  onclick="selectToInput($('#modal{{ rival.id }}'));" class="icon icon_edit rowEditing fancybox-popup-selected"></a>
@@ -103,8 +123,14 @@
                                                 </div>
                                                 <div class="zForm-row ">
                                                     <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
-
                                                 </div>
+                                                {# col 2 #}
+                                                {% if sections is defined %}
+                                                    {% for section in sections %}
+                                                        {{ _self.recursiveSectionList(section,rival.sectionsArrayId) }}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                {# col 2 end #}
                                                 <div class="zForm-row">
                                                     <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#modal{{ rival.id }} form')); return false;"/>
                                                     <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
@@ -116,6 +142,13 @@
                                 </div>
                                 <a href="javascript:void(0);" onclick="deleteRivalAlert({{ rival.id }});" class="close-conc"><span class="icon icon_close"></span></a>
                             </div>
+                        </td>
+                        <td>
+                            {% if rival.sections is defined and rival.sections is not empty %}
+                                {% for section in rival.sections %}
+                                    {{ section.title }}{{ (loop.last?'':',') }}
+                                {% endfor %}
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

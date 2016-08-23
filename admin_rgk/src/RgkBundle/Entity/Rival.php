@@ -42,6 +42,12 @@ class Rival
     protected $code;
 
     /**
+     * @var string
+     * @ORM\Column(name="sections", type="string", length=2048, unique=false, nullable=true)
+     */
+    private $sections;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -139,6 +145,31 @@ class Rival
     public function getCode()
     {
         return $this->code;
+    }
+
+
+    /**
+     * Set sections
+     *
+     * @param string $Sections
+     *
+     * @return Rival
+     */
+    public function setSections($Sections)
+    {
+        $this->sections = $Sections;
+
+        return $this;
+    }
+
+    /**
+     * Get sections
+     *
+     * @return string
+     */
+    public function getSections()
+    {
+        return $this->sections;
     }
 }
 

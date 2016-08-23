@@ -9,6 +9,7 @@
 namespace RgkBundle\Controller;
 
 use RgkBundle\Entity\User;
+use RgkBundle\Entity\Section;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -96,5 +97,82 @@ class BaseController extends Controller
 
         echo ($isJson?$value:json_encode($value));
         exit();
+    }
+
+    public function menuStrict(&$objects,$parent=0)
+    {
+        $resp = [];
+        /**
+         * @var Section $object
+         */
+        if(!empty($objects)){
+            foreach ($objects as &$object){
+                $cPar = ($object->getParentSection()?$object->getParentSection()->getId():0);
+                if($cPar != $parent)
+                    continue;
+
+                $resp[] = [
+                    'id'=>$object->getId(),
+                    'title'=>$object->getTitle(),
+                    'parent_id'=>($object->getParentSection()?$object->getParentSection()->getId():''),
+                    'children'=>$this->menuStrict($objects,$object->getId())
+                ];
+            }
+        }
+        return $resp;
+    }
+
+    public function getSectionChildTreeIds($id,$sectArray)
+    {
+        $resp = [];
+        foreach ($sectArray as $item){
+            if($id != $item['id'])
+            {
+                if(!empty($item['children'])){
+                    $resp = array_merge($resp,$this->getSectionChildTreeIds($id,$item['children']));
+                }
+                continue;
+            }
+
+            $resp[] = $item['id'];
+
+            if(!empty($item['children'])){
+                foreach ($item['children'] as $child){
+                    $resp = array_merge($resp,$this->getSectionChildTreeIds($child['id'],$item['children']));
+                }
+            }
+        }
+        return $resp;
+    }
+
+    /**
+     * @param $array
+     * @return string
+     */
+    public function getSectionJson($array){
+        $sections = $this->getDoctrine()
+            ->getRepository('RgkBundle:Section')
+            ->findBy(array(), array('title' => 'ASC'));
+
+        $sections = $this->menuStrict($sections);
+
+        $resp = $this->checkStrict($sections,$array);
+        return json_encode($resp);
+    }
+
+    private function checkStrict($sections,$array){
+        $r = [];
+        foreach ($sections as $section){
+            if(in_array($section['id'],$array)){//active
+                //check if have not
+                $r[] = $section['id'];
+            } elseif(!empty($section['children'])) {
+                $a = $this->checkStrict($section['children'],$array);
+                foreach ($a as $section_id){
+                    $r[] = $section_id;
+                }
+            }
+        }
+        return $r;
     }
 }
