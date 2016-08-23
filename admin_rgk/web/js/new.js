@@ -123,8 +123,9 @@
                 });
                 plusMinusImg();
                 if(val == ""){
-                   
-                    resetView();
+
+                    $('.catalogList ul>li ul').removeClass('active');
+                    $('.catalogList ul>li li').removeClass('active');
 
                     plusMinusImg();
                 }
@@ -133,7 +134,7 @@
         });
         function resetView(){
             $('.catalogList ul>li ul').removeClass('active');
-            $('.catalogList ul>li li ').removeClass('active');
+            $('.catalogList ul li').removeClass('active');
         }
         function plusMinusImg(){
             $('.icon_lplus').each(
