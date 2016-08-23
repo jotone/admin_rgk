@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use RgkBundle\Entity\User;
 use Symfony\Component\Yaml\Parser;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     /**
      * @Route("/login")

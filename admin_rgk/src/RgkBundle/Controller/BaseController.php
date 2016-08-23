@@ -61,7 +61,7 @@ class BaseController extends Controller
 
         if ($container->get('mailer')->send($message) == 1)
             return true;
-
+        return false;
     }
 
     public function getTemplatteParams()
