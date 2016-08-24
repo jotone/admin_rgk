@@ -59,6 +59,12 @@ class Product
     private $pos;
 
     /**
+     * @var string
+     * @ORM\Column(name="url", type="string", length=4096,nullable=true)
+     */
+    private $url;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -205,6 +211,29 @@ class Product
     public function getPos()
     {
         return $this->pos;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return Product
+     */
+    public function setUrl($url = '')
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**

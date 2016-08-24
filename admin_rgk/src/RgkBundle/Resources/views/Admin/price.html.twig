@@ -113,7 +113,14 @@
                                                 <a href="javascript:void (0)" onclick="editTovar($('.table-row[data-id={{ product.id }}]')); return false;" class="icon icon_edit rowEditing"></a>
                                                 <a href="#deleteTovar" onclick="deleteTovar({{ product.id }}, '{{ product.title }}' );" class="close-conc2 fancybox-popup"><span class="icon icon_close"></span></a>
                                             </div>
-                                            {{ product.title }}<p class="section-titlus">/{{ product.section?product.section.title:'' }}/</p>
+                                            {% if product.url is defined and product.url is not empty %}
+                                                <a href="{{ product.url }}" target="_blank" class="linkProduct">
+                                                    {{ product.title }}
+                                                </a>
+                                            {% else %}
+                                                {{ product.title }}
+                                            {% endif %}
+                                            <p class="section-titlus">/{{ product.section?product.section.title:'' }}/</p>
                                         </div>
                                         <div class="table-td" >{{ product.price|number_format(0,',',' ') }}
                                             {% if product.percent != 0 %}

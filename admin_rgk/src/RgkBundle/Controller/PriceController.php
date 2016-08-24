@@ -235,6 +235,7 @@ class PriceController extends BaseController
 
         $product->setTitle((isset($data['title'])?$data['title']:''))
                 ->setPrice((isset($data['price']) && $data['price']>0?floatval($data['price']):0))
+                ->setUrl((isset($data['url'])?$data['url']:''))
                 ->setSection($section);
         
         $errors = $this->get('validator')->validate($product);
