@@ -39,6 +39,12 @@ class Section
     private $parentSection;
 
     /**
+     * @var boolean
+     * @ORM\Column(name="folder", type="boolean")
+     */
+    private $folder=false;
+
+    /**
      * Get id
      *
      * @return int
@@ -94,6 +100,30 @@ class Section
     public function getParentSection()
     {
         return $this->parentSection;
+    }
+
+
+    /**
+     * Set folder
+     *
+     * @param boolean $folder
+     * @return Section
+     */
+    public function setFolder($folder)
+    {
+        $this->folder = $folder;
+
+        return $this;
+    }
+
+    /**
+     * Get folder
+     *
+     * @return boolean
+     */
+    public function getFolder()
+    {
+        return $this->folder;
     }
 }
 

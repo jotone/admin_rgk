@@ -28,12 +28,6 @@ class BaseController extends Controller
             'class'=>'icon_menu7',
             'title'=>'Конкуренты'
         ],
-        2 => [
-            'link'=>'rgk_report_xls',
-            'sub_links'=>[],
-            'class'=>'icon_menu4',
-            'title'=>'Отчет'
-        ],
         3 => [
             'link'=>'rgk_user_index',
             'sub_links'=>[],
@@ -114,6 +108,7 @@ class BaseController extends Controller
                 $resp[] = [
                     'id'=>$object->getId(),
                     'title'=>$object->getTitle(),
+                    'folder'=>$object->getFolder(),
                     'parent_id'=>($object->getParentSection()?$object->getParentSection()->getId():''),
                     'children'=>$this->menuStrict($objects,$object->getId())
                 ];
@@ -174,5 +169,27 @@ class BaseController extends Controller
             }
         }
         return $r;
+    }
+
+    public function getSectionsRival($idArray){
+        $res = [];
+        if(empty($idArray))
+            return $res;
+
+        $q = "SELECT `id` FROM `rival` WHERE ".implode(' OR',array_map(function($a){return sprintf("`sections` LIKE  '[%1\$d,%%' OR  `sections` LIKE  '%%,%1\$d,%%' OR  `sections` LIKE  '%%,%1\$d]' OR  `sections` LIKE  '[%1\$d]' ",$a);},$idArray));
+
+        $stmt = $this->getDoctrine()->getManager()
+            ->getConnection()
+            ->prepare(
+                $q
+            );
+        $stmt->execute();
+        $ideas=$stmt->fetchAll();
+        if(!empty($ideas)){
+            $res = $this->getDoctrine()
+                ->getRepository('RgkBundle:Rival')
+                ->findBy(array('id'=>array_map(function($a){return $a['id'];},$ideas)), array('name' => 'ASC'));
+        }
+        return $res;
     }
 }

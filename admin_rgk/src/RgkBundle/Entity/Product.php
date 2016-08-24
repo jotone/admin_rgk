@@ -52,6 +52,13 @@ class Product
     protected $prices;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="pos", type="integer",nullable=true)
+     */
+    private $pos;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -173,6 +180,31 @@ class Product
     public function getPrices()
     {
         return $this->prices;
+    }
+
+
+    /**
+     * Set pos
+     *
+     * @param string $pos
+     *
+     * @return Product
+     */
+    public function setPos($pos)
+    {
+        $this->pos = $pos;
+
+        return $this;
+    }
+
+    /**
+     * Get pos
+     *
+     * @return string
+     */
+    public function getPos()
+    {
+        return $this->pos;
     }
 
     /**

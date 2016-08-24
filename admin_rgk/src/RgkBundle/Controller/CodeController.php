@@ -84,6 +84,26 @@ class CodeController extends BaseController
     }
 
     /**
+     * @Route("/actionCode/{id}")
+     */
+    public function codeAction(Request $request,$id=0){
+        if($request->getMethod() != 'DELETE')
+           return $this->redirectToRoute('rgk_code_index');
+
+        $code = $this->getDoctrine()
+            ->getRepository('RgkBundle:Code')
+            ->find(intval($id));
+
+        if(!$code)
+            $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($code);
+        $manager->flush();
+        $this->renderApiJson(['success'=>true]);
+    }
+
+    /**
      * @Route("/actionRival", name="rgk_post_rival")
      * @Route("/actionRival/{id}", name="rgk_action_rival")
      */
@@ -158,7 +178,6 @@ class CodeController extends BaseController
 
         $manager->persist($code);
         $manager->flush();
-
 
         $this->renderApiJson(['success'=>true]);
     }

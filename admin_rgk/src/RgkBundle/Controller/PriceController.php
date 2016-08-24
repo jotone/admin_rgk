@@ -25,9 +25,6 @@ class PriceController extends BaseController
      */
     public function indexAction(Request $request,$id=0)
     {
-        //$parse = new ParseController();
-        //$result=$parse->get_price('http://carpan.com.ua/tovar/katushka-jaxon-tabias-fdx-kj-tab100','.item-price-current');
-        //var_dump($result); exit();
         /**
          * @var Section $a
          */
@@ -43,9 +40,11 @@ class PriceController extends BaseController
              */
             foreach ($params['sections'] as &$a){
                 if($a->getId() == $id) {
+                    if($a->getFolder())
+                        return $this->redirectToRoute("rgk_price_index");
+
                     $params['active_section_title'] = $a->getTitle();
                     $params['active_section_parent_id'] = ($a->getParentSection()?$a->getParentSection()->getId():'');
-
                     break;
                 }
             }
@@ -58,14 +57,12 @@ class PriceController extends BaseController
                 return $this->redirectToRoute("rgk_price_index");
 
             //get all rivals array
-            $params['rivals'] = $this->getDoctrine()
-                                     ->getRepository('RgkBundle:Rival')
-                                     ->findBy(array(), array('name' => 'ASC'));
+            $params['rivals'] = $this->getSectionsRival($sectionSpectre);
 
             //get products of active section
             $params['products'] = $this->getDoctrine()
                                        ->getRepository('RgkBundle:Product')
-                                       ->findBy(array('section'=>$sectionSpectre), array('title' => 'ASC','price'=>'ASC'));
+                                       ->findBy(array('section'=>$sectionSpectre), array('pos' => 'ASC','title' => 'ASC','price'=>'ASC'));
         }
         return $this->render('RgkBundle:Admin:price.html.twig',$params);
     }
@@ -77,7 +74,7 @@ class PriceController extends BaseController
     {
         $sections = $this->getDoctrine()
             ->getRepository('RgkBundle:Section')
-            ->findBy(array(), array('title' => 'ASC'));
+            ->findBy(array('folder'=>true), array('title' => 'ASC'));
         $sections = $this->menuStrict($sections);
 
         $id = $request->query->get('id');
@@ -100,6 +97,7 @@ class PriceController extends BaseController
                 $this->renderApiJson(['error'=>'invalidMethod']);
             return $this->redirectToRoute('rgk_price_index');
         }
+        $data = $request->request->get('product');
 
         if($request->get("_route") == 'rgk_action_section'){
             $section = $this->getDoctrine()
@@ -115,10 +113,11 @@ class PriceController extends BaseController
                 $this->renderApiJson(['success'=>true]);
             }
         }
-        else
+        else {
             $section = new Section();
+            $section->setFolder((isset($data['folder'])&&$data['folder']>0?true:false));
+        }
 
-        $data = $request->request->get('product');
         $parentSection = (isset($data['section']) && $data['section']>0?
             $this->getDoctrine()->getRepository('RgkBundle:Section')->find(intval($data['section'])):
             null
@@ -151,6 +150,56 @@ class PriceController extends BaseController
     }
 
     /**
+     * @Route("/actionProductPos/{id}")
+     */
+    public function ProductPosAction(Request $request,$id=0)
+    {
+        if($request->getMethod() != 'POST')
+            return $this->redirectToRoute('rgk_price_index');
+
+        /**
+         * @var Product $product
+         */
+        $product = $this->getDoctrine()
+            ->getRepository('RgkBundle:Product')
+            ->find(intval($id));
+
+        if(!$product || !$product->getSection())
+            $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+        $up = ($request->query->get('up')?true:false);
+
+        //get closest
+        $q = sprintf("SELECT id FROM `product` WHERE `section` = %d and pos %s %d ORDER BY pos %s LIMIT 0, 1",$product->getSection()->getId(),($up?'<':'>'),$product->getPos(),($up?'DESC':'ASC'));
+        $stmt = $this->getDoctrine()->getManager()
+            ->getConnection()
+            ->prepare(
+                $q
+            );
+        $stmt->execute();
+        $ideas=$stmt->fetchAll();
+
+        if($ideas && isset($ideas[0]['id'])){
+            $product2 = $this->getDoctrine()
+                ->getRepository('RgkBundle:Product')
+                ->find(intval($ideas[0]['id']));
+            if(!$product2)
+                $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+            //swap position value
+            $a = $product->getPos();
+            $product->setPos($product2->getPos());
+            $product2->setPos($a);
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($product);
+            $manager->persist($product2);
+            $manager->flush();
+        }
+        $this->renderApiJson(['success'=>true]);
+    }
+
+    /**
      * @Route("/actionProduct", name="rgk_post_product")
      * @Route("/actionProduct/{id}", name="rgk_action_product")
      */
@@ -177,7 +226,13 @@ class PriceController extends BaseController
             $product = new Product();
 
         $data = $request->request->get('product');
+        /**
+         * @var Section $section
+         */
         $section = (isset($data['section']) && $data['section']>0?$this->getDoctrine()->getRepository('RgkBundle:Section')->find(intval($data['section'])):null);
+        if($section->getFolder())
+            $this->renderApiJson(['error' => 'Ошибка передачи данных раздела']);
+
         $product->setTitle((isset($data['title'])?$data['title']:''))
                 ->setPrice((isset($data['price']) && $data['price']>0?floatval($data['price']):0))
                 ->setSection($section);
@@ -189,10 +244,13 @@ class PriceController extends BaseController
         $manager = $this->getDoctrine()->getManager();
         $manager->persist($product);
         $manager->flush();
-
+        if($request->get("_route") == 'rgk_post_product'){
+            $product->setPos($product->getId());
+            $manager->persist($product);
+            $manager->flush();
+        }
         $this->renderApiJson(['success'=>true]);
     }
-
 
     /**
      * @Route("/actionPrice", name="rgk_post_price")
@@ -330,8 +388,5 @@ class PriceController extends BaseController
         }
         return array_values($objects);
     }
-
-
-
 
 }

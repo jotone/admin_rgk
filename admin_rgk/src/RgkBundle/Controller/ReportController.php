@@ -8,6 +8,7 @@
 
 namespace RgkBundle\Controller;
 
+use RgkBundle\Entity\Section;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -42,28 +43,56 @@ class ReportController extends BaseController
     }
 
     /**
-     * @Route("/xls")
+     * @Route("/xls/{id}")
      */
-    public function xlsAction(){
-        // ask the service for a Excel5
+    public function xlsAction($id=0){
         /**
          * @var PHPExcel $phpExcelObject
          */
+        // section
+        $params['sections'] = $this->getDoctrine()
+            ->getRepository('RgkBundle:Section')
+            ->findBy(array(), array('title' => 'ASC'));
+
+        $active_section = false;
+        if(!empty($params['sections'])){
+            /**
+             * @var Section $a
+             */
+            foreach ($params['sections'] as &$a){
+                if($a->getId() == $id) {
+                    $active_section = $a;
+                    break;
+                }
+            }
+        }
+        if($active_section == false || $active_section->getFolder())
+            $this->renderApiJson(['error'=>'Ошибка передачи раздела']);
+
+        $params['sections'] = $this->menuStrict($params['sections']);
+        $sectionSpectre = $this->getSectionChildTreeIds($active_section->getId(),$params['sections']);
+        if(empty($sectionSpectre))
+            $this->renderApiJson(['error'=>'Ошибка передачи раздела']);
+
+        //get products of active section
+        $prod = $this->getDoctrine()
+            ->getRepository('RgkBundle:Product')
+            ->findBy(array('section'=>$sectionSpectre), array('pos' => 'ASC','title' => 'ASC','price'=>'ASC'));
+
+        // ask the service for a Excel5
         $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
         $phpExcelObject->getProperties()->setCreator("liuggio")
             ->setLastModifiedBy("Artoa")
-            ->setTitle("Отчет");
+            ->setTitle(sprintf('Отчет "%s"',$active_section->getTitle()));
         $phpExcelObject->setActiveSheetIndex(0);
 
         ///
-        $prod = $this->getDoctrine()
-            ->getRepository('RgkBundle:Product')
-            ->findBy([],['title' => 'ASC','price'=>'ASC']);
         if(!empty($prod)) {
-            $rivals = $this->getDoctrine()
-                ->getRepository('RgkBundle:Rival')
-                ->findBy([],['name' => 'ASC']);
+
+            //get all rivals array
+            $rivals = $this->getSectionsRival($sectionSpectre);
+
             $colorArray = array(
                 'fill' => array(
                     'type' => \PHPExcel_Style_Fill::FILL_SOLID,
@@ -139,7 +168,7 @@ class ReportController extends BaseController
         }
         ///
 
-        $phpExcelObject->getActiveSheet()->setTitle('Отчет');
+        $phpExcelObject->getActiveSheet()->setTitle(sprintf('Отчет "%s"',$active_section->getTitle()));
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $phpExcelObject->setActiveSheetIndex(0);
 
@@ -150,7 +179,7 @@ class ReportController extends BaseController
         // adding headers
         $dispositionHeader = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'stream-file.xls'
+            sprintf('report_%d.xls',$active_section->getId())
         );
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Pragma', 'public');

@@ -1,10 +1,10 @@
 {% extends 'RgkBundle:Admin:base.html.twig' %}
 {% macro recursiveMenu(section,parentid=0,active_section=0,depth=0) %}
     <li {% if depth == 1 %}class="active"{% endif %}>
-        {% if section.children|length %}
+        {% if section.folder %}
 
         <div class="wrap-title"><span class="icon icon_lplus"></span><span class="icon icon_folder"></span>
-            <a href="{{ path("rgk_price_section", {'id': section.id}) }}" data-id="{{ section.id }}" data-parentid="{{ (parentid>0?parentid:'') }}" class="folder_item {% if section.id == active_section %}active{% endif %}">{{ section.title }}</a>
+            <a href="javascript:void(0)" data-id="{{ section.id }}" data-parentid="{{ (parentid>0?parentid:'') }}" class="folder_item {% if section.id == active_section %}active{% endif %}">{{ section.title }}</a>
         </div>
 
             <ul>
@@ -24,74 +24,72 @@
 {% block content %}
     {% block sections %}
         <div class="content-left scroll-for-x pull-left litright">
-
-        <div class="lsep"></div>
-        <div class="tabs blueTabs">
-
-            <div class="tabs-window" data-utab="1">
-                <div class="catalogTop searchWrap smart">
-                    <div class="hsearch">
-                        <div class="search">
-                            <form onsubmit="return false;">
-                                <div class="search-button">
-                                    <input type="submit" value=""/>
+            <div class="lsep"></div>
+            <div class="tabs blueTabs">
+                <div class="tabs-window" data-utab="1">
+                    <div class="catalogTop searchWrap smart">
+                        <div class="hsearch">
+                            <div class="search">
+                                <form onsubmit="return false;">
+                                    <div class="search-button">
+                                        <input type="submit" value=""/>
+                                    </div>
+                                    <div class="searsh-input">
+                                        <input id="smartSearch" type="text" placeholder="Поиск"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lPopup popTroll" id="createMainGroup">
+                        <div class="title-main-group">
+                            Создать раздел верхнего уровня:
+                        </div>
+                        <div class="zForm zNice">
+                            <form>
+                                <div class="zForm-row">
+                                    <input type="text" required="required" name="name" placeholder="Название раздела"/>
                                 </div>
-                                <div class="searsh-input">
-                                    <input id="smartSearch" type="text" placeholder="Поиск"/>
+                                <div class="zForm-row">
+                                    <button><span>Создать</span></button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                </div>
-                <div class="lPopup popTroll" id="createMainGroup">
-                    <div class="title-main-group">
-                        Создать раздел верхнего уровня:
-                    </div>
-                    <div class="zForm zNice">
-                        <form>
-                            <div class="zForm-row">
-                                <input type="text" required="required" name="name" placeholder="Название раздела"/>
-                            </div>
-                            <div class="zForm-row">
-                                <button><span>Создать</span></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="catalogList-wrap">
-                    <div class="modalWindow smartSearch-modal">
-                        <ul>
-                            <li>
-                                <a href="#createItem" class="fancybox-popup">Создать товар</a>
-                            </li>
-                            <li>
-                                <a href="#createGroup" class="fancybox-popup">Создать группу</a>
-                            </li>
-                            <li>
-                                <a href="#" class="editItem">Редактировать</a>
-                            </li>
-                            <li>
-                                <a href="#" class="moveItem">Перемеситить</a>
-                            </li>
-                            <li>
-                                <a href="#deleteItem" class="fancybox-popup">Удалить</a>
-                            </li>
-                        </ul>
-                    </div>
-                    {% if sections %}
-                        <div class="catalogList">
-                            <ul class="main active" style="display: block;">
-                                {% for section in sections %}
-                                    {{ _self.recursiveMenu(section,0,active_section,1) }}
-                                {% endfor %}
+                    <div class="catalogList-wrap">
+                        <div class="modalWindow smartSearch-modal">
+                            <ul>
+                                <li>
+                                    <a href="#createItem" class="fancybox-popup">Создать товар</a>
+                                </li>
+                                <li>
+                                    <a href="#createGroup" class="fancybox-popup">Создать группу</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="editItem">Редактировать</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="moveItem">Перемеситить</a>
+                                </li>
+                                <li>
+                                    <a href="#deleteItem" class="fancybox-popup">Удалить</a>
+                                </li>
                             </ul>
                         </div>
-                    {% endif %}
+                        {% if sections %}
+                            <div class="catalogList">
+                                <ul class="main active" style="display: block;">
+                                    {% for section in sections %}
+                                        {{ _self.recursiveMenu(section,0,active_section,1) }}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
     {% endblock %}
     {% block product %}
         {% if products is defined %}
