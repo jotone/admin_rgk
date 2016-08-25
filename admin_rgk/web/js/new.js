@@ -211,7 +211,7 @@
                     url : "/actionSection/"+id,
                     dataType:"json",
                     data: {
-                        product:{
+                        section:{
                             title: title,
                             section: newId
                         }
@@ -286,7 +286,7 @@
                     url : "/actionSection/"+id,
                     dataType:"json",
                     data: {
-                        product:{
+                        section:{
                             title: title,
                             section: newId
                         }
@@ -325,21 +325,26 @@
                     return false;
                 });
             }
-            function createMainGroup() {
-                $(document).on('click', '#createMainGroup button', function (e) {
-                    var parentid = "";
-                    var text = $('#createMainGroup input[name=name]').val();
-                    finalAjaxCreateGroup(parentid, text);
-                });
+
+            function createSection(folder) {
+                var wrap_name = '#createGroupNew';
+                $(wrap_name+' .popupTitle').html((folder?'Создать папку':'Создать группу'));
+                $(wrap_name+' form').trigger("reset");
+                $(wrap_name+' input[name="section[folder]"]').val(folder);
+                $(wrap_name+' .zNice-select-text .zNice-select-item').text($(wrap_name+' form select option[value=""]').text());
+
+                $.fancybox.open(wrap_name);
             }
+
             function finalAjaxCreateGroup(parentId, title) {
                 $.ajax({
                     url : "/actionSection",
                     dataType:"json",
                     data: {
-                        product:{
+                        section:{
                             title: title,
-                            section: parentId
+                            section: parentId,
+                            folder: 0
                         }
                     },
                     type:'POST',
@@ -377,8 +382,9 @@
                         if (checkInput(inputs)){
                             var price = $('#createItem input[name="priceItem"]').val();
                             var text = $('#createItem input[name="newItem"]').val();
+                            var url = $('#createItem input[name="urlItem"]').val();
 
-                            finalAjaxCreateItem(parentId, text, price);
+                            finalAjaxCreateItem(parentId, text, price,url);
                             e.preventDefault();
                             return false;
                         }
@@ -399,7 +405,8 @@
 
 
                 }
-                function finalAjaxCreateItem(parentId, title, price) {
+                function finalAjaxCreateItem(parentId, title, price, url) {
+                    debugger;
                     $.ajax({
                         url : "/actionProduct",
                         dataType:"json",
@@ -407,7 +414,8 @@
                             product:{
                                 title: title,
                                 price: price,
-                                section: parentId
+                                section: parentId,
+                                url: url
                             }
                         },
                         type:'POST',
@@ -443,12 +451,14 @@
                     var parentid = obj.data('section');
                     var title = obj.data('name');
                     var price = obj.data('price');
-                    
+                    var url = obj.data('url');
+
                     var popup = $('#editTovar');
                     popup.find('input[name=name]').val(title);
                     popup.find('input[name=id]').val(id);
                     popup.find('input[name=parentid]').val(parentid);
                     popup.find('input[name=price]').val(price);
+                    popup.find('input[name=url]').val(url);
 
                     $.fancybox.open(popup);
 
@@ -460,6 +470,8 @@
                         var id = popup.find('input[name=id]').val();
                         var parentid = popup.find('input[name=parentid]').val();
                         var price = popup.find('input[name=price]').val();
+                        var url = popup.find('input[name=url]').val();
+
                         $.ajax({
                             url: "/actionProduct/" + id,
                             dataType: "json",
@@ -467,7 +479,8 @@
                                 product: {
                                     title: title,
                                     price: price,
-                                    section: parentid
+                                    section: parentid,
+                                    url: url
                                 }
                             },
                             type: 'POST',
@@ -905,7 +918,42 @@ function deleteRival(id) {
     }
 
 //  END END EDITING concurent price table
-createMainGroup();
+
+//
+function universalSubmit(form) {
+    debugger;
+    if(form.valid()){
+        var data = form.serialize();
+        $.ajax({
+            url : form.data('action'),
+            dataType:"json",
+            data: data,
+            type:'POST',
+            beforeSend:function () {
+                showPreloader();
+            },
+            success : function(data){
+                debugger;
+                $.fancybox.close();
+                if(typeof data.error != 'undefined'){
+                    hidePreloader();
+                    errorMessage(data.error);
+                }else if (typeof data.success != 'undefined'){
+                    location.reload();
+                } else{
+                    hidePreloader();
+                    console.log(data);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr, ajaxOptions, thrownError);
+                debugger;
+                location.reload();
+            }
+        });
+    }
+}
+//
 editTovarAjax();
 createCell();
 createPrice();

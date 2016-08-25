@@ -91,7 +91,7 @@ class ReportController extends BaseController
         if(!empty($prod)) {
 
             //get all rivals array
-            $rivals = $this->getSectionsRival($sectionSpectre);
+            $rivals = $this->getSectionsRival($sectionSpectre,$active_section);
 
             $colorArray = array(
                 'fill' => array(

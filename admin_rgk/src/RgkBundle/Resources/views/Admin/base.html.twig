@@ -49,12 +49,12 @@
 
     <div class="lPopup popTroll" id="creting-price">
         <div class="popupTitle">
-            Добавить цену
+            Добавить цену конкурента
         </div>
         <div class="report-form zForm zNice">
             <form>
                 <div class="zForm-row">
-                    Название товара:
+                    Название товара конкурента:
                 </div>
                 <div class="zForm-row">
                     <input type="text" required="required" name="name" placeholder="Название товара"/>
@@ -78,13 +78,11 @@
                     <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
                 </div>
                 <div class="zForm-row">
-                    <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
+                    <button class="submit-tmp" onsubmit="return false"><span>Сохранить</span></button>
                     <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
                 </div>
             </form>
         </div>
-
-
     </div>
 
 
@@ -93,8 +91,6 @@
     <div class="lPopup popTroll" id="deleteItem">
         <div class="popupTitle">
             <p>Вы уверены что хотите удалить раздел <span class="item-name"></span> ?</p>
-            <p><span class="subtitle"> Все товары из даного раздела будут удалены </span></p>
-            <p><span class="subtitle">Ну так что, удаляем?</span></p>
         </div>
         <div class="report-form zForm zNice">
                 <div class="zForm-row">
@@ -106,8 +102,6 @@
     <div class="lPopup popTroll" id="deleteTovar">
         <div class="popupTitle">
             <p>Вы уверены что хотите удалить товар <span class="item-name"></span> ?</p>
-
-            <p><span class="subtitle">Ну так что, удаляем?</span></p>
         </div>
         <div class="report-form zForm zNice">
             <div class="zForm-row">
@@ -145,7 +139,9 @@
                 <div class="zForm-row">
                     <input type="text" required="required" name="priceItem" class="priceItem" placeholder="Цена товара"/>
                 </div>
-
+                <div class="zForm-row">
+                    <input type="text" required="required" name="urlItem" class="urlItem" placeholder="Страница товара"/>
+                </div>
                 <div class="zForm-row">
                     <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
                     <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
@@ -173,7 +169,12 @@
                     <div class="zForm-row">
                         <input type="text" required="required" name="price" class="priceItem" placeholder="Цена товара"/>
                     </div>
-
+                    <div class="zForm-row">
+                        Страница товара:
+                    </div>
+                    <div class="zForm-row">
+                        <input type="text" required="required" name="url" class="priceItem" placeholder="Страница товара"/>
+                    </div>
                     <div class="zForm-row">
                         <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
                         <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>

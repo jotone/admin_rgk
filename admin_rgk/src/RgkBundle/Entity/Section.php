@@ -45,6 +45,12 @@ class Section
     private $folder=false;
 
     /**
+     * @var string
+     * @ORM\Column(name="sortInfo", type="string",nullable=true)
+     */
+    private $sortInfo;
+
+    /**
      * Get id
      *
      * @return int
@@ -77,7 +83,6 @@ class Section
     {
         return $this->title;
     }
-
 
     /**
      * Set parentSection
@@ -124,6 +129,30 @@ class Section
     public function getFolder()
     {
         return $this->folder;
+    }
+
+
+    /**
+     * Set sortInfo
+     *
+     * @param string $sortInfo
+     * @return Section
+     */
+    public function setSortInfo($sortInfo)
+    {
+        $this->sortInfo = $sortInfo;
+
+        return $this;
+    }
+
+    /**
+     * Get sortInfo
+     *
+     * @return string
+     */
+    public function getSortInfo()
+    {
+        return $this->sortInfo;
     }
 }
 

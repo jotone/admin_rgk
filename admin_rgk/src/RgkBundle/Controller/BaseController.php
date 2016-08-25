@@ -9,6 +9,7 @@
 namespace RgkBundle\Controller;
 
 use RgkBundle\Entity\User;
+use RgkBundle\Entity\Rival;
 use RgkBundle\Entity\Section;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -171,7 +172,7 @@ class BaseController extends Controller
         return $r;
     }
 
-    public function getSectionsRival($idArray){
+    public function getSectionsRival($idArray, $activeObj = false){
         $res = [];
         if(empty($idArray))
             return $res;
@@ -189,6 +190,35 @@ class BaseController extends Controller
             $res = $this->getDoctrine()
                 ->getRepository('RgkBundle:Rival')
                 ->findBy(array('id'=>array_map(function($a){return $a['id'];},$ideas)), array('name' => 'ASC'));
+
+            if($res && is_object($activeObj)){
+                $sortInfo = $activeObj->getSortInfo();
+                if(!empty($sortInfo)){
+                    $sortInfo = json_decode($sortInfo,true);
+                    if(is_array($sortInfo) && !empty($sortInfo)){
+                        $endStak = [];
+                        $resultStak = [];
+                        /**
+                         * @var Rival $r
+                         */
+                        foreach ($res as $r){
+                            $key = array_search($r->getId(),$sortInfo);
+                            if($key !== false){
+                                $resultStak[$key] = $r;
+                            } else {
+                                $endStak[] = $r;
+                            }
+                        }
+                        ksort($resultStak);
+                        if(!empty($endStak)){
+                            foreach ($endStak as $a){
+                                $resultStak[] = $a;
+                            }
+                        }
+                        $res = $resultStak;
+                    }
+                }
+            }
         }
         return $res;
     }

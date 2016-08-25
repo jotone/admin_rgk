@@ -20,7 +20,43 @@
         {% endif %}
     </li>
 {% endmacro %}
-
+{% macro folderOptions(section,depth=0) %}
+    {% if section.folder %}
+        <option value="{{ section.id }}">{% for i in 0..depth %}&nbsp;{% endfor %}{{ section.title }}</option>
+        {% set depth = depth + 1 %}
+        {% for child in section.children %}
+            {{ _self.folderOptions(child,depth) }}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+{% block zhidden %}
+    {{ parent() }}
+    <div class="lPopup popTroll" id="createGroupNew">
+        <div class="popupTitle">
+            Добавить группу
+        </div>
+        <div class="report-form zForm zNice">
+            <form data-action="{{ path('rgk_post_section') }}">
+                <input type="hidden" name="section[folder]" value="" />
+                <div class="zForm-row">
+                    <input type="text" required="required" name="section[title]" class="newGroup" placeholder="Название"/>
+                </div>
+                <div class="zForm-row">
+                    <select name="section[section]">
+                        <option value="">Корневой раздел</option>
+                        {% for section in sections %}
+                            {{ _self.folderOptions(section) }}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="zForm-row">
+                    <a class="button" onclick="universalSubmit($('#createGroupNew form')); return false;"><span>Добавить</span></a>
+                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
 {% block content %}
     {% block sections %}
         <div class="content-left scroll-for-x pull-left litright">
@@ -42,16 +78,11 @@
                         </div>
                     </div>
                     <div class="lPopup popTroll" id="createMainGroup">
-                        <div class="title-main-group">
-                            Создать раздел верхнего уровня:
-                        </div>
                         <div class="zForm zNice">
                             <form>
                                 <div class="zForm-row">
-                                    <input type="text" required="required" name="name" placeholder="Название раздела"/>
-                                </div>
-                                <div class="zForm-row">
-                                    <button><span>Создать</span></button>
+                                    <button onclick="createSection(1); return false;"><span>Создать папку</span></button>
+                                    <button onclick="createSection(0); return false;"><span>Создать группу</span></button>
                                 </div>
                             </form>
                         </div>
@@ -107,7 +138,7 @@
                                     <div class="table-td sTable-inner">Цена</div>
                                 </div>
                                 {% for product in products %}
-                                    <div class="table-row wdth" data-id="{{ product.id }}" data-section="{{ product.section?product.section.id:'' }}" data-name="{{ product.title }}" data-price="{{ product.price }}">
+                                    <div class="table-row wdth" data-id="{{ product.id }}" data-section="{{ product.section?product.section.id:'' }}" data-name="{{ product.title }}" data-price="{{ product.price }}" data-url="{{ product.url }}">
                                         <div class="table-td">
                                             <div class="closeWrap">
                                                 <a href="javascript:void (0)" onclick="editTovar($('.table-row[data-id={{ product.id }}]')); return false;" class="icon icon_edit rowEditing"></a>

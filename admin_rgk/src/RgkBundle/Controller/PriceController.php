@@ -19,6 +19,13 @@ use ParseBundle\Controller\ParseController;
 
 class PriceController extends BaseController
 {
+    public function getParent(Section $a){
+        $return = [$a->getId()];
+        if($a->getParentSection()){
+            $return = array_merge($return,$this->getParent($a->getParentSection()));
+        }
+        return $return;
+    }
     /**
      * @Route("/", name="rgk_price_index")
      * @Route("/section/{id}", name="rgk_price_section")
@@ -34,6 +41,7 @@ class PriceController extends BaseController
         $params['sections'] = $this->getDoctrine()
                                      ->getRepository('RgkBundle:Section')
                                      ->findBy(array(), array('title' => 'ASC'));
+        $activeObj = false;
         if(!empty($params['sections'])){
             /**
              * @var Section $a
@@ -43,26 +51,35 @@ class PriceController extends BaseController
                     if($a->getFolder())
                         return $this->redirectToRoute("rgk_price_index");
 
+                    $activeObj = $a;
                     $params['active_section_title'] = $a->getTitle();
                     $params['active_section_parent_id'] = ($a->getParentSection()?$a->getParentSection()->getId():'');
                     break;
                 }
             }
         }
-        $params['sections'] = $this->menuStrict($params['sections']);
+
         if($request->get("_route") == 'rgk_price_section'){
+            //get parent spectre
+            $parentSpectre = $this->getParent($activeObj);
+
+            //get all rivals array
+            $params['rivals'] = $this->getSectionsRival($parentSpectre,$activeObj);
+
+            $params['sections'] = $this->menuStrict($params['sections']);
+
             //get active section id with all children
             $sectionSpectre = $this->getSectionChildTreeIds($params['active_section'],$params['sections']);
             if(empty($sectionSpectre))
                 return $this->redirectToRoute("rgk_price_index");
 
-            //get all rivals array
-            $params['rivals'] = $this->getSectionsRival($sectionSpectre);
-
             //get products of active section
             $params['products'] = $this->getDoctrine()
                                        ->getRepository('RgkBundle:Product')
                                        ->findBy(array('section'=>$sectionSpectre), array('pos' => 'ASC','title' => 'ASC','price'=>'ASC'));
+        }
+        else {
+            $params['sections'] = $this->menuStrict($params['sections']);
         }
         return $this->render('RgkBundle:Admin:price.html.twig',$params);
     }
@@ -85,19 +102,53 @@ class PriceController extends BaseController
     }
 
     /**
+     * @Route("/actionSectionPos/{id}")
+     */
+    public function sectionPosAction(Request $request,$id=0)
+    {
+        if($request->getMethod() != 'POST'){
+            //if ajax
+            if ( $request->isXmlHttpRequest() )
+                $this->renderApiJson(['error'=>'invalidMethod']);
+            return $this->redirectToRoute('rgk_price_index');
+        }
+        /**
+         * @var Section $section
+         */
+        $section = $this->getDoctrine()
+            ->getRepository('RgkBundle:Section')
+            ->find(intval($id));
+        if(!$section)
+            $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+        $param = [];
+        if($a = $request->request->get('rivals')){
+            if(is_array($a) && !empty($a)){
+                $a = array_map(function($a){return intval($a);},$a);
+                $a = array_unique($a);
+                $a = array_filter($a,function($a){return ($a>0);});
+            }
+        }
+        $section->setSortInfo(json_encode($a));
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($section);
+        $manager->flush();
+
+        $this->renderApiJson(['success'=>true]);
+    }
+    /**
      * @Route("/actionSection", name="rgk_post_section")
      * @Route("/actionSection/{id}", name="rgk_action_section")
      */
     public function sectionAction(Request $request,$id=0)
     {
-
         if($request->getMethod() != 'POST' && $request->getMethod() != 'DELETE') {
             //if ajax
             if ( $request->isXmlHttpRequest() )
                 $this->renderApiJson(['error'=>'invalidMethod']);
             return $this->redirectToRoute('rgk_price_index');
         }
-        $data = $request->request->get('product');
+        $data = $request->request->get('section');
 
         if($request->get("_route") == 'rgk_action_section'){
             $section = $this->getDoctrine()
