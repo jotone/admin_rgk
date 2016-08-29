@@ -954,13 +954,50 @@ function universalSubmit(form) {
     }
 }
 //
+
+function checScript() {
+    $(document).on('change', '.check-script input', function () {
+        var form = $(this).closest('form');
+        if($(this).prop('checked')){
+
+           recursive($(this), form);
+        }else{
+            recursive2($(this), form);
+        }
+        function recursive(elem, form) {
+                var parent = elem.val();
+                console.log(parent);
+                if (parent.length>0) {
+                    form.find('.check-script input[data-parent-id = ' + parent + ']').each(function () {
+                        $(this).prop('checked', true);
+                        recursive($(this), form);
+                    });
+                }
+        }
+        function recursive2(elem, form) {
+            var parent = parseInt(elem.data('parent-id'));
+            console.log(parent);
+            if (parent>0) {
+
+                form.find('.check-script input[value = ' + parent + ']').each(function () {
+                    $(this).prop('checked', false);
+                    recursive2($(this), form);
+                });
+            }
+        }
+
+
+
+
+    })
+}
 editTovarAjax();
 createCell();
 createPrice();
 infoCell();
 editActiveSection();
 $(document).ready(function () {
-
+    checScript();
     hoverTableRow();
     oneWidth();
     setTimeout(function () {
