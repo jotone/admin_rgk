@@ -617,16 +617,29 @@ function selectToInput(popup) {
 
     var select = popup.find('select');
     var input = popup.find('input[name="rival[codeText]"]');
+    var delButtn = popup.find('.deletius');
     input.val(select.find('[selected]').text());
+    delButtn.attr({
+        'data-id':select.find('[selected]').val(),
+        'data-text':select.find('[selected]').text()
+    });
+    input.keyup( function () {
+        delButtn.addClass('notactive');
+    });
+
     select.change(function () {
 
         var id = select.val();
         var txt = select.find('option[value='+id+']').text();
-
+        delButtn.removeClass('notactive').attr({
+            'data-id':id,
+            'data-text':txt
+        });
         input.val(txt);
     });
 
 }
+
 function createRival(form) {
     
     if(form.valid()){
@@ -991,6 +1004,55 @@ function checScript() {
 
     })
 }
+
+
+function deleteCode() {
+    $('.deletius').click(function () {
+        var text = $(this).data('text');
+        var id = $(this).data('id');
+        $('#deleteCode .item-name').text('"'+text+'"');
+        $.fancybox.open('#deleteCode');
+        $(document).on('click', '#deleteCode button', function (e) {
+            finalAjaxDeleteCode(id);
+            e.preventDefault();
+            return false;
+        });
+    });
+
+}
+function finalAjaxDeleteCode(id) {
+    $.ajax({
+        url : "/app_dev.php/actionCode/"+id,
+        dataType:"json",
+        type:'DELETE',
+        beforeSend:function () {
+            showPreloader();
+
+        },
+        success : function(data){
+            $.fancybox.close();
+
+            if(typeof data.error != 'undefined') {
+                hidePreloader();
+                errorMessage(data.error);
+            }else if (typeof data.success != 'undefined') {
+                console.log('succes deleting item id--> ' + id);
+                location.reload();
+            }else{
+                hidePreloader();
+                errorMessage(data);
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+
+            console.log(xhr);
+            console.log(ajaxOptions);
+            console.log(thrownError);
+            location.reload();
+
+        }
+    });
+}
 editTovarAjax();
 createCell();
 createPrice();
@@ -1006,6 +1068,7 @@ $(document).ready(function () {
     clickOnPlus();
     blockContextMenu();
     search();
+    deleteCode();
 
 
 

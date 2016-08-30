@@ -521,14 +521,25 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .form-col{width: 49%; display: inline-block; vertical-align: top; margin-bottom: 25px; }
 .form-col-scrolled{ position: absolute; top: 0; right: 0; height: calc(100% - 50px);}
 .toselect{ position: absolute;top: 0;
-    width: calc(100% - 34px);}
+    width: calc(100% - 54px); left: 20px;}
 .toselect-wrap{ position: relative;}
 .smash-container{ overflow-y: scroll; overflow-x: auto; border: 1px solid #eee; height: calc(100% - 37px);}
 .nowrap{white-space: nowrap;}
 .check-troll { position: relative; padding-left: 17px;}
 .check-troll-wrap input{ opacity: 0;}
-.check-troll-wrap input:checked + .check-troll:after{ display: block;}
-.check-troll:before{content:''; position: absolute; display: block; width: 10px; height: 10px; border:1px solid #333; border-radius: 2px; top: 0; left: 0; cursor: pointer;}
-.check-troll:after{content:''; position: absolute; width: 10px; height: 5px; border-bottom:3px solid #f00; border-left:3px solid #f00; top: 0; left: 0; display: none;transform:rotate(-45deg);}
-.childCheckbox{width: 10px; height: 25px; border-bottom:1px solid #333; border-left:1px solid #333; top: 0; left: 0;display: inline-block;   vertical-align: top;    margin-top: 5px;    margin-right: 0px;left: -13px;
+.check-troll-wrap input:checked + .check-troll:after{opacity: 1;}
+.check-troll-wrap input:checked ~ .nbsp + .check-troll:after{opacity: 1;}
+.check-troll:before{content:''; position: absolute; display: block; width: 10px; height: 10px; border:1px solid #333; border-radius: 2px; top: 0; left: 0; cursor: pointer; background-color: #fff; z-index:20;}
+.check-troll:after{content:''; position: absolute; display: block; width: 10px; height: 5px; border-bottom:3px solid #f00; border-left:3px solid #f00; top: 0; left: 0; opacity:0; transform:rotate(-45deg);z-index: 25;}
+.childCheckbox{width: 10px; height: 1px; display: inline-block;   vertical-align: top;    margin-top: 5px; background-color: #333; left: -8px;
     bottom: 8px; position: absolute;}
+.nbsp{ width: 10px; height: 10px; display: inline-block; position: relative;}
+.nbsp:before{content: ''; display: block; width: 1px; height: 29px; background-color: #333; position: absolute; bottom: 5px; left: 5px; }
+.deletius{ position: absolute; left: 0; height: 100%; width: 20px; background-color: #fff; top: 0; z-index: 50; cursor:pointer; pointer-events: auto;}
+.deletius:before,
+.deletius:after{ position: absolute; width: 15px; height: 3px; background-color: #f00; border-radius: 2px; overflow: hidden; content: ''; display: block; top: 16px; opacity:1;}
+.deletius:before{transform:rotate(-45deg);}
+.deletius:after{transform:rotate(45deg);}
+.deletius.notactive{pointer-events: none;}
+.deletius.notactive:before,
+.deletius.notactive:after{opacity: 0;}

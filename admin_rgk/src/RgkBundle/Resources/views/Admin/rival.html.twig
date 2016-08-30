@@ -1,7 +1,7 @@
 {% extends 'RgkBundle:Admin:base.html.twig' %}
 {% macro recursiveSectionList(section,active=[],depth=0) %}
     <div class="zForm-row tal nowrap check-script check-troll-wrap">
-        <label><input type="checkbox" name="rival[section][]" value="{{ section.id }}" {{ (section.id in active?'checked="checked"':'') }} data-parent-id="{{ section.parent_id }}"/>{% for i in 0..depth %}&nbsp;&nbsp;&nbsp;{% endfor %}<span class="check-troll">{{ (depth?'<span class="childCheckbox"></span>':'')|raw }}{{ section.title }}</span></label>
+        <label><input type="checkbox" name="rival[section][]" value="{{ section.id }}" {{ (section.id in active?'checked="checked"':'') }} data-parent-id="{{ section.parent_id?section.parent_id:0 }}"/>{% for i in 0..depth %} {{ (i?'<span class="nbsp"></span>':'')|raw }}  {% endfor %}<span class="check-troll">{{ (depth?'<span class="childCheckbox"></span>':'')|raw }}{{ section.title }}</span></label>
     </div>
     {% if section.children|length %}
         {% set chaildDepth = depth + 1 %}
@@ -118,7 +118,8 @@
                                                         Код:
                                                     </div>
                                                     <div class="toselect-wrap">
-                                                        <div class="zForm-row ">
+                                                        <div class="deletius"></div>
+                                                        <div class="zForm-row">
                                                             <select name="rival[code]" class="formstyler">
                                                                 {% for code in rival.code %}
                                                                     <option value="{{ code.id }}" {{ (code.def?'selected':'') }}>{{ code.code }} <div class="delete-this"></div></option>
