@@ -78,13 +78,15 @@
                         </div>
                     </div>
                     <div class="lPopup popTroll" id="createMainGroup">
-                        <div class="zForm zNice">
-                            <form>
+                        <div class="one-row-buttons">
+
                                 <div class="zForm-row">
                                     <button onclick="createSection(1); return false;"><span>Создать папку</span></button>
+                                </div>
+                                <div class="zForm-row">
                                     <button onclick="createSection(0); return false;"><span>Создать группу</span></button>
                                 </div>
-                            </form>
+
                         </div>
                     </div>
                     <div class="catalogList-wrap">
@@ -93,7 +95,7 @@
                                 <li>
                                     <a href="#createItem" class="fancybox-popup">Создать товар</a>
                                 </li>
-                                <li>
+                                <li class="creative-menu-punct">
                                     <a href="#createGroup" class="fancybox-popup">Создать группу</a>
                                 </li>
                                 <li>
@@ -131,7 +133,26 @@
                 <div class="lsep"></div>
                 <div class="tables-wrap">
                     {% if products|length %}
-                        <div class="sTable bTable Add-on_price">
+                        <div class="sTable bTable Add-on_price tables-wraper">
+                            <div class="modalWindow-tovar tovar-modal">
+                                <ul>
+                                    <li>
+                                        <a href="#" class="editingTovar">Редактировать</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="createConcurent">Создать конкурента</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="moveUpTovar">Перемеситить вверх</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="moveDownTovar">Перемеситить вниз</a>
+                                    </li>
+                                    <li>
+                                        <a href="#deleteTovar" class="deletingTovar fancybox-popup">Удалить</a>
+                                    </li>
+                                </ul>
+                            </div>
                             <div class="table-new-one">
                                 <div class="table-head wdth">
                                     <div class="table-td"><a href="#createItem" onclick="createItem({{ active_section }})" class="sTable-inner grayBg fancybox-popup"><span class="icon icon_litplus pull-left"></span>ТОВАР</a></div>
@@ -140,10 +161,7 @@
                                 {% for product in products %}
                                     <div class="table-row wdth" data-id="{{ product.id }}" data-section="{{ product.section?product.section.id:'' }}" data-name="{{ product.title }}" data-price="{{ product.price }}" data-url="{{ product.url }}">
                                         <div class="table-td">
-                                            <div class="closeWrap">
-                                                <a href="javascript:void (0)" onclick="editTovar($('.table-row[data-id={{ product.id }}]')); return false;" class="icon icon_edit rowEditing"></a>
-                                                <a href="#deleteTovar" onclick="deleteTovar({{ product.id }}, '{{ product.title }}' );" class="close-conc2 fancybox-popup"><span class="icon icon_close"></span></a>
-                                            </div>
+
                                             {% if product.url is defined and product.url is not empty %}
                                                 <a href="{{ product.url }}" target="_blank" class="linkProduct">
                                                     {{ product.title }}
@@ -165,9 +183,11 @@
                         {% if rivals %}
                             <div class="new-table-price">
                                 <div class="table-new-two">
-                                    <div class="table-head  cfix wdth">
+                                    <div class="table-head  cfix wdth" data-name="{{ active_section_title }}" data-section="{{ active_section }}">
+                                        {%  set pos = 0 %}
                                         {% for rival in rivals %}
-                                            <div class="table-td">{{ rival.name }}</div>
+                                            {% set pos = pos +1 %}
+                                            <div class="table-td" data-pos="{{ pos }}" data-id="{{ rival.id }}" data-name="{{ rival.name }}" ><div class="moveConc">M</div>{{ rival.name }}<div class="delConc">X</div></div>
                                         {% endfor %}
                                         <script>
                                             var revalCodes = {

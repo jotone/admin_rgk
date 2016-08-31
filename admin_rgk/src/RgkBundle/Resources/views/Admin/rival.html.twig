@@ -1,7 +1,7 @@
 {% extends 'RgkBundle:Admin:base.html.twig' %}
 {% macro recursiveSectionList(section,active=[],depth=0) %}
-    <div class="zForm-row">
-        <label><input type="checkbox" name="rival[section][]" value="{{ section.id }}" {{ (section.id in active?'checked="checked"':'') }} data-parent-id="{{ section.parent_id }}"/>{% for i in 0..depth %}&nbsp;{% endfor %}{{ section.title }}</label>
+    <div class="zForm-row tal nowrap check-script check-troll-wrap">
+        <label><input type="checkbox" name="rival[section][]" value="{{ section.id }}" {{ (section.id in active?'checked="checked"':'') }} data-parent-id="{{ section.parent_id?section.parent_id:0 }}"/>{% for i in 0..depth %} {{ (i?'<span class="nbsp"></span>':'')|raw }}  {% endfor %}<span class="check-troll">{{ (depth?'<span class="childCheckbox"></span>':'')|raw }}{{ section.title }}</span></label>
     </div>
     {% if section.children|length %}
         {% set chaildDepth = depth + 1 %}
@@ -33,7 +33,9 @@
                     <input type="text" minlength="3" required="required" placeholder="Код" name="rival[codeText]"/>
                 </div>
                 {# col 2 #}
+
                 {% if sections is defined %}
+
                     {% for section in sections %}
                         {{ _self.recursiveSectionList(section) }}
                     {% endfor %}
@@ -97,50 +99,65 @@
                             <div class="closeWrap">
                                 <div class="zHiddenBlock">
                                     <div class="row-modal-window" id="modal{{ rival.id }}">
-                                        <div class="zForm zNice">
+                                        <div class="zForm">
                                             <form data-action="/app_dev.php/actionRival/{{ rival.id }}">
-                                                <div class="zForm-row">
-                                                    Название:
+                                                <div class="form-col zNice">
+                                                    <div class="zForm-row">
+                                                        Название:
+                                                    </div>
+                                                    <div class="zForm-row">
+                                                        <input type="text" required="required" placeholder="Название" name="rival[name]" value="{{ rival.name }}"/>
+                                                    </div>
+                                                    <div class="zForm-row">
+                                                        URL:
+                                                    </div>
+                                                    <div class="zForm-row">
+                                                        <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]" value="{{ rival.url }}"/>
+                                                    </div>
+                                                    <div class="zForm-row">
+                                                        Код:
+                                                    </div>
+                                                    <div class="toselect-wrap">
+                                                        <div class="deletius"></div>
+                                                        <div class="zForm-row">
+                                                            <select name="rival[code]" class="formstyler">
+                                                                {% for code in rival.code %}
+                                                                    <option value="{{ code.id }}" {{ (code.def?'selected':'') }}>{{ code.code }} <div class="delete-this"></div></option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="zForm-row toselect">
+                                                            <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="zForm-row">
-                                                    <input type="text" required="required" placeholder="Название" name="rival[name]" value="{{ rival.name }}"/>
+                                                <div class="form-col form-col-scrolled">
+                                                    <div class="zForm-row">
+                                                        Разделы
+                                                    </div>
+                                                    <div class="smash-container">
+                                                        {# col 2 #}
+                                                        {% if sections is defined %}
+                                                            {% for section in sections %}
+                                                                {{ _self.recursiveSectionList(section,rival.sectionsArrayId) }}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                        {# col 2 end #}
+                                                    </div>
+
                                                 </div>
-                                                <div class="zForm-row">
-                                                    URL:
-                                                </div>
-                                                <div class="zForm-row">
-                                                    <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]" value="{{ rival.url }}"/>
-                                                </div>
-                                                <div class="zForm-row">
-                                                    Код:
-                                                </div>
-                                                <div class="zForm-row ">
-                                                    <select name="rival[code]" class="formstyler">
-                                                        {% for code in rival.code %}
-                                                            <option value="{{ code.id }}" {{ (code.def?'selected':'') }}>{{ code.code }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                                <div class="zForm-row ">
-                                                    <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
-                                                </div>
-                                                {# col 2 #}
-                                                {% if sections is defined %}
-                                                    {% for section in sections %}
-                                                        {{ _self.recursiveSectionList(section,rival.sectionsArrayId) }}
-                                                    {% endfor %}
-                                                {% endif %}
-                                                {# col 2 end #}
-                                                <div class="zForm-row">
+                                                <div class="zForm-row zNice">
                                                     <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#modal{{ rival.id }} form')); return false;"/>
                                                     <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
                                                 </div>
+
+
                                             </form>
                                         </div>
 
                                     </div>
                                 </div>
-                                <a href="javascript:void(0);" onclick="deleteRivalAlert({{ rival.id }});" class="close-conc"><span class="icon icon_close"></span></a>
+
                             </div>
                         </td>
                         <td>
@@ -149,6 +166,9 @@
                                     {{ section.title }}{{ (loop.last?'':',') }}
                                 {% endfor %}
                             {% endif %}
+                            <div class="closeWrap rel-td">
+                                <a href="javascript:void(0);" onclick="deleteRivalAlert({{ rival.id }});" class="close-conc"><span class="icon icon_close"></span></a>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}

@@ -215,10 +215,15 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 
 
 
-.modalWindow{position: absolute;background: #fff;-webkit-box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);padding: 17px 15px 5px 15px;min-width: 122px;display: none;}
+.modalWindow-tovar,
+.modalWindow{position: absolute;background: #fff;-webkit-box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);padding: 17px 15px 5px 15px;min-width: 122px;display: none;z-index: 150;}
+.modalWindow-tovar ul li,
 .modalWindow ul li{margin-bottom: 12px;}
+.modalWindow-tovar ul li:last-child,
 .modalWindow ul li:last-child{margin-bottom: 8px;}
+.modalWindow-tovar ul li a,
 .modalWindow ul li a{font-size: 12px;font-weight: 300;text-decoration: none;color: #43525a;}
+.modalWindow-tovar ul li a:hover,
 .modalWindow ul li a:hover{text-decoration: underline;}
 
 /*popups*/
@@ -286,7 +291,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .productEdit-line-text.productEdit-url,.productEdit-line-text.productEdit-url input{color:#004a80;}
 .linkProduct{color: #7d8ebd;max-width: 224px;text-overflow: ellipsis;white-space: nowrap;display: block;margin: 0 auto;overflow: hidden;}
 .Add-on_price.sTable  tr{ position: relative;}
-.prodTable table thead td,.konkTable table thead td{width: 33.33333%;font-size: 14px;}
+.prodTable table thead td,.konkTable table thead td{width: 25%;font-size: 14px;}
 .prodTable table td,.konkTable table td{font-size: 13px;text-align: center!important;}
 .prodTable .icon_litplus,.konkTable thead .icon{margin:0 10px;}
 .konkTable thead .icon{margin-left: -15px;}
@@ -415,7 +420,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .table-row:hover .closeWrap .icon{ display: block;}
 .hover,
 .table-row:hover{background: #d4e8f1; }
-.table-new-two .table-td{ display: inline-block; min-width: 100px; margin-left: -2px; text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
+.table-new-two .table-td{ display: inline-block; min-width: 100px; margin-left: -2px; text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 21px;vertical-align: top; position: relative;}
 .table-new-two .table-td:hover{ background: #86a4b1;}
 .table-new-one .table-td{width: 85px; display: inline-block; margin-left: -2px;text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
 .table-new-one .table-td:first-child{width: 220px; }
@@ -467,8 +472,8 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .close-conc{ position: absolute; left: 100%;height: 35px;    width: 20px;    top: -24px;    display: block; cursor:pointer;}
 
 .closeWrap .icon.rowEditing{ left: -20px;}
-
-.row-modal-window{width: 270px;}
+.tal{text-align: left}
+.row-modal-window{width: 540px;}
 .selectinput{ position: relative;}
 .inputstyle{width: calc(100% - 35px);}
 .select-styler{ position: absolute; top: 0; left: 0;}
@@ -514,6 +519,42 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .jq-selectbox__trigger-arrow{ display: none;}
 
 #createMainGroup .zForm-row{ width: 49%;display: inline-block; margin-bottom: 0;  text-align: left;}
-#createMainGroup.popTroll button{ height: 27px; line-height: 27px; margin-left: -4px;}
+#createMainGroup.popTroll button{ height: 27px; line-height: 27px; margin-left: -4px; white-space: nowrap; font-size: 9px;}
 .title-main-group{ font-size: 10px; border-top: 1px solid #d1d2d2;    padding: 10px 0 5px 2px;}
 
+
+.form-col{width: 49%; display: inline-block; vertical-align: top; margin-bottom: 25px; }
+.form-col-scrolled{ position: absolute; top: 0; right: 0; height: calc(100% - 50px);}
+.toselect{ position: absolute;top: 0;
+    width: calc(100% - 54px); left: 20px;}
+.toselect-wrap{ position: relative;}
+.smash-container{ overflow-y: scroll; overflow-x: auto; border: 1px solid #eee; height: calc(100% - 37px);}
+.nowrap{white-space: nowrap;}
+.check-troll { position: relative; padding-left: 17px;}
+.check-troll-wrap input{ opacity: 0;}
+.check-troll-wrap input:checked + .check-troll:after{opacity: 1;}
+.check-troll-wrap input:checked ~ .nbsp + .check-troll:after{opacity: 1;}
+.check-troll:before{content:''; position: absolute; display: block; width: 10px; height: 10px; border:1px solid #333; border-radius: 2px; top: 0; left: 0; cursor: pointer; background-color: #fff; z-index:20;}
+.check-troll:after{content:''; position: absolute; display: block; width: 10px; height: 5px; border-bottom:3px solid #f00; border-left:3px solid #f00; top: 0; left: 0; opacity:0; transform:rotate(-45deg);z-index: 25;}
+.childCheckbox{width: 10px; height: 1px; display: inline-block;   vertical-align: top;    margin-top: 5px; background-color: #333; left: -8px;
+    bottom: 8px; position: absolute;}
+.nbsp{ width: 10px; height: 10px; display: inline-block; position: relative;}
+.nbsp:before{content: ''; display: block; width: 1px; height: 29px; background-color: #333; position: absolute; bottom: 5px; left: 5px; }
+.deletius{ position: absolute; left: 0; height: 100%; width: 20px; background-color: #fff; top: 0; z-index: 50; cursor:pointer; pointer-events: auto;}
+.deletius:before,
+.deletius:after{ position: absolute; width: 15px; height: 3px; background-color: #f00; border-radius: 2px; overflow: hidden; content: ''; display: block; top: 16px; opacity:1;}
+.deletius:before{transform:rotate(-45deg);}
+.deletius:after{transform:rotate(45deg);}
+.deletius.notactive{pointer-events: none;}
+.deletius.notactive:before,
+.deletius.notactive:after{opacity: 0;}
+.one-row-buttons{width: 100%; padding: 0 20px;}
+#creting-price .select{width: calc(100% - 20px);    margin-left: 20px;}
+#creting-price .deletius{z-index: 150;}
+#creting-price .toselect{z-index: 150;}
+#creting-price .jq-selectbox__select {height: 34px;}
+.moveConc{ position: absolute; top: 3px; left: 3px; width: 13px; height: 13px; background-color: #00f; cursor:pointer; color: #fff; text-align: center;}
+.delConc{ position: absolute; top: 19px; left: 3px; width: 13px; height: 13px; background-color: #f00; cursor:pointer; color: #fff; text-align: center;}
+#moveConc{width: 600px;}
+.item-draggable{ border: 1px solid #333;    border-radius: 5px;    display: inline-block;    padding: 2px 5px; cursor:pointer; margin:2px;}
+.item-draggable.active{ background-color: #f88;}

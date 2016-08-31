@@ -72,6 +72,13 @@
         var el = document.querySelectorAll('.catalogList a');
         for(var i = 0; i<el.length; i++){
             el[i].addEventListener('contextmenu', function(event) {
+                if($(this).hasClass('folder_item')){
+                    $('.modalWindow.smartSearch-modal li:first-child').attr('style','display:none');
+                    $('.modalWindow.smartSearch-modal .creative-menu-punct').removeAttr('style');
+                }else{
+                    $('.modalWindow.smartSearch-modal li:first-child').removeAttr('style');
+                    $('.modalWindow.smartSearch-modal .creative-menu-punct').attr('style','display:none');
+                }
                 event = event || window.event;
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
                 var itemId = $(this).attr('data-id'),
@@ -368,7 +375,7 @@
                         console.log(xhr);
                         console.log(ajaxOptions);
                         console.log(thrownError);
-                        debugger;
+                        
                         location.reload();
 
                     }
@@ -406,7 +413,7 @@
 
                 }
                 function finalAjaxCreateItem(parentId, title, price, url) {
-                    debugger;
+                    
                     $.ajax({
                         url : "/actionProduct",
                         dataType:"json",
@@ -446,21 +453,25 @@
                         }
                     });
                 }
-                function editTovar(obj) {
-                    var id = obj.data('id');
-                    var parentid = obj.data('section');
-                    var title = obj.data('name');
-                    var price = obj.data('price');
-                    var url = obj.data('url');
+                function editTovar(obj) { //редактирование товара
+                    $(document).on('click', '.editingTovar', function () {
 
-                    var popup = $('#editTovar');
-                    popup.find('input[name=name]').val(title);
-                    popup.find('input[name=id]').val(id);
-                    popup.find('input[name=parentid]').val(parentid);
-                    popup.find('input[name=price]').val(price);
-                    popup.find('input[name=url]').val(url);
+                        var id = obj.data('id');
+                        var parentid = obj.data('section');
+                        var title = obj.data('name');
+                        var price = obj.data('price');
+                        var url = obj.data('url');
 
-                    $.fancybox.open(popup);
+                        var popup = $('#editTovar');
+                        popup.find('input[name=name]').val(title);
+                        popup.find('input[name=id]').val(id);
+                        popup.find('input[name=parentid]').val(parentid);
+                        popup.find('input[name=price]').val(price);
+                        popup.find('input[name=url]').val(url);
+
+                        $.fancybox.open(popup);
+                    });
+
 
                 }
                 function editTovarAjax() {
@@ -514,7 +525,7 @@
                         return false;
                     });
                 }
-                function deleteTovar(id, text) {
+                function deleteTovar(id, text) { //удаление товара
                     $('#deleteTovar .item-name').text('"'+text+'"');
                     $(document).on('click', '#deleteTovar button', function (e) {
                         finalAjaxDeleteTovar(id);
@@ -617,16 +628,32 @@ function selectToInput(popup) {
 
     var select = popup.find('select');
     var input = popup.find('input[name="rival[codeText]"]');
-    input.val(select.find('[selected]').text());
+
+    var delButtn = popup.find('.deletius');
+    var id = select.val();
+    var txt = select.find('option[value='+id+']').text();
+    delButtn.removeClass('notactive').attr({
+        'data-id':id,
+        'data-text':txt
+    });
+    input.val(txt);
+    input.keyup( function () {
+        delButtn.addClass('notactive');
+    });
+
     select.change(function () {
 
         var id = select.val();
         var txt = select.find('option[value='+id+']').text();
-
+        delButtn.removeClass('notactive').attr({
+            'data-id':id,
+            'data-text':txt
+        });
         input.val(txt);
     });
 
 }
+
 function createRival(form) {
     
     if(form.valid()){
@@ -766,7 +793,7 @@ function deleteRival(id) {
 
         });
     }
-    function editInfoCell(obj, priceid) {
+    function editInfoCell(obj, priceid) { // редактирование ячейки цены конкурента
         $(document).on('click', '.productEdit .editButton', function (e) {
             var codeId = obj.data('price-code');
             var rival = obj.data('rival-id');
@@ -833,7 +860,7 @@ function deleteRival(id) {
             });
         });
     }
-    function createCell() {
+    function createCell() {  // нередактированая ячейка цены конкурента
         $(document).on('click', '.creatingPopup', function () {
 
             var rival = $(this).data('rival-id');
@@ -861,7 +888,7 @@ function deleteRival(id) {
 
         });
     }
-    function createPrice() {
+    function createPrice() { //создание цены
 
         $(document).on('click', '#creting-price button', function (e) {
 
@@ -921,7 +948,7 @@ function deleteRival(id) {
 
 //
 function universalSubmit(form) {
-    debugger;
+    
     if(form.valid()){
         var data = form.serialize();
         $.ajax({
@@ -933,7 +960,7 @@ function universalSubmit(form) {
                 showPreloader();
             },
             success : function(data){
-                debugger;
+                
                 $.fancybox.close();
                 if(typeof data.error != 'undefined'){
                     hidePreloader();
@@ -947,20 +974,307 @@ function universalSubmit(form) {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr, ajaxOptions, thrownError);
-                debugger;
+                
                 location.reload();
             }
         });
     }
 }
 //
+//логика чекбоксов в попапе конкурентов
+function checScript() {
+    $(document).on('change', '.check-script input', function () {
+        var form = $(this).closest('form');
+        if($(this).prop('checked')){
+
+           recursive($(this), form);
+        }else{
+            recursive2($(this), form);
+        }
+        function recursive(elem, form) {
+                var parent = elem.val();
+                console.log(parent);
+                if (parent.length>0) {
+                    form.find('.check-script input[data-parent-id = ' + parent + ']').each(function () {
+                        $(this).prop('checked', true);
+                        recursive($(this), form);
+                    });
+                }
+        }
+        function recursive2(elem, form) {
+            var parent = parseInt(elem.data('parent-id'));
+            console.log(parent);
+            if (parent>0) {
+
+                form.find('.check-script input[value = ' + parent + ']').each(function () {
+                    $(this).prop('checked', false);
+                    recursive2($(this), form);
+                });
+            }
+        }
+
+
+
+
+    })
+}
+// END логика чекбоксов в попапе конкурентов
+//удаление кода
+function deleteCode() {
+    $('.deletius').click(function () {
+        var text = $(this).data('text');
+        var id = $(this).data('id');
+        $('#deleteCode .item-name').text('"'+text+'"');
+        $.fancybox.open('#deleteCode');
+        $(document).on('click', '#deleteCode button', function (e) {
+            finalAjaxDeleteCode(id);
+            e.preventDefault();
+            return false;
+        });
+    });
+
+}
+function finalAjaxDeleteCode(id) {
+    $.ajax({
+        url : "/app_dev.php/actionCode/"+id,
+        dataType:"json",
+        type:'DELETE',
+        beforeSend:function () {
+            showPreloader();
+
+        },
+        success : function(data){
+            $.fancybox.close();
+
+            if(typeof data.error != 'undefined') {
+                hidePreloader();
+                errorMessage(data.error);
+            }else if (typeof data.success != 'undefined') {
+                console.log('succes deleting item id--> ' + id);
+                location.reload();
+            }else{
+                hidePreloader();
+                errorMessage(data);
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+
+            console.log(xhr);
+            console.log(ajaxOptions);
+            console.log(thrownError);
+            location.reload();
+
+        }
+    });
+}
+// END удаление кода
+//контекстное меню товара
+function contextMenuTovar() {
+    var el = document.querySelectorAll('.table-new-one .table-row');
+    for(var i = 0; i<el.length; i++){
+        el[i].addEventListener('contextmenu', function(event) {
+
+            event = event || window.event;
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            var obj = $(this);
+            var id = obj.data('id');
+            var text = obj.data('name');
+
+            var pos = $('.tables-wraper').offset(),
+                elem_left = pos.left,
+                elem_top = pos.top,
+                Xinner = event.pageX - elem_left,
+                Yinner = event.pageY - elem_top;
+            if(!$(this).hasClass('activeCont')){
+                starterContextTovarFunctional(obj, id, text);
+
+            }
+            $('.table-new-one .table-row').removeClass('activeCont');
+            $(this).addClass('activeCont');
+            $('.modalWindow-tovar').css({'display':'block','left':Xinner,'top':Yinner}).attr('data-id',id);
+
+
+            return false;
+        }, false);
+    }
+}
+function starterContextTovarFunctional(obj, id, text) {
+    editTovar(obj);
+    $(document).on('click', '.createConcurent', function () {
+        var hidden = obj.data('section');
+        $('#addConcurent input[name="rival[section][0]"]').val(hidden);
+        $.fancybox.open('#addConcurent');
+    });
+    $(document).on('click', '.moveUpTovar', function () {
+        var z = 1;
+        finalAjaxMoveTovar(id, z);
+    });
+    $(document).on('click', '.moveDownTovar', function () {
+        var z = 0;
+        finalAjaxMoveTovar(id, z);
+    });
+    $(document).on('click', '.deletingTovar', function () {
+               deleteTovar(id,text);
+    });
+
+}
+function finalAjaxMoveTovar(id, z) {
+    $.ajax({
+        url : "/app_dev.php/actionProductPos/"+id,
+        data:{
+            up:z
+        },
+        type:'POST',
+        beforeSend:function () {
+            showPreloader();
+
+        },
+        success : function(data){
+           if(typeof data.error != 'undefined') {
+                hidePreloader();
+                errorMessage(data.error);
+            }else if (typeof data.success != 'undefined') {
+                console.log('succes moved item id--> ' + id);
+                location.reload();
+            }else{
+                hidePreloader();
+                errorMessage(data);
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+
+            console.log(xhr);
+            console.log(ajaxOptions);
+            console.log(thrownError);
+            location.reload();
+
+        }
+    });
+}
+//END контекстное меню товара
+//перемещение цен конкурента 
+
+function moveConc() {
+    $(document).on('click', '#moveConc button', function () {
+        var mass = [];
+        var id = $('#moveConc input[type="hidden"]').val();
+        $('#moveConc .item-draggable').each(function () {
+            mass.push($(this).data('id'));
+        });
+        
+        $.ajax({
+            url : "/app_dev.php/actionSectionPos/"+id,
+            data:{
+                rivals:mass
+            },
+            type:'POST',
+            beforeSend:function () {
+                showPreloader();
+
+            },
+            success : function(data){
+                if(typeof data.error != 'undefined') {
+                    hidePreloader();
+                    errorMessage(data.error);
+                }else if (typeof data.success != 'undefined') {
+
+                    location.reload();
+                }else{
+                    hidePreloader();
+                    errorMessage(data);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+
+                console.log(xhr);
+                console.log(ajaxOptions);
+                console.log(thrownError);
+                location.reload();
+
+            }
+        });
+        
+    });
+    $(document).on('click', '.moveConc', function () {
+        var itemId = $(this).closest('.table-td').data('id');
+        var sectid = $(this).closest('.table-head').data('section');
+        var content= '';
+        $('.table-new-two .table-head .table-td').each(function () {
+            var id = $(this).data('id');
+            var name = $(this).data('name');
+            if(itemId == id){
+                content = content + '<div class="item-draggable active" data-id="'+id+'"><span>'+name+'</span></div>';
+            }else {
+                content = content + '<div class="item-draggable" data-id="' + id + '"><span>' + name + '</span></div>';
+            }
+        });
+        $('#moveConc .list-items').html(content);
+        $('#moveConc input[type="hidden"]').val(sectid);
+
+        $.fancybox.open('#moveConc', {
+            afterShow: function () {
+                $('#moveConc .list-items').sortable();
+            }
+        });
+    });
+
+}
+function delConc() {
+    $(document).on('click', '.delConc', function () {
+        var itemId = $(this).closest('.table-td').data('id');
+        var itemName = $(this).closest('.table-td').data('name');
+        var sectid = $(this).closest('.table-head').data('section');
+        var sectName = $(this).closest('.table-head').data('name');
+        var popup = $('#deleteConc');
+        popup.find('.item-name').text('"'+itemName+'"');
+        popup.find('.sect-name').text('"'+sectName+'"');
+        $.fancybox.open(popup);
+        $(document).on('click', '#deleteConc button', function () {
+            $.ajax({
+                url : "/app_dev.php/sectionRival/"+sectid,
+                data:{
+                    rival:itemId
+                },
+                type:'DELETE',
+                beforeSend:function () {
+                    showPreloader();
+
+                },
+                success : function(data){
+                    if(typeof data.error != 'undefined') {
+                        hidePreloader();
+                        errorMessage(data.error);
+                    }else if (typeof data.success != 'undefined') {
+
+                        location.reload();
+                    }else{
+                        hidePreloader();
+                        errorMessage(data);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                    console.log(xhr);
+                    console.log(ajaxOptions);
+                    console.log(thrownError);
+                    location.reload();
+
+                }
+            });
+        });
+
+    });
+
+}
+//END перемещение цен конкурента 
+
 editTovarAjax();
 createCell();
 createPrice();
 infoCell();
 editActiveSection();
 $(document).ready(function () {
-
+    checScript();
     hoverTableRow();
     oneWidth();
     setTimeout(function () {
@@ -969,6 +1283,10 @@ $(document).ready(function () {
     clickOnPlus();
     blockContextMenu();
     search();
+    deleteCode();
+    contextMenuTovar();
+    moveConc();
+    delConc();
 
 
 
