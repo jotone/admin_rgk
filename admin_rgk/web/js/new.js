@@ -1153,51 +1153,42 @@ function finalAjaxMoveTovar(id, z) {
 }
 //END контекстное меню товара
 //перемещение цен конкурента 
+function contextMenuConcurent() {
+    var el = document.querySelectorAll('.context-conc');
+    for(var i = 0; i<el.length; i++){
+        el[i].addEventListener('click', function(event) {
 
-function moveConc() {
-    $(document).on('click', '#moveConc button', function () {
-        var mass = [];
-        var id = $('#moveConc input[type="hidden"]').val();
-        $('#moveConc .item-draggable').each(function () {
-            mass.push($(this).data('id'));
-        });
-        
-        $.ajax({
-            url : "/app_dev.php/actionSectionPos/"+id,
-            data:{
-                rivals:mass
-            },
-            type:'POST',
-            beforeSend:function () {
-                showPreloader();
+            event = event || window.event;
+            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+            var obj = $(this).closest('.table-td');
+            var id = obj.data('id');
+            var itemId = $(this).closest('.table-td').data('id');
+            var itemName = $(this).closest('.table-td').data('name');
+            var sectid = $(this).closest('.table-head').data('section');
+            var sectName = $(this).closest('.table-head').data('name');
 
-            },
-            success : function(data){
-                if(typeof data.error != 'undefined') {
-                    hidePreloader();
-                    errorMessage(data.error);
-                }else if (typeof data.success != 'undefined') {
-
-                    location.reload();
-                }else{
-                    hidePreloader();
-                    errorMessage(data);
-                }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-
-                console.log(xhr);
-                console.log(ajaxOptions);
-                console.log(thrownError);
-                location.reload();
-
+            var pos = $('.new-table-price').offset(),
+                elem_left = pos.left,
+                elem_top = pos.top,
+                Xinner = event.pageX - elem_left,
+                Yinner = event.pageY - elem_top;
+            if(!$(this).hasClass('activeCont')){
+                moveConc(itemId, sectid);
+                delConc(itemId, sectid, itemName, sectName);
             }
-        });
-        
-    });
+            $('.context-conc').removeClass('activeCont');
+            $(this).addClass('activeCont');
+            $('.modalWindow-conc').css({'display':'block','left':Xinner,'top':Yinner}).attr('data-id',id);
+
+
+            return false;
+        }, false);
+    }
+}
+function moveConc(itemId, sectid) {
+
     $(document).on('click', '.moveConc', function () {
-        var itemId = $(this).closest('.table-td').data('id');
-        var sectid = $(this).closest('.table-head').data('section');
+
         var content= '';
         $('.table-new-two .table-head .table-td').each(function () {
             var id = $(this).data('id');
@@ -1216,15 +1207,52 @@ function moveConc() {
                 $('#moveConc .list-items').sortable();
             }
         });
+        $(document).on('click', '#moveConc button', function () {
+            var mass = [];
+            var id = $('#moveConc input[type="hidden"]').val();
+            $('#moveConc .item-draggable').each(function () {
+                mass.push($(this).data('id'));
+            });
+
+            $.ajax({
+                url : "/app_dev.php/actionSectionPos/"+id,
+                data:{
+                    rivals:mass
+                },
+                type:'POST',
+                beforeSend:function () {
+                    showPreloader();
+
+                },
+                success : function(data){
+                    if(typeof data.error != 'undefined') {
+                        hidePreloader();
+                        errorMessage(data.error);
+                    }else if (typeof data.success != 'undefined') {
+
+                        location.reload();
+                    }else{
+                        hidePreloader();
+                        errorMessage(data);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                    console.log(xhr);
+                    console.log(ajaxOptions);
+                    console.log(thrownError);
+                    location.reload();
+
+                }
+            });
+
+        });
     });
 
 }
-function delConc() {
+function delConc(itemId, sectid, itemName, sectName) {
     $(document).on('click', '.delConc', function () {
-        var itemId = $(this).closest('.table-td').data('id');
-        var itemName = $(this).closest('.table-td').data('name');
-        var sectid = $(this).closest('.table-head').data('section');
-        var sectName = $(this).closest('.table-head').data('name');
+
         var popup = $('#deleteConc');
         popup.find('.item-name').text('"'+itemName+'"');
         popup.find('.sect-name').text('"'+sectName+'"');
@@ -1285,8 +1313,8 @@ $(document).ready(function () {
     search();
     deleteCode();
     contextMenuTovar();
-    moveConc();
-    delConc();
+    contextMenuConcurent();
+
 
 
 

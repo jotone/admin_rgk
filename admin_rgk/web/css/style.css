@@ -413,11 +413,11 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .cfix:after{content: '';display: block;height: 0;font-size: 1px;line-height: 1px;overflow: hidden;clear: both;}
 .tables-wrap{ position: relative;}
 .sTable.Add-on_price{ width: 305px;}
-.new-table-price{position: absolute;    left: 306px;    top: 0; overflow-x: scroll;width: calc(100% - 305px); overflow-y: hidden;}
+.new-table-price{position: absolute;    left: 305px;    top: 0; overflow-x: scroll;width: calc(100% - 305px); overflow-y: hidden;}
 
 .table-head{white-space: nowrap;}
 .table-head .table-td{background: #d1d2d4; padding: 11px 5px; border-bottom: none; white-space: normal;    line-height: 1.2em;}
-.table-row{white-space: nowrap;}
+.table-row{ display: inline-flex;}
 .table-row .closeWrap .icon.rowEditing {
     left: 0;
     top: 5px;
@@ -425,10 +425,11 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .table-row:hover .closeWrap .icon{ display: block;}
 .hover,
 .table-row:hover{background: #d4e8f1; }
-.table-new-two .table-td{ display: inline-block; min-width: 100px; margin-left: -2px; text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 21px;vertical-align: top; position: relative;}
+.table-new-two .table-td{ display: block; float:left; min-width: 100px;text-align: center;  border-bottom: 1px solid #d1d2d2; padding: 11px 21px; position: relative;}
+.table-new-two .table-td:first-child{ margin-left: 0;}
 .table-new-two .table-td:hover{ background: #86a4b1;}
-.table-new-one .table-td{width: 85px; display: inline-block; margin-left: -2px;text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
-.table-new-one .table-td:first-child{width: 220px; }
+.table-new-one .table-td{width: 85px; display: block; float:left; text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px; position: relative;}
+.table-new-one .table-td:first-child{width: 220px; margin-left: 0;}
 .table-new-one .table-head .table-td{ padding: 0; vertical-align: top;}
 .table-new-one .table-head .table-td.sTable-inner{ padding: 11px 5px; vertical-align: top;}
 
@@ -558,8 +559,8 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 #creting-price .deletius{z-index: 150;}
 #creting-price .toselect{z-index: 150;}
 #creting-price .jq-selectbox__select {height: 34px;}
-.moveConc{ position: absolute; top: 3px; left: 3px; width: 13px; height: 13px; background-color: #00f; cursor:pointer; color: #fff; text-align: center;}
-.delConc{ position: absolute; top: 19px; left: 3px; width: 13px; height: 13px; background-color: #f00; cursor:pointer; color: #fff; text-align: center;}
+
 #moveConc{width: 600px;}
 .item-draggable{ border: 1px solid #333;    border-radius: 5px;    display: inline-block;    padding: 2px 5px; cursor:pointer; margin:2px;}
 .item-draggable.active{ background-color: #f88;}
+.icon_edit.context-conc{ position: absolute; left: 6px; top: 9px; cursor: pointer;}

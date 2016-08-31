@@ -60,7 +60,7 @@
 {% block content %}
     {% block sections %}
         <div class="content-left scroll-for-x pull-left litright">
-            <div class="lsep"></div>
+
             <div class="tabs blueTabs">
                 <div class="tabs-window" data-utab="1">
                     <div class="catalogTop searchWrap smart">
@@ -131,7 +131,7 @@
                     <span>{{ active_section_title }}</span><a href="#" data-id="{{ active_section }}" data-parentid="{{ active_section_parent_id }}" class="icon icon_edit pull-right editActiveSection"></a>
                 </h1>
                 {% if products|length %}<a href="/xls/{{ active_section }}" class="button" style="margin-bottom: 10px;">Скачать отчет</a>{% endif %}
-                <div class="lsep"></div>
+
                 <div class="tables-wrap">
                     {% if products|length %}
                         <div class="sTable bTable Add-on_price tables-wraper">
@@ -186,20 +186,12 @@
                                 <div class="modalWindow-conc conc-modal">
                                     <ul>
                                         <li>
-                                            <a href="#" class="editingTovar">Редактировать</a>
+                                            <a href="#" class="moveConc">Переместить</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="createConcurent">Создать конкурента</a>
+                                            <a href="#" class="delConc">Удалить</a>
                                         </li>
-                                        <li>
-                                            <a href="#" class="moveUpTovar">Перемеситить вверх</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="moveDownTovar">Перемеситить вниз</a>
-                                        </li>
-                                        <li>
-                                            <a href="#deleteTovar" class="deletingTovar fancybox-popup">Удалить</a>
-                                        </li>
+
                                     </ul>
                                 </div>
                                 <div class="table-new-two">
