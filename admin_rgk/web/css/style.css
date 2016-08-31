@@ -215,10 +215,15 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 
 
 
-.modalWindow{position: absolute;background: #fff;-webkit-box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);padding: 17px 15px 5px 15px;min-width: 122px;display: none;}
+.modalWindow-tovar,
+.modalWindow{position: absolute;background: #fff;-webkit-box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);padding: 17px 15px 5px 15px;min-width: 122px;display: none;z-index: 150;}
+.modalWindow-tovar ul li,
 .modalWindow ul li{margin-bottom: 12px;}
+.modalWindow-tovar ul li:last-child,
 .modalWindow ul li:last-child{margin-bottom: 8px;}
+.modalWindow-tovar ul li a,
 .modalWindow ul li a{font-size: 12px;font-weight: 300;text-decoration: none;color: #43525a;}
+.modalWindow-tovar ul li a:hover,
 .modalWindow ul li a:hover{text-decoration: underline;}
 
 /*popups*/
@@ -415,7 +420,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .table-row:hover .closeWrap .icon{ display: block;}
 .hover,
 .table-row:hover{background: #d4e8f1; }
-.table-new-two .table-td{ display: inline-block; min-width: 100px; margin-left: -2px; text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
+.table-new-two .table-td{ display: inline-block; min-width: 100px; margin-left: -2px; text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 21px;vertical-align: top; position: relative;}
 .table-new-two .table-td:hover{ background: #86a4b1;}
 .table-new-one .table-td{width: 85px; display: inline-block; margin-left: -2px;text-align: center; border-bottom: 1px solid #d1d2d2; padding: 11px 5px;vertical-align: top; position: relative;}
 .table-new-one .table-td:first-child{width: 220px; }
@@ -514,7 +519,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .jq-selectbox__trigger-arrow{ display: none;}
 
 #createMainGroup .zForm-row{ width: 49%;display: inline-block; margin-bottom: 0;  text-align: left;}
-#createMainGroup.popTroll button{ height: 27px; line-height: 27px; margin-left: -4px;}
+#createMainGroup.popTroll button{ height: 27px; line-height: 27px; margin-left: -4px; white-space: nowrap; font-size: 9px;}
 .title-main-group{ font-size: 10px; border-top: 1px solid #d1d2d2;    padding: 10px 0 5px 2px;}
 
 
@@ -543,3 +548,13 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .deletius.notactive{pointer-events: none;}
 .deletius.notactive:before,
 .deletius.notactive:after{opacity: 0;}
+.one-row-buttons{width: 100%; padding: 0 20px;}
+#creting-price .select{width: calc(100% - 20px);    margin-left: 20px;}
+#creting-price .deletius{z-index: 150;}
+#creting-price .toselect{z-index: 150;}
+#creting-price .jq-selectbox__select {height: 34px;}
+.moveConc{ position: absolute; top: 3px; left: 3px; width: 13px; height: 13px; background-color: #00f; cursor:pointer; color: #fff; text-align: center;}
+.delConc{ position: absolute; top: 19px; left: 3px; width: 13px; height: 13px; background-color: #f00; cursor:pointer; color: #fff; text-align: center;}
+#moveConc{width: 600px;}
+.item-draggable{ border: 1px solid #333;    border-radius: 5px;    display: inline-block;    padding: 2px 5px; cursor:pointer; margin:2px;}
+.item-draggable.active{ background-color: #f88;}

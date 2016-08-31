@@ -218,7 +218,7 @@ class PriceController extends BaseController
         if(!$product || !$product->getSection())
             $this->renderApiJson(['error'=>'Элемент не найдено']);
 
-        $up = ($request->query->get('up')?true:false);
+        $up = ($request->request->get('up')?true:false);
 
         //get closest
         $q = sprintf("SELECT id FROM `product` WHERE `section` = %d and pos %s %d ORDER BY pos %s LIMIT 0, 1",$product->getSection()->getId(),($up?'<':'>'),$product->getPos(),($up?'DESC':'ASC'));
