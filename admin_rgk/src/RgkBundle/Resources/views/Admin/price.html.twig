@@ -130,6 +130,7 @@
                 <h1 class="mainheading">
                     <span>{{ active_section_title }}</span><a href="#" data-id="{{ active_section }}" data-parentid="{{ active_section_parent_id }}" class="icon icon_edit pull-right editActiveSection"></a>
                 </h1>
+                {% if products|length %}<a href="/xls/{{ active_section }}" class="button" style="margin-bottom: 10px;">Скачать отчет</a>{% endif %}
                 <div class="lsep"></div>
                 <div class="tables-wrap">
                     {% if products|length %}
