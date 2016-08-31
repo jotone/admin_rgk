@@ -1218,7 +1218,7 @@ function moveConc() {
 
 }
 function delConc() {
-    $(document).on('click', '.moveConc', function () {
+    $(document).on('click', '.delConc', function () {
         var itemId = $(this).closest('.table-td').data('id');
         var itemName = $(this).closest('.table-td').data('name');
         var sectid = $(this).closest('.table-head').data('section');
