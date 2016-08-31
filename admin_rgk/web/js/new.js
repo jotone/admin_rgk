@@ -72,10 +72,12 @@
         var el = document.querySelectorAll('.catalogList a');
         for(var i = 0; i<el.length; i++){
             el[i].addEventListener('contextmenu', function(event) {
-                if(!$(this).hasClass('folder_item')){
+                if($(this).hasClass('folder_item')){
                     $('.modalWindow.smartSearch-modal li:first-child').attr('style','display:none');
+                    $('.modalWindow.smartSearch-modal .creative-menu-punct').removeAttr('style');
                 }else{
                     $('.modalWindow.smartSearch-modal li:first-child').removeAttr('style');
+                    $('.modalWindow.smartSearch-modal .creative-menu-punct').attr('style','display:none');
                 }
                 event = event || window.event;
                 event.preventDefault ? event.preventDefault() : event.returnValue = false;
@@ -1229,7 +1231,7 @@ function delConc() {
         $.fancybox.open(popup);
         $(document).on('click', '#deleteConc button', function () {
             $.ajax({
-                url : "/app_dev.php/actionSectionPos/"+sectid,
+                url : "/app_dev.php/sectionRival/"+sectid,
                 data:{
                     rival:itemId
                 },

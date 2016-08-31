@@ -44,7 +44,6 @@
     {% block zhidden %}
     <div class="preloader"><img src="/images/default.svg" alt=""></div>
 
-
         <div class="popTroll" id="moveConc">
             <div class="popupTitle">
                 Перемещение конкурентов
@@ -90,48 +89,45 @@
             </div>
         </div>
 
-
-
-    <div class="lPopup popTroll" id="creting-price">
-        <div class="popupTitle">
-            Добавить цену конкурента
-        </div>
-        <div class="report-form zForm zNice">
-            <form>
-                <div class="zForm-row">
-                    Название товара конкурента:
-                </div>
-                <div class="zForm-row">
-                    <input type="text" required="required" name="name" placeholder="Название товара"/>
-                    <input type="hidden"  name="product" value=""/>
-                    <input type="hidden"  name="priceid" value=""/>
-                    <input type="hidden"  name="rival" value=""/>
-                </div>
-                <div class="zForm-row">
-                    URL товара:
-                </div>
-                <div class="zForm-row">
-                    <input type="text" required="required" name="url" placeholder="URL товара"/>
-                </div>
-                <div class="zForm-row">
-                    Код товара:
-                </div>
-                <div class="toselect-wrap">
-                    <div class="deletius"></div>
-                    <div class="zForm-row select"></div>
-                    <div class="zForm-row toselect">
-                        <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
+        <div class="lPopup popTroll" id="creting-price">
+            <div class="popupTitle">
+                Добавить цену конкурента
+            </div>
+            <div class="report-form zForm zNice">
+                <form>
+                    <div class="zForm-row">
+                        Название товара конкурента:
                     </div>
-                </div>
+                    <div class="zForm-row">
+                        <input type="text" required="required" name="name" placeholder="Название товара"/>
+                        <input type="hidden"  name="product" value=""/>
+                        <input type="hidden"  name="priceid" value=""/>
+                        <input type="hidden"  name="rival" value=""/>
+                    </div>
+                    <div class="zForm-row">
+                        URL товара:
+                    </div>
+                    <div class="zForm-row">
+                        <input type="text" required="required" name="url" placeholder="URL товара"/>
+                    </div>
+                    <div class="zForm-row">
+                        Код товара:
+                    </div>
+                    <div class="toselect-wrap">
+                        <div class="deletius"></div>
+                        <div class="zForm-row select"></div>
+                        <div class="zForm-row toselect">
+                            <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
+                        </div>
+                    </div>
 
-                <div class="zForm-row">
-                    <button class="submit-tmp" onsubmit="return false"><span>Сохранить</span></button>
-                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
-                </div>
-            </form>
+                    <div class="zForm-row">
+                        <button class="submit-tmp" onsubmit="return false"><span>Сохранить</span></button>
+                        <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-
 
         <div class="lPopup popTroll" id="deleteConc">
             <div class="popupTitle">
@@ -145,17 +141,18 @@
             </div>
         </div>
 
-    <div class="lPopup popTroll" id="deleteItem">
-        <div class="popupTitle">
-            <p>Вы уверены что хотите удалить раздел <span class="item-name"></span> ?</p>
+        <div class="lPopup popTroll" id="deleteItem">
+            <div class="popupTitle">
+                <p>Вы уверены что хотите удалить раздел <span class="item-name"></span> ?</p>
+            </div>
+            <div class="report-form zForm zNice">
+                    <div class="zForm-row">
+                        <button class="submit-tmp" onsubmit="return false"><span>Удалить</span></button>
+                        <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                    </div>
+            </div>
         </div>
-        <div class="report-form zForm zNice">
-                <div class="zForm-row">
-                    <button class="submit-tmp" onsubmit="return false"><span>Удалить</span></button>
-                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
-                </div>
-        </div>
-    </div>
+
         <div class="lPopup popTroll" id="deleteCode">
             <div class="popupTitle">
                 <p>Вы уверены что хотите удалить код <span class="item-name"></span> ?</p>
@@ -167,56 +164,60 @@
                 </div>
             </div>
         </div>
-    <div class="lPopup popTroll" id="deleteTovar">
-        <div class="popupTitle">
-            <p>Вы уверены что хотите удалить товар <span class="item-name"></span> ?</p>
-        </div>
-        <div class="report-form zForm zNice">
-            <div class="zForm-row">
-                <button class="submit-tmp" onsubmit="return false"><span>Удалить</span></button>
-                <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+
+        <div class="lPopup popTroll" id="deleteTovar">
+            <div class="popupTitle">
+                <p>Вы уверены что хотите удалить товар <span class="item-name"></span> ?</p>
+            </div>
+            <div class="report-form zForm zNice">
+                <div class="zForm-row">
+                    <button class="submit-tmp" onsubmit="return false"><span>Удалить</span></button>
+                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="lPopup popTroll" id="createGroup">
-        <div class="popupTitle">
-            Добавить группу
-        </div>
-        <div class="report-form zForm zNice">
-            <form>
-                <div class="zForm-row">
-                    <input type="text" required="required" name="newGroup" class="newGroup" placeholder="Название группы"/>
-                </div>
 
-                <div class="zForm-row">
-                    <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
-                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
-                </div>
-            </form>
+        <div class="lPopup popTroll" id="createGroup">
+            <div class="popupTitle">
+                Добавить группу
+            </div>
+            <div class="report-form zForm zNice">
+                <form>
+                    <div class="zForm-row">
+                        <input type="text" required="required" name="newGroup" class="newGroup" placeholder="Название группы"/>
+                    </div>
+
+                    <div class="zForm-row">
+                        <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
+                        <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="lPopup popTroll" id="createItem">
-        <div class="popupTitle">
-            Добавить товар
+
+        <div class="lPopup popTroll" id="createItem">
+            <div class="popupTitle">
+                Добавить товар
+            </div>
+            <div class="report-form zForm zNice">
+                <form>
+                    <div class="zForm-row">
+                        <input type="text" required="required" name="newItem" class="newItem" placeholder="Название товара"/>
+                    </div>
+                    <div class="zForm-row">
+                        <input type="text" required="required" name="priceItem" class="priceItem" placeholder="Цена товара"/>
+                    </div>
+                    <div class="zForm-row">
+                        <input type="text" required="required" name="urlItem" class="urlItem" placeholder="Страница товара"/>
+                    </div>
+                    <div class="zForm-row">
+                        <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
+                        <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="report-form zForm zNice">
-            <form>
-                <div class="zForm-row">
-                    <input type="text" required="required" name="newItem" class="newItem" placeholder="Название товара"/>
-                </div>
-                <div class="zForm-row">
-                    <input type="text" required="required" name="priceItem" class="priceItem" placeholder="Цена товара"/>
-                </div>
-                <div class="zForm-row">
-                    <input type="text" required="required" name="urlItem" class="urlItem" placeholder="Страница товара"/>
-                </div>
-                <div class="zForm-row">
-                    <button class="submit-tmp" onsubmit="return false"><span>Добавить</span></button>
-                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
-                </div>
-            </form>
-        </div>
-    </div>
+
         <div class="lPopup popTroll" id="editTovar">
             <div class="popupTitle">
                 Редактировать товар
@@ -251,68 +252,66 @@
             </div>
         </div>
 
-
-
-    <div class="lPopup report" id="addKonk">
-        <div class="popupTitle">
-            Добавить конкурента
+        <div class="lPopup report" id="addKonk">
+            <div class="popupTitle">
+                Добавить конкурента
+            </div>
+            <div class="report-form zForm zNice">
+                <form>
+                    <div class="zForm-row">
+                        <input type="text" required="required" placeholder="Название конкурента"/>
+                    </div>
+                    <div class="zForm-row radioRow">
+                        <input type="text" required="required" placeholder="URL товара"/>
+                    </div>
+                    <div class="zForm-row">
+                        <input type="submit" class="sm-btn" value="Добавить"/>
+                        <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="report-form zForm zNice">
+        <div class="lPopup productEdit zNice" id="productEdit">
             <form>
-                <div class="zForm-row">
-                    <input type="text" required="required" placeholder="Название конкурента"/>
+                <div class="productEdit-top text-right">
+                    <a href="#" class="icon icon_edit editButton"></a>
+                    <a href="#" class="icon icon_refr refreshButton"></a>
                 </div>
-                <div class="zForm-row radioRow">
-                    <input type="text" required="required" placeholder="URL товара"/>
+                <div class="productEdit-line">
+                    <div class="productEdit-line-tabel">
+                        Название товара:
+                    </div>
+                    <div class="productEdit-line-text productEdit-name">
+                        <input type="text" class="editInput" readonly="readonly" name="name" value="" required="required"/>
+                    </div>
                 </div>
-                <div class="zForm-row">
-                    <input type="submit" class="sm-btn" value="Добавить"/>
-                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                <div class="productEdit-line">
+                    <div class="productEdit-line-tabel">
+                        Код товара:
+                    </div>
+                    <div class="productEdit-line-text productEdit-cat">
+                        <input type="text" class="editInput" readonly="readonly" value="" name="code" required="required"/>
+                    </div>
                 </div>
+                <div class="productEdit-line">
+                    <div class="productEdit-line-tabel">
+                        URL товара:
+                    </div>
+                    <div class="productEdit-line-text productEdit-url">
+                        <input type="text" class="editInput" readonly="readonly" value="" name="url" required="required"/>
+                    </div>
+                </div>
+                <div class="productEdit-line">
+                    <div class="productEdit-line-tabel">
+                        Последнее обновление:
+                    </div>
+                    <div class="productEdit-line-text productEdit-date">
+                        01.11.2015
+                    </div>
+                </div>
+                <input type="hidden" name="product" value="">
             </form>
         </div>
-    </div>
-    <div class="lPopup productEdit zNice" id="productEdit">
-        <form>
-            <div class="productEdit-top text-right">
-                <a href="#" class="icon icon_edit editButton"></a>
-                <a href="#" class="icon icon_refr refreshButton"></a>
-            </div>
-            <div class="productEdit-line">
-                <div class="productEdit-line-tabel">
-                    Название товара:
-                </div>
-                <div class="productEdit-line-text productEdit-name">
-                    <input type="text" class="editInput" readonly="readonly" name="name" value="" required="required"/>
-                </div>
-            </div>
-            <div class="productEdit-line">
-                <div class="productEdit-line-tabel">
-                    Код товара:
-                </div>
-                <div class="productEdit-line-text productEdit-cat">
-                    <input type="text" class="editInput" readonly="readonly" value="" name="code" required="required"/>
-                </div>
-            </div>
-            <div class="productEdit-line">
-                <div class="productEdit-line-tabel">
-                    URL товара:
-                </div>
-                <div class="productEdit-line-text productEdit-url">
-                    <input type="text" class="editInput" readonly="readonly" value="" name="url" required="required"/>
-                </div>
-            </div>
-            <div class="productEdit-line">
-                <div class="productEdit-line-tabel">
-                    Последнее обновление:
-                </div>
-                <div class="productEdit-line-text productEdit-date">
-                    01.11.2015
-                </div>
-            </div>
-            <input type="hidden" name="product" value="">
-        </form>
-    </div>
     {% endblock %}
 </div>
 <header class="header">
