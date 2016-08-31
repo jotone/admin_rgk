@@ -11,6 +11,7 @@ namespace RgkBundle\Controller;
 use RgkBundle\Entity\Price;
 use RgkBundle\Entity\Product;
 use RgkBundle\Entity\Code;
+use RgkBundle\Entity\Rival;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -99,6 +100,74 @@ class PriceController extends BaseController
             $sections = $this->unsetChild($sections,intval($id));
         }
         return $this->renderApiJson($sections);
+    }
+
+    /**
+     * @Route("/sectionRival/{id}")
+     */
+    public function sectionRival(Request $request, $id=0){
+        if($request->getMethod() != 'DELETE')
+            return $this->redirectToRoute('rgk_price_index');
+
+        /**
+         * @var Section $section
+         */
+        $params['sections'] = $this->getDoctrine()
+            ->getRepository('RgkBundle:Section')
+            ->findBy(array(), array('title' => 'ASC'));
+
+        $activeObj = false;
+        if(!empty($params['sections'])){
+            /**
+             * @var Section $a
+             */
+            foreach ($params['sections'] as &$a){
+                if($a->getId() == $id) {
+                    $activeObj = $a;
+                    break;
+                }
+            }
+        }
+
+        if($activeObj == false)
+            $this->renderApiJson(['error'=>'Ошибка передачи данных раздела']);
+
+        //get parent spectre
+        $parentSpectre = $this->getParent($activeObj);
+
+        $rivalId = $request->request->get('rival');
+        if(!$rivalId)
+            $rivalId = $request->query->get('rival');
+
+        /**
+         * @var Rival $rival
+         */
+        $rival = $this->getDoctrine()
+            ->getRepository('RgkBundle:Rival')
+            ->find(intval($rivalId));
+
+        if(!$rival)
+            $this->renderApiJson(['error'=>'Ошибка передачи данных конкурента']);
+
+        $a = json_decode($rival->getSections(),true);
+        if(!$a || !is_array($a))
+            return $this->renderApiJson([]);
+
+        $resp = array_uintersect($parentSpectre, $a, "strcasecmp");
+        if(!empty($resp)){
+            foreach ($resp as $r){
+                $key = array_search($r,$a);
+                if($key !== false)
+                    unset($a[$key]);
+            }
+        }
+        $rival->setSections(json_encode($a));
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($rival);
+        $manager->flush();
+
+        $this->renderApiJson(['success'=>true]);
     }
 
     /**
