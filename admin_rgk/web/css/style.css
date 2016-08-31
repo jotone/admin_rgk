@@ -215,14 +215,19 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 
 
 
+.modalWindow-conc,
 .modalWindow-tovar,
 .modalWindow{position: absolute;background: #fff;-webkit-box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);padding: 17px 15px 5px 15px;min-width: 122px;display: none;z-index: 150;}
+.modalWindow-conc ul li,
 .modalWindow-tovar ul li,
 .modalWindow ul li{margin-bottom: 12px;}
+.modalWindow-conc ul li:last-child,
 .modalWindow-tovar ul li:last-child,
 .modalWindow ul li:last-child{margin-bottom: 8px;}
+.modalWindow-conc ul li a,
 .modalWindow-tovar ul li a,
 .modalWindow ul li a{font-size: 12px;font-weight: 300;text-decoration: none;color: #43525a;}
+.modalWindow-conc ul li a:hover,
 .modalWindow-tovar ul li a:hover,
 .modalWindow ul li a:hover{text-decoration: underline;}
 

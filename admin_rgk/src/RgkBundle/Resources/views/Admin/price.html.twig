@@ -182,12 +182,31 @@
                         </div>
                         {% if rivals %}
                             <div class="new-table-price">
+                                <div class="modalWindow-conc conc-modal">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="editingTovar">Редактировать</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="createConcurent">Создать конкурента</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="moveUpTovar">Перемеситить вверх</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="moveDownTovar">Перемеситить вниз</a>
+                                        </li>
+                                        <li>
+                                            <a href="#deleteTovar" class="deletingTovar fancybox-popup">Удалить</a>
+                                        </li>
+                                    </ul>
+                                </div>
                                 <div class="table-new-two">
                                     <div class="table-head  cfix wdth" data-name="{{ active_section_title }}" data-section="{{ active_section }}">
                                         {%  set pos = 0 %}
                                         {% for rival in rivals %}
                                             {% set pos = pos +1 %}
-                                            <div class="table-td" data-pos="{{ pos }}" data-id="{{ rival.id }}" data-name="{{ rival.name }}" ><div class="moveConc">M</div>{{ rival.name }}<div class="delConc">X</div></div>
+                                            <div class="table-td" data-pos="{{ pos }}" data-id="{{ rival.id }}" data-name="{{ rival.name }}" >{{ rival.name }}<a href="#" class="icon icon_edit context-conc"></a></div>
                                         {% endfor %}
                                         <script>
                                             var revalCodes = {
