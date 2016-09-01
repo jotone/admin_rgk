@@ -412,11 +412,11 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .icon_products{background: url('../images/icon_label.png') no-repeat center top;width: 16px;height: 12px;margin-right: 4px;}
 .cfix:after{content: '';display: block;height: 0;font-size: 1px;line-height: 1px;overflow: hidden;clear: both;}
 .tables-wrap{ position: relative;}
-.sTable.Add-on_price{ width: 305px;}
-.new-table-price{position: absolute;    left: 305px;    top: 0; overflow-x: scroll;width: calc(100% - 305px); overflow-y: hidden;}
+.sTable.Add-on_price{ width: 305px; float: left;}
+.new-table-price{ /*position: absolute;    left: 305px;  */ float: left;  top: 0; overflow-x: scroll;width: calc(100% - 305px); overflow-y: hidden; position: relative; }
 
 .table-head{white-space: nowrap;}
-.table-head .table-td{background: #d1d2d4; padding: 11px 5px; border-bottom: none; white-space: normal;    line-height: 1.2em;}
+.table-head .table-td{background: #d1d2d4; padding: 11px 5px; border-bottom: none; white-space: normal; line-height: 1.2em;}
 .table-row{ display: inline-flex;}
 .table-row .closeWrap .icon.rowEditing {
     left: 0;
@@ -564,3 +564,6 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .item-draggable{ border: 1px solid #333;    border-radius: 5px;    display: inline-block;    padding: 2px 5px; cursor:pointer; margin:2px;}
 .item-draggable.active{ background-color: #f88;}
 .icon_edit.context-conc{ position: absolute; left: 6px; top: 9px; cursor: pointer;}
+
+.right-tabs .icon_edit{ opacity: 0; transition: all 0.3s; }
+.table-new-two .table-td:hover .icon_edit{ opacity: 1;  }

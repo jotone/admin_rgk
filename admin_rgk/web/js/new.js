@@ -1178,7 +1178,10 @@ function contextMenuConcurent() {
             }
             $('.context-conc').removeClass('activeCont');
             $(this).addClass('activeCont');
-            $('.modalWindow-conc').css({'display':'block','left':Xinner,'top':Yinner}).attr('data-id',id);
+
+            var traktorLevo = $('.new-table-price').offset().left - $('.table-new-two').offset().left ;
+
+            $('.modalWindow-conc').css({'display':'block','left':Xinner + traktorLevo ,'top':Yinner}).attr('data-id',id);
 
 
             return false;
@@ -1302,6 +1305,8 @@ createPrice();
 infoCell();
 editActiveSection();
 $(document).ready(function () {
+
+
     checScript();
     hoverTableRow();
     oneWidth();
@@ -1316,7 +1321,33 @@ $(document).ready(function () {
     contextMenuConcurent();
 
 
+    $(document).on('click', function( event ){
+
+        if ( !$('.modalWindow-tovar').is(event.target) && $('.modalWindow-tovar').has(event.target).length === 0 ){
+
+            $('.modalWindow-tovar').css('display', "none");
+
+        };     
+
+        if ( !$('.modalWindow-conc').is(event.target) && $('.modalWindow-conc').has(event.target).length === 0 &&  !$('.icon_edit').is(event.target) ){
+
+            if ( $('.modalWindow-conc').css('display') == "block" ){
+
+                $('.modalWindow-conc').css('display', "none");
+
+            }
+
+        };          
+
+    });
 
 
 
 });
+
+$(window).resize(function(){
+
+    oneWidth();
+
+});
+
