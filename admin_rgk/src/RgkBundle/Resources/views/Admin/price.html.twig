@@ -90,7 +90,7 @@
                         </div>
                     </div>
                     <div class="catalogList-wrap">
-                        <div class="modalWindow smartSearch-modal">
+                        <div class="modalWindow miss smartSearch-modal">
                             <ul>
                                 <li>
                                     <a href="#createItem" class="fancybox-popup">Создать товар</a>
@@ -135,7 +135,7 @@
                 <div class="tables-wrap">
                     {% if products|length %}
                         <div class="sTable bTable Add-on_price tables-wraper">
-                            <div class="modalWindow-tovar tovar-modal">
+                            <div class="modalWindow-tovar miss tovar-modal">
                                 <ul>
                                     <li>
                                         <a href="#" class="editingTovar">Редактировать</a>
@@ -193,6 +193,7 @@
                                         </li>
 
                                     </ul>
+                                    <div  class="fancybox-item modal-close fancybox-close"></div>
                                 </div>
                                 <div class="table-new-two">
                                     <div class="table-head  cfix wdth" data-name="{{ active_section_title }}" data-section="{{ active_section }}">
@@ -258,7 +259,7 @@
                     {% else %}
                         <p>Раздет пуст</p>
                         <br>
-                        <a href="#createItem" onclick="createItem({{ active_section }})" class="button fancybox-popup">Добавить товар</a>
+                        <a href="#createItem" data-section="{{ active_section }}" class="button createItemButton fancybox-popup">Добавить товар</a>
                     {% endif %}
                 </div>
 

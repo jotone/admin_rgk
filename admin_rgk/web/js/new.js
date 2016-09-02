@@ -384,6 +384,7 @@
         // END functional create itemGroup
         // functional create item
                 function createItem(parentId) {
+
                     $(document).on('click', '#createItem button', function (e) {
                         var inputs = $('#createItem input');
                         if (checkInput(inputs)){
@@ -432,7 +433,7 @@
                         },
                         success : function(data){
                             $.fancybox.close();
-
+                            createItemFlag = false;
                             if(typeof data.error != 'undefined') {
                                 hidePreloader();
                                 errorMessage(data.error);
@@ -452,6 +453,7 @@
 
                         }
                     });
+
                 }
                 function editTovar(obj) { //редактирование товара
                     $(document).on('click', '.editingTovar', function () {
@@ -1294,8 +1296,34 @@ function delConc(itemId, sectid, itemName, sectName) {
     });
 
 }
-//END перемещение цен конкурента 
 
+//END перемещение цен конкурента
+
+function missClick(div) {
+    $(document).on('click touchstart',function (event){
+            if (!div.is(event.target) && div.has(event.target).length === 0 ){ div.removeAttr('style');}
+    });
+}
+
+function closeContext() {
+    $('.modal-close').click(function () {
+        $(this).closest('.conc-modal').removeAttr('style');
+    });
+
+}
+var createItemFlag = false;
+function createItemButton() {
+
+       $('.createItemButton').click(function () {
+           if(createItemFlag==false) {
+               createItemFlag = true;
+               var section = $(this).data('section');
+               createItem(section);
+           }
+       });
+
+
+}
 editTovarAjax();
 createCell();
 createPrice();
@@ -1314,7 +1342,12 @@ $(document).ready(function () {
     deleteCode();
     contextMenuTovar();
     contextMenuConcurent();
+    closeContext();
 
+    $('.miss').each(function () {
+        missClick($(this));
+    });
+    createItemButton();
 
 
 
