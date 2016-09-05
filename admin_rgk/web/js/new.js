@@ -240,7 +240,8 @@
 
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        location.reload();
+                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                        errorMessage(txt);
                     }
                 });
             }
@@ -316,7 +317,8 @@
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        location.reload();
+                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                        errorMessage(txt);
                     }
                 });
             }
@@ -400,12 +402,8 @@ function createSectionOrGroup() {
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-
-                        console.log(xhr);
-                        console.log(ajaxOptions);
-                        console.log(thrownError);
-                        
-                        location.reload();
+                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                        errorMessage(txt);
 
                     }
                 });
@@ -474,11 +472,8 @@ function createSectionOrGroup() {
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
-
-                            console.log(xhr);
-                            console.log(ajaxOptions);
-                            console.log(thrownError);
-                            location.reload();
+                            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                            errorMessage(txt);
 
                         }
                     });
@@ -544,12 +539,8 @@ function createSectionOrGroup() {
                                 }
                             },
                             error: function (xhr, ajaxOptions, thrownError) {
-
-                                console.log(xhr);
-                                console.log(ajaxOptions);
-                                console.log(thrownError);
-                                location.reload();
-
+                                var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                                errorMessage(txt);
                             }
                         });
                         e.preventDefault();
@@ -587,12 +578,8 @@ function createSectionOrGroup() {
                             }
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
-                
-                            console.log(xhr);
-                            console.log(ajaxOptions);
-                            console.log(thrownError);
-                            location.reload();
-                
+                            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                            errorMessage(txt);
                         }
                     });
                 }
@@ -629,12 +616,8 @@ function createSectionOrGroup() {
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-            
-                        console.log(xhr);
-                        console.log(ajaxOptions);
-                        console.log(thrownError);
-                        location.reload();
-            
+                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                        errorMessage(txt);
                     }
                 });
             }
@@ -715,9 +698,8 @@ function createRivalInPrice(form) {
 
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr, ajaxOptions, thrownError);
-
-                    location.reload();
+                    var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                    errorMessage(txt);
                 }
             });
         }else{
@@ -746,9 +728,8 @@ function createRivalInPrice(form) {
 
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr, ajaxOptions, thrownError);
-
-                        location.reload();
+                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                        errorMessage(txt);
                     }
                 });
             }
@@ -786,9 +767,8 @@ function createRival(form) {
 
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr, ajaxOptions, thrownError);
-
-                location.reload();
+                var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                errorMessage(txt);
             }
         });
     }
@@ -834,9 +814,8 @@ function deleteRival(id) {
 
         },
         error: function (xhr, ajaxOptions, thrownError) {
-            console.log(xhr, ajaxOptions, thrownError);
-
-            location.reload();
+            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+            errorMessage(txt);
         }
     });
 }
@@ -932,40 +911,40 @@ function deleteRival(id) {
     }
     function refreshPrice(id) {
         $(document).on('click', '.productEdit .refreshButton', function () {
+            finalAjaxRefresh(id);
 
-            $.ajax({
-                url : "/actionPriceParse/"+id,
-                dataType:"json",
-                type:'POST',
-                beforeSend:function () {
-                    showPreloader();
-
-                },
-                success : function(data){
-                    $.fancybox.close();
-
-                    if(typeof data.error != 'undefined') {
-                        hidePreloader();
-                        errorMessage(data.error);
-                    }else if (typeof data.success != 'undefined') {
-
-                        succsesMessage();
-                    }else{
-                        hidePreloader();
-                        errorMessage(data);
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-
-                    console.log(xhr);
-                    console.log(ajaxOptions);
-                    console.log(thrownError);
-                    //location.reload();
-
-                }
-            });
         });
     }
+function finalAjaxRefresh(id) {
+    $.ajax({
+        url : "/actionPriceParse/"+id,
+        dataType:"json",
+        type:'POST',
+        beforeSend:function () {
+            showPreloader();
+
+        },
+        success : function(data){
+            $.fancybox.close();
+
+            if(typeof data.error != 'undefined') {
+                hidePreloader();
+                errorMessage(data.error);
+            }else if (typeof data.success != 'undefined') {
+
+                succsesMessage();
+            }else{
+                hidePreloader();
+                errorMessage(data);
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+            errorMessage(txt);
+
+        }
+    });
+}
     function createCell() {  // нередактированая ячейка цены конкурента
         $(document).on('click', '.creatingPopup', function () {
 
@@ -1031,8 +1010,8 @@ function deleteRival(id) {
                             errorMessage(data.error);
                         }else if (typeof data.success != 'undefined') {
                             hidePreloader();
-                            console.log(data)
-                            
+
+                            finalAjaxRefresh(data.id)
 
                         }else{
                             hidePreloader();
@@ -1040,11 +1019,8 @@ function deleteRival(id) {
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-
-                        console.log(xhr);
-                        console.log(ajaxOptions);
-                        console.log(thrownError);
-                        location.reload();
+                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                        errorMessage(txt);
 
                     }
                 });
@@ -1085,9 +1061,8 @@ function universalSubmit(form) {
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr, ajaxOptions, thrownError);
-                
-                location.reload();
+                var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                errorMessage(txt);
             }
         });
     }
@@ -1169,12 +1144,8 @@ function finalAjaxDeleteCode(id) {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-
-            console.log(xhr);
-            console.log(ajaxOptions);
-            console.log(thrownError);
-            location.reload();
-
+            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+            errorMessage(txt);
         }
     });
 }
@@ -1266,12 +1237,8 @@ function finalAjaxMoveTovar(id, z) {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-
-            console.log(xhr);
-            console.log(ajaxOptions);
-            console.log(thrownError);
-            location.reload();
-
+            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+            errorMessage(txt);
         }
     });
 }
@@ -1363,12 +1330,8 @@ function moveConc(itemId, sectid) {
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-
-                    console.log(xhr);
-                    console.log(ajaxOptions);
-                    console.log(thrownError);
-                    location.reload();
-
+                    var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                    errorMessage(txt);
                 }
             });
 
@@ -1417,12 +1380,8 @@ function delConc(itemId, sectid, itemName, sectName) {
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-
-                    console.log(xhr);
-                    console.log(ajaxOptions);
-                    console.log(thrownError);
-                    location.reload();
-
+                    var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
+                    errorMessage(txt);
                 }
             });
         });
