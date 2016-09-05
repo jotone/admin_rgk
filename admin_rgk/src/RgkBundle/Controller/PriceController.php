@@ -443,7 +443,7 @@ class PriceController extends BaseController
 
         $this->productCheckPrices($price->getProduct());
 
-        $this->renderApiJson(['success'=>true]);
+        $this->renderApiJson(['success'=>true, 'id'=>$price->getId()]);
     }
 
     /**

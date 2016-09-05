@@ -8,6 +8,8 @@
 
 namespace ParseBundle\Controller;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 class SimpleHtmlDomNodeController
 
 {
@@ -19,6 +21,7 @@ class SimpleHtmlDomNodeController
     public $parent = null;
     public $_ = array();
     public $tag_start = 0;
+    public $iconv = [];
     private $dom = null;
 
     function __construct($dom)
@@ -652,7 +655,11 @@ class SimpleHtmlDomNodeController
             }
             else
             {
-                $converted_text = iconv($sourceCharset, $targetCharset, $text);
+                try{
+                    $converted_text = iconv($sourceCharset, $targetCharset, $text);
+                } catch (\Exception $e){
+                    $converted_text = $text; // print_r([$sourceCharset,$targetCharset]);exit();
+                }
             }
         }
 

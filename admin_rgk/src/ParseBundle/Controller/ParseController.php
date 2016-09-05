@@ -34,9 +34,11 @@ class ParseController
         if ($html->innertext != '' and count($html->find($query))) {
             foreach ($html->find($query) as $price) {
                 if ($count_res < 1) {
+
                     $result = str_replace(" ", "", $price->innertext);
                     $result = preg_replace('~[^0-9]+~', '', $result);
                     $count_res++;
+                    break;
                 } else {
                     return false;
                 }
@@ -48,6 +50,20 @@ class ParseController
         return intval($result);
     }
 
+    /**
+     * @param $url
+     * @param bool $use_include_path
+     * @param null $context
+     * @param int $offset
+     * @param int $maxLen
+     * @param bool $lowercase
+     * @param bool $forceTagsClosed
+     * @param string $target_charset
+     * @param bool $stripRN
+     * @param string $defaultBRText
+     * @param string $defaultSpanText
+     * @return bool|SimpleHtmlDomController
+     */
     private function file_get_html($url, $use_include_path = false, $context=null, $offset = -1, $maxLen=-1, $lowercase = true, $forceTagsClosed=true, $target_charset = self::DEFAULT_TARGET_CHARSET, $stripRN=true, $defaultBRText=self::DEFAULT_BR_TEXT, $defaultSpanText=self::DEFAULT_SPAN_TEXT)
     {
         $dom = new SimpleHtmlDomController(null, $lowercase, $forceTagsClosed, $target_charset, $stripRN, $defaultBRText, $defaultSpanText);
@@ -78,6 +94,7 @@ class ParseController
             return false;
         }
         $dom->load($contents, $lowercase, $stripRN);
+
         return $dom;
     }
 

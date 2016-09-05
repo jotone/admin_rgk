@@ -11,6 +11,9 @@ class SimpleHtmlDomController
     public $nodes = array();
     public $callback = null;
     public $lowercase = false;
+
+    public $iconv = [];
+
     // Used to keep track of how large the text was when we started.
     public $original_size;
     public $size;
