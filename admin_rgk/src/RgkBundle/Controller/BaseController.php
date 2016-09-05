@@ -222,4 +222,20 @@ class BaseController extends Controller
         }
         return $res;
     }
+
+    public function getPopupRivals($excludeRivals){
+        $excludeArray = [];
+        if($excludeRivals && is_array($excludeRivals))
+            $excludeArray = array_map(function($a){return $a->getId();},$excludeRivals);
+
+        $q = "SELECT `id`, `name` FROM `rival` WHERE 1".($excludeArray?sprintf(' AND `id` IN (%s)',implode(', ', $excludeArray)):'').' ORDER BY `name` ASC';
+        $stmt = $this->getDoctrine()->getManager()
+            ->getConnection()
+            ->prepare(
+                $q
+            );
+        $stmt->execute();
+        $ideas=$stmt->fetchAll();
+        return ($ideas?$ideas:[]);
+    }
 }

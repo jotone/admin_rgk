@@ -10,6 +10,7 @@ namespace RgkBundle\Controller;
 
 use RgkBundle\Entity\Rival;
 use RgkBundle\Entity\Code;
+use RgkBundle\Entity\Section;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -100,6 +101,45 @@ class CodeController extends BaseController
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($code);
         $manager->flush();
+        $this->renderApiJson(['success'=>true]);
+    }
+
+    /**
+     * @Route("/activeRivalSection/{id}")
+     */
+    public function rivalSectionAction(Request $request,$id=0){
+        if($request->getMethod() != 'POST')
+            return $this->redirectToRoute('rgk_code_index');
+        /**
+         * @var Rival $rival
+         * @var Section $section
+         */
+        $rival = $this->getDoctrine()
+            ->getRepository('RgkBundle:Rival')
+            ->find(intval($id));
+        if(!$rival)
+            $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+        $section = $request->request->get('section');
+        if(!$section || intval($section)<=0)
+            $this->renderApiJson(['error'=>'Ошибка передачи раздела']);
+
+        $section = $this->getDoctrine()
+            ->getRepository('RgkBundle:Section')
+            ->find($section);
+        if(!$section)
+            $this->renderApiJson(['error'=>'Ошибка передачи раздела']);
+
+        $sectionArray = json_decode($rival->getSections(),true);
+        if(!$sectionArray || !is_array($sectionArray))
+            $sectionArray = [];
+        $sectionArray[] = $section->getId();
+
+        $rival->setSections($this->getSectionJson($sectionArray));
+        $manager = $this->getDoctrine()->getManager();
+        $manager->persist($rival);
+        $manager->flush();
+
         $this->renderApiJson(['success'=>true]);
     }
 

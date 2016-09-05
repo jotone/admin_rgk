@@ -56,39 +56,6 @@
             </div>
         </div>
 
-
-        <div class="lPopup report" id="addConcurent">
-            <div class="popupTitle">
-                Добавить конкурента
-            </div>
-            <div class="report-form zForm zNice">
-                <form data-action="/app_dev.php/actionRival">
-                    <div class="zForm-row error" style="display: none; color: #ff0000;">
-
-                    </div>
-
-                    <div class="zForm-row">
-                        <input type="text" required="required" placeholder="Название" name="rival[name]"/>
-                    </div>
-
-                    <div class="zForm-row">
-                        <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]"/>
-                    </div>
-                    <div class="zForm-row radioRow">
-                        <input type="text" minlength="3" required="required" placeholder="Код" name="rival[codeText]"/>
-                    </div>
-                    <div class="zForm-row radioRow">
-                        <input type="hidden" name="rival[section][0]"/>
-                    </div>
-
-                    <div class="zForm-row">
-                        <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#addConcurent form')); return false;"/>
-                        <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-
         <div class="lPopup popTroll" id="creting-price">
             <div class="popupTitle">
                 Добавить цену конкурента

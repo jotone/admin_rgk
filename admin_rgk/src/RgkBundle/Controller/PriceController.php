@@ -67,6 +67,9 @@ class PriceController extends BaseController
             //get all rivals array
             $params['rivals'] = $this->getSectionsRival($parentSpectre,$activeObj);
 
+            //get name+id of all rivals for popup
+            $params['popup_rivals'] = $this->getPopupRivals($params['rivals']);
+
             $params['sections'] = $this->menuStrict($params['sections']);
 
             //get active section id with all children
