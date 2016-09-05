@@ -50,7 +50,7 @@
                     </select>
                 </div>
                 <div class="zForm-row">
-                    <a class="button" onclick="universalSubmit($('#createGroupNew form')); return false;"><span>Добавить</span></a>
+                    <a class="button"><span>Добавить</span></a>
                     <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
                 </div>
             </form>
@@ -68,7 +68,7 @@
                 </div>
                 {% if popup_rivals is defined and popup_rivals is not empty %}
                     <div class="zForm-row">
-                        <select name="section">
+                        <select name="rival">
                             <option value="">Новый конкурент</option>
                             {% for rival in popup_rivals %}
                                 <option value="{{ rival.id }}">{{ rival.name }}</option>
@@ -76,14 +76,14 @@
                         </select>
                     </div>
                 {% endif %}
-                <div class="zForm-row">
+                <div class="zForm-row locked-to-hide">
                     <input type="text" required="required" placeholder="Название" name="rival[name]"/>
                 </div>
 
-                <div class="zForm-row">
+                <div class="zForm-row locked-to-hide">
                     <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]"/>
                 </div>
-                <div class="zForm-row radioRow">
+                <div class="zForm-row radioRow locked-to-hide">
                     <input type="text" minlength="3" required="required" placeholder="Код" name="rival[codeText]"/>
                 </div>
                 <div class="zForm-row radioRow">
@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="zForm-row">
-                    <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#addConcurent form')); return false;"/>
+                    <input type="submit" class="sm-btn" value="Добавить" onclick="createRivalInPrice($('#addConcurent form')); return false;"/>
                     <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
                 </div>
             </form>
@@ -122,10 +122,10 @@
                         <div class="one-row-buttons">
 
                                 <div class="zForm-row">
-                                    <button onclick="createSection(1); return false;"><span>Создать папку</span></button>
+                                    <button data-num="1" class="create-section-bttn"><span>Создать папку</span></button>
                                 </div>
                                 <div class="zForm-row">
-                                    <button onclick="createSection(0); return false;"><span>Создать группу</span></button>
+                                    <button data-num="0" class="create-section-bttn" ><span>Создать группу</span></button>
                                 </div>
 
                         </div>
@@ -197,7 +197,7 @@
                             </div>
                             <div class="table-new-one">
                                 <div class="table-head wdth">
-                                    <div class="table-td"><a href="#createItem" onclick="createItem({{ active_section }})" class="sTable-inner grayBg fancybox-popup"><span class="icon icon_litplus pull-left"></span>ТОВАР</a></div>
+                                    <div class="table-td"><a href="#createItem" data-section="{{ active_section }}" class="sTable-inner createItemButton grayBg fancybox-popup"><span class="icon icon_litplus pull-left"></span>ТОВАР</a></div>
                                     <div class="table-td sTable-inner">Цена</div>
                                 </div>
                                 {% for product in products %}

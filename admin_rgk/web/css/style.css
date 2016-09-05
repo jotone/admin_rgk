@@ -197,7 +197,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .catalogTop .icon:hover{opacity: 0.6;}
 
 .catalogList-wrap{padding:0 0 20px;position: relative;}
-.catalogList{margin-bottom: 11px;}
+.catalogList{margin-bottom: 11px; padding-top: 10px;}
 .catalogList-title .icon{margin-right: 9px;top: -2px;position: relative;}
 .catalogList ul .icon{margin-right: 6px;}
 .catalogList .icon_lplus{margin-right: 6px;}
@@ -206,7 +206,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .catalogList ul li.active{ display: block;}
 .catalogList ul.active{ display: block;}
 .catalogList ul{ padding-left: 15px; display: none; margin-bottom: 10px;}
-.wrap-title{ margin: 7px 0;}
+.wrap-title{ margin: 7px 0; cursor: pointer;}
 .catalogList ul li a:hover,
 .catalogList ul li a.active {background: #e6e5e5;}
 .catalogList ul li  { display: none;white-space: nowrap;}
@@ -479,6 +479,9 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 
 .closeWrap .icon.rowEditing{ left: -20px;}
 .tal{text-align: left}
+#addSite form{ position: relative;}
+#addSite .smash-container{height: 100%;}
+#addSite,
 .row-modal-window{width: 540px;}
 .selectinput{ position: relative;}
 .inputstyle{width: calc(100% - 35px);}
@@ -567,3 +570,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 
 .right-tabs .icon_edit{ opacity: 0; transition: all 0.3s; }
 .table-new-two .table-td:hover .icon_edit{ opacity: 1;  }
+.succes-info{font-size: 16px;
+    text-align: center;
+    width: 250px;
+    padding: 50px 30px;}

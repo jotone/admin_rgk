@@ -16,30 +16,39 @@
         <div class="popupTitle">
             Добавить конкурента
         </div>
-        <div class="report-form zForm zNice">
+        <div class="zForm zNice">
             <form data-action="/app_dev.php/actionRival">
-                <div class="zForm-row error" style="display: none; color: #ff0000;">
+                <div class="form-col">
+                    <div class="zForm-row error" style="display: none; color: #ff0000;">
+
+                    </div>
+                    {# col 1#}
+                    <div class="zForm-row ">
+                        <input type="text" required="required" placeholder="Название" name="rival[name]"/>
+                    </div>
+
+                    <div class="zForm-row">
+                        <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]"/>
+                    </div>
+                    <div class="zForm-row radioRow">
+                        <input type="text" minlength="3" required="required" placeholder="Код" name="rival[codeText]"/>
+                    </div>
+                </div>
+                <div class="form-col form-col-scrolled">
+                    <div class="smash-container">
+                        {% if sections is defined %}
+
+                            {% for section in sections %}
+                                {{ _self.recursiveSectionList(section) }}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
 
                 </div>
-                {# col 1#}
-                <div class="zForm-row">
-                    <input type="text" required="required" placeholder="Название" name="rival[name]"/>
-                </div>
 
-                <div class="zForm-row">
-                    <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]"/>
-                </div>
-                <div class="zForm-row radioRow">
-                    <input type="text" minlength="3" required="required" placeholder="Код" name="rival[codeText]"/>
-                </div>
                 {# col 2 #}
 
-                {% if sections is defined %}
 
-                    {% for section in sections %}
-                        {{ _self.recursiveSectionList(section) }}
-                    {% endfor %}
-                {% endif %}
                 {# col 2 end #}
                 <div class="zForm-row">
                     <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#addSite form')); return false;"/>

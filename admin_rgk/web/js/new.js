@@ -57,14 +57,14 @@
 /*END table*/
 /*smart search*/
     function clickOnPlus() {
-        $(document).on('click','.icon_lplus', function () {
-            $(this).toggleClass('active');
-            if($(this).hasClass('active')){
-                $(this).parent().next().addClass('active');
-                $(this).parent().next().find('>li').addClass('active');
+        $(document).on('click','.wrap-title', function () {
+            $(this).find('.icon_lplus').toggleClass('active');
+            if($(this).find('.icon_lplus').hasClass('active')){
+                $(this).next().addClass('active');
+                $(this).next().find('>li').addClass('active');
             }else{
-                $(this).parent().next().removeClass('active');
-                $(this).parent().next().find('>li').removeClass('active');
+                $(this).next().removeClass('active');
+                $(this).next().find('>li').removeClass('active');
             }
         })
     }
@@ -233,7 +233,7 @@
                             hidePreloader();
                             errorMessage(data.error);
                         } else if (typeof data.success != 'undefined'){
-                            location.reload();
+                            succsesMessage();
                         } else{
                             errorMessage(data);
                         }
@@ -304,12 +304,16 @@
                     },
                     success : function(data){
                         hidePreloader();
-                        if(typeof data.error != 'undefined')
+                        if(typeof data.error != 'undefined') {
                             errorMessage(data.error);
-                        else if (typeof data.success != 'undefined')
-                            console.log('succes editing');
-                        else
+                        }else if (typeof data.success != 'undefined') {
+                            hidePreloader();
+                            $.fancybox.open({
+                                content: '<div class="succes-info">Действие успешно совершено!</div>'
+                            });
+                        }else {
                             console.log(data);
+                        }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         location.reload();
@@ -332,6 +336,31 @@
                     return false;
                 });
             }
+var createSectionFlag = false;
+function createSectionOrGroup() {
+    $(document).on('click', '#createGroupNew .button', function () {
+            console.log('wqer');
+            universalSubmit($('#createGroupNew form'));
+        e.preventDefault();
+        return false;
+    });
+    $('#createGroupNew form').keypress(function (event) {
+        if (event.keyCode == 13) {
+
+            universalSubmit($('#createGroupNew form'));
+            event.preventDefault();
+            return false;
+
+        }
+    });
+    $('.create-section-bttn').click( function () {
+            var num = $(this).data('num');
+            createSection(num);
+    });
+
+
+}
+
 
             function createSection(folder) {
                 var wrap_name = '#createGroupNew';
@@ -364,7 +393,7 @@
                             hidePreloader();
                             errorMessage(data.error);
                         }else if (typeof data.success != 'undefined') {
-                            location.reload();
+                            succsesMessage();
                         }else{
                             hidePreloader();
                             errorMessage(data);
@@ -438,7 +467,7 @@
                                 hidePreloader();
                                 errorMessage(data.error);
                             }else if (typeof data.success != 'undefined') {
-                                location.reload();
+                                succsesMessage();
                             }else{
                                 hidePreloader();
                                 errorMessage(data);
@@ -508,7 +537,7 @@
                                     hidePreloader();
                                     errorMessage(data.error);
                                 } else if (typeof data.success != 'undefined') {
-                                    location.reload();
+                                    succsesMessage();
                                 } else {
                                     hidePreloader();
                                     errorMessage(data);
@@ -551,8 +580,7 @@
                                 hidePreloader();
                                 errorMessage(data.error);
                             }else if (typeof data.success != 'undefined') {
-                                console.log('succes deleting item id--> ' + id);
-                                location.reload();
+                                succsesMessage();
                             }else{
                                 hidePreloader();
                                 errorMessage(data);
@@ -594,7 +622,7 @@
                             errorMessage(data.error);
                         }else if (typeof data.success != 'undefined') {
                             console.log('succes deleted id--> ' + id);
-                            location.reload();
+                            succsesMessage();
                         }else{
                             hidePreloader();
                             errorMessage(data);
@@ -656,6 +684,81 @@ function selectToInput(popup) {
 
 }
 
+function createRivalInPrice(form) {
+
+
+        if(form.find('select').val()>0){
+            var id = form.find('select').val();
+            var section = form.find('input[name="rival[section][0]"]').val();
+            $.ajax({
+                url: '/app_dev.php/activeRivalSection/' + id,
+                dataType: "json",
+                data: {
+                    section: section //active section identifier
+                },
+                type: 'POST',
+                beforeSend: function () {
+                    showPreloader();
+                },
+                success: function (data) {
+                    $.fancybox.close();
+                    if (typeof data.error != 'undefined') {
+                        hidePreloader();
+                        errorMessage(data.error);
+                    } else if (typeof data.success != 'undefined') {
+                        succsesMessage();
+                    } else {
+                        hidePreloader();
+                        console.log(data);
+                    }
+
+
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr, ajaxOptions, thrownError);
+
+                    location.reload();
+                }
+            });
+        }else{
+            if(form.valid()) {
+                var data = form.serialize();
+                $.ajax({
+                    url: form.data('action'),
+                    dataType: "json",
+                    data: data,
+                    type: 'POST',
+                    beforeSend: function () {
+                        showPreloader();
+                    },
+                    success: function (data) {
+                        $.fancybox.close();
+                        if (typeof data.error != 'undefined') {
+                            hidePreloader();
+                            errorMessage(data.error);
+                        } else if (typeof data.success != 'undefined') {
+                            succsesMessage();
+                        } else {
+                            hidePreloader();
+                            console.log(data);
+                        }
+
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr, ajaxOptions, thrownError);
+
+                        location.reload();
+                    }
+                });
+            }
+
+
+        }
+
+
+}
+
 function createRival(form) {
     
     if(form.valid()){
@@ -674,7 +777,7 @@ function createRival(form) {
                     hidePreloader();
                     errorMessage(data.error);
                 }else if (typeof data.success != 'undefined'){
-                    location.reload();
+                    succsesMessage();
                 } else{
                     hidePreloader();
                     console.log(data);
@@ -722,7 +825,7 @@ function deleteRival(id) {
 
             }
             else if (typeof data.success != 'undefined')
-                location.reload();
+                succsesMessage();
             else{
                 hidePreloader();
                 console.log(data);
@@ -829,6 +932,7 @@ function deleteRival(id) {
     }
     function refreshPrice(id) {
         $(document).on('click', '.productEdit .refreshButton', function () {
+
             $.ajax({
                 url : "/actionPriceParse/"+id,
                 dataType:"json",
@@ -845,7 +949,7 @@ function deleteRival(id) {
                         errorMessage(data.error);
                     }else if (typeof data.success != 'undefined') {
 
-                        location.reload();
+                        succsesMessage();
                     }else{
                         hidePreloader();
                         errorMessage(data);
@@ -893,54 +997,59 @@ function deleteRival(id) {
     function createPrice() { //создание цены
 
         $(document).on('click', '#creting-price button', function (e) {
+            if($(this).closest('form').valid()){
+                var popup = $('#creting-price');
+                var product = popup.find('input[name="product"]').val();
+                var title = popup.find('input[name="name"]').val();
+                var url = popup.find('input[name="url"]').val();
+                var rival = popup.find('input[name="rival"]').val();
+                var code = popup.find('input[name="rival[codeText]"]').val();
+                var priceid = popup.find('input[name="priceid"]').val();
+                var ajaxurl = (priceid.length>0?"/app_dev.php/actionPrice/"+priceid:"/app_dev.php/actionPrice");
+                console.log(ajaxurl);
+                $.ajax({
+                    url : ajaxurl,
+                    dataType:"json",
+                    data: {
+                        price: {
+                            rival:rival,
+                            product: product,
+                            code: code,
+                            url: url,
+                            title: title
+                        }
+                    },
+                    type:'POST',
+                    beforeSend:function () {
+                        showPreloader();
 
-            var popup = $('#creting-price');
-            var product = popup.find('input[name="product"]').val();
-            var title = popup.find('input[name="name"]').val();
-            var url = popup.find('input[name="url"]').val();
-            var rival = popup.find('input[name="rival"]').val();
-            var code = popup.find('input[name="rival[codeText]"]').val();
-            var priceid = popup.find('input[name="priceid"]').val();
-            var ajaxurl = (priceid.length>0?"/app_dev.php/actionPrice/"+priceid:"/app_dev.php/actionPrice");
-            console.log(ajaxurl);
-            $.ajax({
-                url : ajaxurl,
-                dataType:"json",
-                data: {
-                    price: {
-                        rival:rival,
-                        product: product,
-                        code: code,
-                        url: url,
-                        title: title
-                    }
-                },
-                type:'POST',
-                beforeSend:function () {
-                    showPreloader();
+                    },
+                    success : function(data){
+                        $.fancybox.close();
+                        if(typeof data.error != 'undefined') {
+                            hidePreloader();
+                            errorMessage(data.error);
+                        }else if (typeof data.success != 'undefined') {
+                            hidePreloader();
+                            console.log(data)
+                            
 
-                },
-                success : function(data){
-                    $.fancybox.close();
-                    if(typeof data.error != 'undefined') {
-                        hidePreloader();
-                        errorMessage(data.error);
-                    }else if (typeof data.success != 'undefined') {
+                        }else{
+                            hidePreloader();
+                            errorMessage(data);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+
+                        console.log(xhr);
+                        console.log(ajaxOptions);
+                        console.log(thrownError);
                         location.reload();
-                    }else{
-                        hidePreloader();
-                        errorMessage(data);
+
                     }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
+                });
+            }
 
-                    console.log(xhr);
-                    console.log(ajaxOptions);
-                    console.log(thrownError);
-                    location.reload();
-
-                }
-            });
             e.preventDefault();
             return false;
         });
@@ -968,7 +1077,8 @@ function universalSubmit(form) {
                     hidePreloader();
                     errorMessage(data.error);
                 }else if (typeof data.success != 'undefined'){
-                    location.reload();
+                    succsesMessage();
+
                 } else{
                     hidePreloader();
                     console.log(data);
@@ -1052,8 +1162,7 @@ function finalAjaxDeleteCode(id) {
                 hidePreloader();
                 errorMessage(data.error);
             }else if (typeof data.success != 'undefined') {
-                console.log('succes deleting item id--> ' + id);
-                location.reload();
+                succsesMessage();
             }else{
                 hidePreloader();
                 errorMessage(data);
@@ -1105,7 +1214,21 @@ function starterContextTovarFunctional(obj, id, text) {
     $(document).on('click', '.createConcurent', function () {
         var hidden = obj.data('section');
         $('#addConcurent input[name="rival[section][0]"]').val(hidden);
-        $.fancybox.open('#addConcurent');
+        $.fancybox.open('#addConcurent',{
+            wrapCSS: 'selected-fancybox',
+            afterShow:function () {
+                
+                    var select = $('#addConcurent').find('select');
+                    select.change(function () {
+                        if(select.val()>0){
+                            $('.locked-to-hide').stop().slideUp();
+                        }else{
+                            $('.locked-to-hide').stop().slideDown();
+                        }
+                    });
+                
+            }
+        });
     });
     $(document).on('click', '.moveUpTovar', function () {
         var z = 1;
@@ -1136,8 +1259,7 @@ function finalAjaxMoveTovar(id, z) {
                 hidePreloader();
                 errorMessage(data.error);
             }else if (typeof data.success != 'undefined') {
-                console.log('succes moved item id--> ' + id);
-                location.reload();
+               succsesMessage();
             }else{
                 hidePreloader();
                 errorMessage(data);
@@ -1234,8 +1356,7 @@ function moveConc(itemId, sectid) {
                         hidePreloader();
                         errorMessage(data.error);
                     }else if (typeof data.success != 'undefined') {
-
-                        location.reload();
+                        succsesMessage();
                     }else{
                         hidePreloader();
                         errorMessage(data);
@@ -1254,6 +1375,16 @@ function moveConc(itemId, sectid) {
         });
     });
 
+}
+function succsesMessage(){
+    hidePreloader();
+    $.fancybox.open({
+        content:'<div class="succes-info">Действие успешно совершено!</div>',
+        afterClose:function () {
+            showPreloader();
+            location.reload();
+        }
+    });
 }
 function delConc(itemId, sectid, itemName, sectName) {
     $(document).on('click', '.delConc', function () {
@@ -1279,7 +1410,7 @@ function delConc(itemId, sectid, itemName, sectName) {
                         errorMessage(data.error);
                     }else if (typeof data.success != 'undefined') {
 
-                        location.reload();
+                        succsesMessage();
                     }else{
                         hidePreloader();
                         errorMessage(data);
@@ -1316,7 +1447,6 @@ function closeContext() {
 }
 var createItemFlag = false;
 function createItemButton() {
-
        $('.createItemButton').click(function () {
            if(createItemFlag==false) {
                createItemFlag = true;
@@ -1324,14 +1454,14 @@ function createItemButton() {
                createItem(section);
            }
        });
-
-
 }
+
 editTovarAjax();
 createCell();
 createPrice();
 infoCell();
 editActiveSection();
+
 $(document).ready(function () {
 
 
@@ -1348,7 +1478,7 @@ $(document).ready(function () {
     contextMenuTovar();
     contextMenuConcurent();
     closeContext();
-
+    createSectionOrGroup();
     $('.miss').each(function () {
         missClick($(this));
     });
