@@ -480,7 +480,7 @@ class PriceController extends BaseController
             ->findBy(array('section'=>$section->getId()));
 
         if($prods){
-            $prodIds = array_map(function($a){return $a->getId();},$prods);
+            $prodIds = array_map(function($a){return (strpos($a->getUrl(),'http')===0?$a->getId():0);},$prods);
             //get all prices
             $prices = $this->getDoctrine()
                 ->getRepository('RgkBundle:Price')
@@ -520,7 +520,9 @@ class PriceController extends BaseController
             ->find(intval($id));
         if(!$price)
             $this->renderApiJson(['error'=>'Элемент не найдено']);
-
+        
+        if(strpos($price->getUrl(),'http')!==0)
+            $this->renderApiJson(['error'=>'URL товара в недопустимом формате']);
         //check parce
         $parse = new ParseController();
         $priceValue = $parse->get_price($price->getUrl(), $price->getCode()->getCode());
