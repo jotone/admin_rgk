@@ -1,4 +1,11 @@
 /*table*/
+    var ErrorResponse = function (xhr, ajaxOptions, thrownError) {
+        console.log([xhr, ajaxOptions, thrownError]);
+        debugger;
+        hidePreloader();
+        errorMessage((ajaxOptions == 'parsererror'?'Ошибка авторизации':'Ошибка отправки запроса'));
+    }
+
     function oneHeight() {
         $('.table-new-one .wdth').each(function () {
             var ind = $(this).index();
@@ -239,10 +246,7 @@
                         }
 
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                        errorMessage(txt);
-                    }
+                    error: ErrorResponse
                 });
             }
             function errorMessage(data){
@@ -316,10 +320,7 @@
                             console.log(data);
                         }
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                        errorMessage(txt);
-                    }
+                    error: ErrorResponse
                 });
             }
         //END functional edit item
@@ -401,11 +402,7 @@ function createSectionOrGroup() {
                             errorMessage(data);
                         }
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                        errorMessage(txt);
-
-                    }
+                    error: ErrorResponse
                 });
             }
         // END functional create itemGroup
@@ -471,11 +468,7 @@ function createSectionOrGroup() {
                                 errorMessage(data);
                             }
                         },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                            errorMessage(txt);
-
-                        }
+                        error: ErrorResponse
                     });
 
                 }
@@ -538,10 +531,7 @@ function createSectionOrGroup() {
                                     errorMessage(data);
                                 }
                             },
-                            error: function (xhr, ajaxOptions, thrownError) {
-                                var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                                errorMessage(txt);
-                            }
+                            error: ErrorResponse
                         });
                         e.preventDefault();
                         return false;
@@ -577,10 +567,7 @@ function createSectionOrGroup() {
                                 errorMessage(data);
                             }
                         },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                            errorMessage(txt);
-                        }
+                        error: ErrorResponse
                     });
                 }
         // END functional create item
@@ -615,10 +602,7 @@ function createSectionOrGroup() {
                             errorMessage(data);
                         }
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                        errorMessage(txt);
-                    }
+                    error: ErrorResponse
                 });
             }
         // END functional create item
@@ -697,10 +681,7 @@ function createRivalInPrice(form) {
 
 
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                    errorMessage(txt);
-                }
+                error: ErrorResponse
             });
         }else{
             if(form.valid()) {
@@ -727,10 +708,7 @@ function createRivalInPrice(form) {
 
 
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                        errorMessage(txt);
-                    }
+                    error: ErrorResponse
                 });
             }
 
@@ -766,10 +744,7 @@ function createRival(form) {
 
 
             },
-            error: function (xhr, ajaxOptions, thrownError) {
-                var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                errorMessage(txt);
-            }
+            error: ErrorResponse
         });
     }
 }
@@ -813,10 +788,7 @@ function deleteRival(id) {
 
 
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-            errorMessage(txt);
-        }
+        error: ErrorResponse
     });
 }
 // edit active Section
@@ -938,11 +910,7 @@ function finalAjaxRefresh(id) {
                 errorMessage(data);
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-            errorMessage(txt);
-
-        }
+        error: ErrorResponse
     });
 }
     function createCell() {  // нередактированая ячейка цены конкурента
@@ -1018,11 +986,7 @@ function finalAjaxRefresh(id) {
                             errorMessage(data);
                         }
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                        errorMessage(txt);
-
-                    }
+                    error: ErrorResponse
                 });
             }
 
@@ -1060,10 +1024,7 @@ function universalSubmit(form) {
                     console.log(data);
                 }
             },
-            error: function (xhr, ajaxOptions, thrownError) {
-                var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                errorMessage(txt);
-            }
+            error: ErrorResponse
         });
     }
 }
@@ -1143,10 +1104,7 @@ function finalAjaxDeleteCode(id) {
                 errorMessage(data);
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-            errorMessage(txt);
-        }
+        error: ErrorResponse
     });
 }
 // END удаление кода
@@ -1236,10 +1194,7 @@ function finalAjaxMoveTovar(id, z) {
                 errorMessage(data);
             }
         },
-        error: function (xhr, ajaxOptions, thrownError) {
-            var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-            errorMessage(txt);
-        }
+        error: ErrorResponse
     });
 }
 //END контекстное меню товара
@@ -1329,10 +1284,7 @@ function moveConc(itemId, sectid) {
                         errorMessage(data);
                     }
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                    errorMessage(txt);
-                }
+                error: ErrorResponse
             });
 
         });
@@ -1379,10 +1331,7 @@ function delConc(itemId, sectid, itemName, sectName) {
                         errorMessage(data);
                     }
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    var txt= xhr+'; '+ajaxOptions+'; '+thrownError+';';
-                    errorMessage(txt);
-                }
+                error: ErrorResponse
             });
         });
 
