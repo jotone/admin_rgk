@@ -824,6 +824,13 @@ function deleteRival(id) {
     }
 //END  edit active Section
 // EDITING concurent price table
+    function targetBlanc(){
+        $(document).on('click', '#productEdit input[name=url]', function () {
+            var href = $(this).val();
+            window.open(href, '_blank');
+        });
+
+    }
     function infoCell() {
         $(document).on('click', '.editablePopup', function () {
             
@@ -1369,7 +1376,7 @@ createCell();
 createPrice();
 infoCell();
 editActiveSection();
-
+targetBlanc();
 $(document).ready(function () {
 
 
