@@ -31,13 +31,15 @@ class ParseController
         $html = $this->file_get_html($url);
         $result = '';
         $count_res = 0;
+        if(!$html)
+            return false;
+
         if ($html->innertext != '' and count($html->find($query))) {
             foreach ($html->find($query) as $price) {
                 if ($count_res < 1) {
-
                     $result = str_replace(" ", "", $price->innertext);
-                    $result = preg_replace('~[^0-9]+~', '', $result);
-                    $count_res++;
+                    $result = preg_replace('~<[^><]+>~', '', $result); // delete tags
+                    $result = preg_replace('~[^0-9]+~', '', $result);  //  delete text
                     break;
                 } else {
                     return false;
