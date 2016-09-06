@@ -1126,6 +1126,7 @@ function contextMenuTovar() {
             var obj = $(this);
             var id = obj.data('id');
             var text = obj.data('name');
+            var section = obj.data('section');
 
             var pos = $('.tables-wraper').offset(),
                 elem_left = pos.left,
@@ -1134,7 +1135,7 @@ function contextMenuTovar() {
                 Yinner = event.pageY - elem_top;
             if(!$(this).hasClass('activeCont')){
                 starterContextTovarFunctional(obj, id, text);
-
+                updateMenuTovar(id, section);
             }
             $('.table-new-one .table-row').removeClass('activeCont');
             $(this).addClass('activeCont');
@@ -1144,6 +1145,33 @@ function contextMenuTovar() {
             return false;
         }, false);
     }
+}
+function updateMenuTovar(itemId, sectid) {
+    $(document).on('click', '.updateTovar', function () {
+        $.ajax({
+            url : "/app_dev.php/actionSectionParse/"+sectid,
+            data:{
+                product:itemId
+            },
+            type:'POST',
+            beforeSend:function () {
+                showPreloader();
+
+            },
+            success : function(data){
+                if(typeof data.error != 'undefined') {
+                    hidePreloader();
+                    errorMessage(data.error);
+                }else if (typeof data.success != 'undefined') {
+                    succsesMessage();
+                }else{
+                    hidePreloader();
+                    errorMessage(data);
+                }
+            },
+            error: ErrorResponse
+        });
+    });
 }
 function starterContextTovarFunctional(obj, id, text) {
     editTovar(obj);
