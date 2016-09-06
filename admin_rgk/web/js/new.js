@@ -1227,6 +1227,7 @@ function contextMenuConcurent() {
                 Yinner = event.pageY - elem_top;
             if(!$(this).hasClass('activeCont')){
                 moveConc(itemId, sectid);
+                updateConc(itemId, sectid);
                 delConc(itemId, sectid, itemName, sectName);
             }
             $('.context-conc').removeClass('activeCont');
@@ -1240,6 +1241,33 @@ function contextMenuConcurent() {
             return false;
         }, false);
     }
+}
+function updateConc(itemId, sectid) {
+    $(document).on('click', '.updateConc', function () {
+        $.ajax({
+            url : "/app_dev.php/actionSectionParse/"+sectid,
+            data:{
+                rival:itemId
+            },
+            type:'POST',
+            beforeSend:function () {
+                showPreloader();
+
+            },
+            success : function(data){
+                if(typeof data.error != 'undefined') {
+                    hidePreloader();
+                    errorMessage(data.error);
+                }else if (typeof data.success != 'undefined') {
+                    succsesMessage();
+                }else{
+                    hidePreloader();
+                    errorMessage(data);
+                }
+            },
+            error: ErrorResponse
+        });
+    });
 }
 function moveConc(itemId, sectid) {
 
