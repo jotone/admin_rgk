@@ -457,6 +457,7 @@ class PriceController extends BaseController
          * @var Rival $rival
          * @var Section $section
          * @var Price $price
+         * @var Product $prod
          */
         $section = $this->getDoctrine()
             ->getRepository('RgkBundle:Section')
@@ -465,40 +466,60 @@ class PriceController extends BaseController
             $this->renderApiJson(['error'=>'Элемент не найдено']);
 
         $rival = $request->request->get('rival');
-        if(!$rival || $rival<=0)
-            $this->renderApiJson(['error'=>'Конкурент не найден']);
+        $prod = $request->request->get('product');
+        if( (!$rival || $rival<=0) && (!$prod || $prod<=0))
+            $this->renderApiJson(['error'=>'Ошибка передачи данных']);
 
-        $rival = $this->getDoctrine()
-            ->getRepository('RgkBundle:Rival')
-            ->find(intval($rival));
-        if(!$rival)
-            $this->renderApiJson(['error'=>'Элемент не найдено']);
+        $prices = false;
+        if($rival>0) {
+            $rival = $this->getDoctrine()
+                ->getRepository('RgkBundle:Rival')
+                ->find(intval($rival));
+            if (!$rival)
+                $this->renderApiJson(['error' => 'Элемент не найдено']);
 
-        //get section-rival products
-        $prods = $this->getDoctrine()
-            ->getRepository('RgkBundle:Product')
-            ->findBy(array('section'=>$section->getId()));
+            //get section-rival products
+            $prods = $this->getDoctrine()
+                ->getRepository('RgkBundle:Product')
+                ->findBy(array('section' => $section->getId()));
 
-        if($prods){
-            $prodIds = array_map(function($a){return (strpos($a->getUrl(),'http')===0?$a->getId():0);},$prods);
-            //get all prices
-            $prices = $this->getDoctrine()
-                ->getRepository('RgkBundle:Price')
-                ->findBy(['product'=>$prodIds,'code'=>array(function($a){return $a->getId();},$rival->getCode()->toArray())]);
+            if ($prods) {
+                $prodIds = array_map(function ($a) {
+                    return (strpos($a->getUrl(), 'http') === 0 ? $a->getId() : 0);
+                }, $prods);
+                $prodIds = array_filter($prodIds);
 
-            if($prices){
-                $manager = $this->getDoctrine()->getManager();
-                $parse = new ParseController();
-                foreach ($prices as $price) {
-                    $priceValue = $parse->get_price($price->getUrl(), $price->getCode()->getCode());
-                    if($priceValue) {
-                        $price->setPrice($priceValue)
-                              ->setDate(new \DateTime());
-                        $manager->persist($price);
-                    }
-                }
-                $manager->flush();
+                //get all prices
+                $prices = $this->getDoctrine()
+                    ->getRepository('RgkBundle:Price')
+                    ->findBy(['product' => $prodIds, 'code' => array_map(function ($a) {
+                        return $a->getId();
+                    }, $rival->getCode()->toArray())]);
+
             }
+        } else {
+            $prod = $this->getDoctrine()
+                ->getRepository('RgkBundle:Product')
+                ->find(intval($prod));
+
+            if (!$prod)
+                $this->renderApiJson(['error' => 'Элемент не найдено']);
+
+            $prices = $prod->getPrices()->toArray();
+        }
+
+        if($prices){
+            $manager = $this->getDoctrine()->getManager();
+            $parse = new ParseController();
+            foreach ($prices as $price) {
+                $priceValue = $parse->get_price($price->getUrl(), $price->getCode()->getCode());
+                if($priceValue) {
+                    $price->setPrice($priceValue)
+                        ->setDate(new \DateTime());
+                    $manager->persist($price);
+                }
+            }
+            $manager->flush();
         }
 
         $this->renderApiJson(['success'=>true]);
