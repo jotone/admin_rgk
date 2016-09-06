@@ -481,10 +481,12 @@ class PriceController extends BaseController
 
         if($prods){
             $prodIds = array_map(function($a){return (strpos($a->getUrl(),'http')===0?$a->getId():0);},$prods);
+            $prodIds = array_filter($prodIds);
+
             //get all prices
             $prices = $this->getDoctrine()
                 ->getRepository('RgkBundle:Price')
-                ->findBy(['product'=>$prodIds,'code'=>array(function($a){return $a->getId();},$rival->getCode()->toArray())]);
+                ->findBy(['product'=>$prodIds,'code'=>array_map(function($a){return $a->getId();},$rival->getCode()->toArray())]);
 
             if($prices){
                 $manager = $this->getDoctrine()->getManager();
