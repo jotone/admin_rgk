@@ -447,6 +447,64 @@ class PriceController extends BaseController
     }
 
     /**
+     * @Route("/actionSectionParse/{id}")
+     */
+    public function sectionParseAction(Request $request,$id=0)
+    {
+        if ($request->getMethod() != 'POST')
+            return $this->redirectToRoute('rgk_price_index');
+        /**
+         * @var Rival $rival
+         * @var Section $section
+         * @var Price $price
+         */
+        $section = $this->getDoctrine()
+            ->getRepository('RgkBundle:Section')
+            ->find(intval($id));
+        if(!$section)
+            $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+        $rival = $request->request->get('rival');
+        if(!$rival || $rival<=0)
+            $this->renderApiJson(['error'=>'Конкурент не найден']);
+
+        $rival = $this->getDoctrine()
+            ->getRepository('RgkBundle:Rival')
+            ->find(intval($rival));
+        if(!$rival)
+            $this->renderApiJson(['error'=>'Элемент не найдено']);
+
+        //get section-rival products
+        $prods = $this->getDoctrine()
+            ->getRepository('RgkBundle:Product')
+            ->findBy(array('section'=>$section->getId()));
+
+        if($prods){
+            $prodIds = array_map(function($a){return $a->getId();},$prods);
+            //get all prices
+            $prices = $this->getDoctrine()
+                ->getRepository('RgkBundle:Price')
+                ->findBy(['product'=>$prodIds,'code'=>array(function($a){return $a->getId();},$rival->getCode()->toArray())]);
+
+            if($prices){
+                $manager = $this->getDoctrine()->getManager();
+                $parse = new ParseController();
+                foreach ($prices as $price) {
+                    $priceValue = $parse->get_price($price->getUrl(), $price->getCode()->getCode());
+                    if($priceValue) {
+                        $price->setPrice($priceValue)
+                              ->setDate(new \DateTime());
+                        $manager->persist($price);
+                    }
+                }
+                $manager->flush();
+            }
+        }
+
+        $this->renderApiJson(['success'=>true]);
+    }
+
+    /**
      * @Route("/actionPriceParse/{id}", name="rgk_action_price_parse")
      */
     public function priceParseAction(Request $request,$id=0)

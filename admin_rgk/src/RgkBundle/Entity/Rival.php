@@ -25,14 +25,14 @@ class Rival
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255, unique=false)
      */
     private $name;
 
     /**
      * @var string
      * @Assert\NotBlank()
-     * @ORM\Column(name="url", type="string", length=255, unique=true)
+     * @ORM\Column(name="url", type="string", length=255, unique=false)
      */
     private $url;
 
