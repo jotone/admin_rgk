@@ -193,11 +193,14 @@
                                     $('.tzNice').styler({
                                         selectVisibleOptions:10
                                     });
-                                        $('.submit-tmp').click(function () {
-                                            var newId = $('.popTroll form select').val();
+                                    setTimeout(function () {
+                                        $(document).on('click', '.submit-tmp', function () {
+                                            var newId = $('#moveItem form select').val();
                                             finalAjax(id, newId, title);
                                             return false;
                                         });
+                                    }, 200);
+
                                 }
                             });
                         }
