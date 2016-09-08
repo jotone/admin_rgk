@@ -192,14 +192,15 @@
 
                         </td>
                         <td>
+                            <div class="closeWrap rel-td">
+                                <a href="javascript:void(0);" onclick="deleteRivalAlert({{ rival.id }});" class="close-conc"><span class="icon icon_close"></span></a>
+                            </div>
                             {% if rival.sections is defined and rival.sections is not empty %}
                                 {% for section in rival.sections %}
                                     {{ section.title }}{{ (loop.last?'':',') }}
                                 {% endfor %}
                             {% endif %}
-                            <div class="closeWrap rel-td">
-                                <a href="javascript:void(0);" onclick="deleteRivalAlert({{ rival.id }});" class="close-conc"><span class="icon icon_close"></span></a>
-                            </div>
+
                         </td>
                     </tr>
                 {% endfor %}
