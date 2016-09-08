@@ -1430,6 +1430,15 @@ function createItemButton() {
        });
 }
 
+function rovEditing() {
+    $(document).on('click', '.rowEditing', function () {
+        var rivalid = $(this).data('rival-id');
+        var rivalName = $(this).data('name');
+        var rivalUrl = $(this).data('url');
+        var action = $(this).data('action');
+    });
+}
+
 editTovarAjax();
 createCell();
 createPrice();

@@ -17,19 +17,19 @@
         <div class="zHiddenBlock">
             <div class="row-modal-window" id="modalEditable">
                 <div class="zForm">
-                    <form data-action="/app_dev.php/actionRival/{#{ rival.id }#}">
+                    <form data-action="">
                         <div class="form-col zNice small">
                             <div class="zForm-row">
                                 Название:
                             </div>
                             <div class="zForm-row">
-                                <input type="text" required="required" placeholder="Название" name="rival[name]" value="{# rival.name #}"/>
+                                <input type="text" required="required" placeholder="Название" name="rival[name]"/>
                             </div>
                             <div class="zForm-row">
                                 URL:
                             </div>
                             <div class="zForm-row">
-                                <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]" value="{#rival.url #}"/>
+                                <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]"/>
                             </div>
                             <div class="zForm-row">
                                 Код:
@@ -156,7 +156,7 @@
                     <tr data-id="{{ rival.id }}" >
                         <td>
                             <div class="closeWrap">
-                                <a href="#modal{{ rival.id }}"  onclick="selectToInput($('#modal{{ rival.id }}'));" class="icon icon_edit rowEditing fancybox-popup-selected"></a>
+                                <a href=""   data-rival-id="{{ rival.id }}" data-action="/app_dev.php/actionRival/{{ rival.id }}" data-url="{{ rival.url }}" data-name="{{  rival.name }}" class="icon icon_edit rowEditing"></a>
                             </div>
                             {{ rival.name }}
 
