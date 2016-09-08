@@ -12,13 +12,79 @@
 {% endmacro %}
 {% block zhidden %}
     {{ parent() }}
+
+
+        <div class="zHiddenBlock">
+            <div class="row-modal-window" id="modalEditable">
+                <div class="zForm">
+                    <form data-action="/app_dev.php/actionRival/{#{ rival.id }#}">
+                        <div class="form-col zNice small">
+                            <div class="zForm-row">
+                                Название:
+                            </div>
+                            <div class="zForm-row">
+                                <input type="text" required="required" placeholder="Название" name="rival[name]" value="{# rival.name #}"/>
+                            </div>
+                            <div class="zForm-row">
+                                URL:
+                            </div>
+                            <div class="zForm-row">
+                                <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]" value="{#rival.url #}"/>
+                            </div>
+                            <div class="zForm-row">
+                                Код:
+                            </div>
+                            <div class="toselect-wrap">
+                                <div class="deletius"></div>
+                                <div class="zForm-row">
+                                    <select name="rival[code]" class="formstyler">
+
+                                           {# <option value="{{ code.id }}">{{ code.code }} <div class="delete-this"></div></option>#}
+
+                                    </select>
+                                </div>
+                                <div class="zForm-row toselect">
+                                    <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
+                                </div>
+                            </div>
+                            <div class="zForm-row zNice">
+                                <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#modalEditable form')); return false;"/>
+                                <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
+                            </div>
+                        </div>
+                        <div class="form-col form-col-scrolled">
+                            <div class="zForm-row">
+                                Разделы
+                            </div>
+                            <div class="smash-container">
+
+                                {% if sections is defined %}
+                                    {% for section in sections %}
+                                        {{ _self.recursiveSectionList(section) }}
+                                    {% endfor %}
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+
     <div class="lPopup report" id="addSite">
         <div class="popupTitle">
             Добавить конкурента
         </div>
         <div class="zForm zNice">
             <form data-action="/app_dev.php/actionRival">
-                <div class="form-col">
+                <div class="form-col small">
                     <div class="zForm-row error" style="display: none; color: #ff0000;">
 
                     </div>
@@ -32,6 +98,10 @@
                     </div>
                     <div class="zForm-row radioRow">
                         <input type="text" minlength="3" required="required" placeholder="Код" name="rival[codeText]"/>
+                    </div>
+                    <div class="zForm-row">
+                        <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#addSite form')); return false;"/>
+                        <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
                     </div>
                 </div>
                 <div class="form-col form-col-scrolled">
@@ -50,10 +120,7 @@
 
 
                 {# col 2 end #}
-                <div class="zForm-row">
-                    <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#addSite form')); return false;"/>
-                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
-                </div>
+
             </form>
         </div>
     </div>
@@ -123,69 +190,7 @@
                             {% endfor %}
 
 
-                            <div class="closeWrap">
-                                <div class="zHiddenBlock">
-                                    <div class="row-modal-window" id="modal{{ rival.id }}">
-                                        <div class="zForm">
-                                            <form data-action="/app_dev.php/actionRival/{{ rival.id }}">
-                                                <div class="form-col zNice">
-                                                    <div class="zForm-row">
-                                                        Название:
-                                                    </div>
-                                                    <div class="zForm-row">
-                                                        <input type="text" required="required" placeholder="Название" name="rival[name]" value="{{ rival.name }}"/>
-                                                    </div>
-                                                    <div class="zForm-row">
-                                                        URL:
-                                                    </div>
-                                                    <div class="zForm-row">
-                                                        <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]" value="{{ rival.url }}"/>
-                                                    </div>
-                                                    <div class="zForm-row">
-                                                        Код:
-                                                    </div>
-                                                    <div class="toselect-wrap">
-                                                        <div class="deletius"></div>
-                                                        <div class="zForm-row">
-                                                            <select name="rival[code]" class="formstyler">
-                                                                {% for code in rival.code %}
-                                                                    <option value="{{ code.id }}" {{ (code.def?'selected':'') }}>{{ code.code }} <div class="delete-this"></div></option>
-                                                                {% endfor %}
-                                                            </select>
-                                                        </div>
-                                                        <div class="zForm-row toselect">
-                                                            <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-col form-col-scrolled">
-                                                    <div class="zForm-row">
-                                                        Разделы
-                                                    </div>
-                                                    <div class="smash-container">
-                                                        {# col 2 #}
-                                                        {% if sections is defined %}
-                                                            {% for section in sections %}
-                                                                {{ _self.recursiveSectionList(section,rival.sectionsArrayId) }}
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                        {# col 2 end #}
-                                                    </div>
 
-                                                </div>
-                                                <div class="zForm-row zNice">
-                                                    <input type="submit" class="sm-btn" value="Добавить" onclick="createRival($('#modal{{ rival.id }} form')); return false;"/>
-                                                    <a href="#" class="button button_bgay sm-btn closeFancybox">ОТМЕНИТЬ</a>
-                                                </div>
-
-
-                                            </form>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
                         </td>
                         <td>
                             {% if rival.sections is defined and rival.sections is not empty %}

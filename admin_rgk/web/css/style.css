@@ -244,9 +244,12 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .sTable thead tr td{border-right:1px solid #f9f9f9;background: #f3f3f4;font-weight: 400;}
 .sTable thead tr td:first-child{width: 103px;}
 .sTable table tbody tr td{padding: 11px 5px;}
-.sTable tbody tr:hover td,.sTable tbody tr.active td{background: #d4e8f1;}
-.sTable tbody tr td:hover{    background: #86a4b1;}
-.sTable tbody tr:hover .closeWrap .icon,.sTable tbody tr.active .closeWrap .icon{display: block;}
+.sTable tbody tr:hover td{background: #d4e8f1;}
+.sTable tbody tr td:hover {
+    background: #86a4b1;
+}
+
+.sTable tbody tr:hover .closeWrap .icon{display: block;}
 .grayBg{background: #d1d2d4;}
 .sTable-inner{padding: 11px 5px;text-decoration: none;display: block; color: #000;}
 .greentext{color: #73c47a;}
@@ -482,7 +485,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 #addSite form{ position: relative;}
 #addSite .smash-container{height: 100%;}
 #addSite,
-.row-modal-window{width: 540px;}
+.row-modal-window{width: 840px; overflow: hidden;}
 .selectinput{ position: relative;}
 .inputstyle{width: calc(100% - 35px);}
 .select-styler{ position: absolute; top: 0; left: 0;}
@@ -533,7 +536,8 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 
 
 .form-col{width: 49%; display: inline-block; vertical-align: top; margin-bottom: 25px; }
-.form-col-scrolled{ position: absolute; top: 0; right: 0; height: calc(100% - 50px);}
+.form-col.small{width: 29%; height: 800px;}
+.form-col-scrolled{ position: absolute; top: 0; right: 0; height: calc(100% - 20px); width: 70%;}
 .toselect{ position: absolute;top: 0;
     width: calc(100% - 54px); left: 20px;}
 .toselect-wrap{ position: relative;}
