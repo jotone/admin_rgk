@@ -18,17 +18,17 @@
             <div class="row-modal-window" id="modalEditable">
                 <div class="zForm">
                     <form data-action="">
-                        <div class="form-col zNice small">
+                        <div class="form-col  small">
                             <div class="zForm-row">
                                 Название:
                             </div>
-                            <div class="zForm-row">
+                            <div class="zForm-row zNice">
                                 <input type="text" required="required" placeholder="Название" name="rival[name]"/>
                             </div>
                             <div class="zForm-row">
                                 URL:
                             </div>
-                            <div class="zForm-row">
+                            <div class="zForm-row zNice">
                                 <input type="text" minlength="5" required="required" placeholder="Адрес сайта" name="rival[url]"/>
                             </div>
                             <div class="zForm-row">
@@ -36,14 +36,10 @@
                             </div>
                             <div class="toselect-wrap">
                                 <div class="deletius"></div>
-                                <div class="zForm-row">
-                                    <select name="rival[code]" class="formstyler">
-
-                                           {# <option value="{{ code.id }}">{{ code.code }} <div class="delete-this"></div></option>#}
-
-                                    </select>
+                                <div class="zForm-row zNull">
+                                    <select name="rival[code]" class="formstyler"></select>
                                 </div>
-                                <div class="zForm-row toselect">
+                                <div class="zForm-row toselect zNice">
                                     <input type="text" minlength="3" class="forSelect" placeholder="Новый код" name="rival[codeText]"/>
                                 </div>
                             </div>
@@ -147,7 +143,10 @@
                         {{ rival.id }}:{
                             code: [
                                 {% for code in rival.code %}
-                                    '{{ code.code|raw }}'{{ (loop.last ? '' : ',') }}
+                                    {
+                                        id: {{ code.id }},
+                                        name: '{{ code.code|raw }}'
+                                    }{{ (loop.last ? '' : ',') }}
                                 {% endfor %}
                             ],
                             section: [
@@ -174,7 +173,7 @@
                     <tr data-id="{{ rival.id }}" >
                         <td>
                             <div class="closeWrap">
-                                <a href=""   data-rival-id="{{ rival.id }}" data-action="/app_dev.php/actionRival/{{ rival.id }}" data-url="{{ rival.url }}" data-name="{{  rival.name }}" class="icon icon_edit rowEditing"></a>
+                                <a href="javascript:;"   data-rival-id="{{ rival.id }}" data-action="/app_dev.php/actionRival/{{ rival.id }}" data-url="{{ rival.url }}" data-name="{{  rival.name }}" class="icon icon_edit rowEditing"></a>
                             </div>
                             {{ rival.name }}
 

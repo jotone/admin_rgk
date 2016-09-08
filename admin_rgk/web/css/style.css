@@ -538,7 +538,7 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
 .form-col{width: 49%; display: inline-block; vertical-align: top; margin-bottom: 25px; }
 .form-col.small{width: 29%; height: 800px;}
 .form-col-scrolled{ position: absolute; top: 0; right: 0; height: calc(100% - 20px); width: 70%;}
-.toselect{ position: absolute;top: 0;
+.toselect{ position: absolute;top: 0; z-index:90;
     width: calc(100% - 54px); left: 20px;}
 .toselect-wrap{ position: relative;}
 .smash-container{ overflow-y: scroll; overflow-x: auto; border: 1px solid #eee; height: calc(100% - 37px);}
@@ -579,3 +579,5 @@ box-shadow: 0 3px 7px 0 rgba(0,0,0,0.5);}
     width: 250px;
     padding: 50px 30px;}
 #productEdit input[name=url]{ cursor: pointer;}
+.zNull{ position: relative; z-index:10;}
+.zNull .jq-selectbox__select{ height: 34px; box-shadow: none;}

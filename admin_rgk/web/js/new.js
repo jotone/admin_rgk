@@ -1042,39 +1042,38 @@ function universalSubmit(form) {
 //логика чекбоксов в попапе конкурентов
 function checScript() {
     $(document).on('change', '.check-script input', function () {
-        var form = $(this).closest('form');
-        if($(this).prop('checked')){
-
-           recursive($(this), form);
-        }else{
-            recursive2($(this), form);
-        }
-        function recursive(elem, form) {
-                var parent = elem.val();
-                console.log(parent);
-                if (parent.length>0) {
-                    form.find('.check-script input[data-parent-id = ' + parent + ']').each(function () {
-                        $(this).prop('checked', true);
-                        recursive($(this), form);
-                    });
-                }
-        }
-        function recursive2(elem, form) {
-            var parent = parseInt(elem.data('parent-id'));
-            console.log(parent);
-            if (parent>0) {
-
-                form.find('.check-script input[value = ' + parent + ']').each(function () {
-                    $(this).prop('checked', false);
-                    recursive2($(this), form);
-                });
-            }
-        }
-
-
-
-
+               chekLogic($(this));
     })
+}
+function chekLogic(elem) {
+    var form = elem.closest('form');
+    if(elem.prop('checked')){
+
+        recursive(elem, form);
+    }else{
+        recursive2(elem, form);
+    }
+    function recursive(elem, form) {
+        var parent = elem.val();
+        console.log(parent);
+        if (parent.length>0) {
+            form.find('.check-script input[data-parent-id = ' + parent + ']').each(function () {
+                $(this).prop('checked', true);
+                recursive($(this), form);
+            });
+        }
+    }
+    function recursive2(elem, form) {
+        var parent = parseInt(elem.data('parent-id'));
+        console.log(parent);
+        if (parent>0) {
+
+            form.find('.check-script input[value = ' + parent + ']').each(function () {
+                $(this).prop('checked', false);
+                recursive2($(this), form);
+            });
+        }
+    }
 }
 // END логика чекбоксов в попапе конкурентов
 //удаление кода
@@ -1436,9 +1435,47 @@ function rovEditing() {
         var rivalName = $(this).data('name');
         var rivalUrl = $(this).data('url');
         var action = $(this).data('action');
+        var options ='';
+        for (var i = 0; i < dataStorage[rivalid].code.length; i++) {
+            options = options + '<option value="'+dataStorage[rivalid].code[i].id+'">'+dataStorage[rivalid].code[i].name+'<div class="delete-this"></div></option>';
+        }
+        $('.check-script input').each(function () {$(this).prop('checked', false);});
+
+        $('.check-script input').each(function () {
+            for (var j = 0; j < dataStorage[rivalid].section.length; j++) {
+                if ($(this).val() == dataStorage[rivalid].section[j]){
+                    $(this).prop('checked', true);
+                    chekLogic($(this));
+                    break;
+                }
+                
+            }
+
+        });
+        var popup = $('#modalEditable');
+        popup.find('input[name="rival[name]"]').val(rivalName);
+        popup.find('input[name="rival[url]"]').val(rivalUrl);
+        popup.find('select').html(options);
+        popup.find('form').data('action', action);
+        $.fancybox.open(popup, {
+            padding:20,
+            fitToView:false,
+            autoSize:true,
+            wrapCSS: 'selected-fancybox',
+            afterShow: function () {
+
+                $('.formstyler').styler({
+                    selectVisibleOptions:10
+                });
+                selectToInput(popup);
+
+            }
+        });
+
+
     });
 }
-
+rovEditing();
 editTovarAjax();
 createCell();
 createPrice();
