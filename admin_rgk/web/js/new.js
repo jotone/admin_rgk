@@ -193,13 +193,13 @@
                                     $('.tzNice').styler({
                                         selectVisibleOptions:10
                                     });
-                                    setTimeout(function () {
-                                        $(document).on('click', '.submit-tmp', function () {
-                                            var newId = $('#moveItem form select').val();
-                                            finalAjax(id, newId, title);
-                                            return false;
-                                        });
-                                    }, 200);
+
+                                    $(document).on('click', '.submit-tmp', function () {
+                                        var newId = $('#moveItem form select').val();
+                                        finalAjax(id, newId, title);
+                                        return false;
+                                    });
+
 
                                 }
                             });
