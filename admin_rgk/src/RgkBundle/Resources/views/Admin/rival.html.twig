@@ -1,7 +1,7 @@
 {% extends 'RgkBundle:Admin:base.html.twig' %}
 {% macro recursiveSectionList(section,active=[],depth=0) %}
     <div class="zForm-row tal nowrap check-script check-troll-wrap">
-        <label><input type="checkbox" name="rival[section][]" value="{{ section.id }}" {{ (section.id in active?'checked="checked"':'') }} data-parent-id="{{ section.parent_id?section.parent_id:0 }}"/>{% for i in 0..depth %} {{ (i?'<span class="nbsp"></span>':'')|raw }}  {% endfor %}<span class="check-troll">{{ (depth?'<span class="childCheckbox"></span>':'')|raw }}{{ section.title }}</span></label>
+        <label><input type="checkbox" name="rival[section][]" value="{{ section.id }}" data-parent-id="{{ section.parent_id?section.parent_id:0 }}"/>{% for i in 0..depth %} {{ (i?'<span class="nbsp"></span>':'')|raw }}  {% endfor %}<span class="check-troll">{{ (depth?'<span class="childCheckbox"></span>':'')|raw }}{{ section.title }}</span></label>
     </div>
     {% if section.children|length %}
         {% set chaildDepth = depth + 1 %}
@@ -74,6 +74,24 @@
         </div>
         <div class="lsep"></div>
         <div class="sTable bTable prodTable">
+            <script>
+                var dataStorage = {
+                    {% for rival in rivals %}
+                        {{ rival.id }}:{
+                            code: [
+                                {% for code in rival.code %}
+                                    '{{ code.code|raw }}'{{ (loop.last ? '' : ',') }}
+                                {% endfor %}
+                            ],
+                            section: [
+                                {% for section in rival.sectionsArrayId %}
+                                    {{ section }}{{ (loop.last ? '' : ',') }}
+                                {% endfor %}
+                            ]
+                        }{{ (loop.last?'':',') }}
+                    {% endfor %}
+                };
+            </script>
             <table>
                 <thead>
                 <tr>
