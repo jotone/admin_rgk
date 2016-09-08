@@ -27,6 +27,32 @@ class PriceController extends BaseController
         }
         return $return;
     }
+
+    public function setProductsPersent(&$products,&$rivals){
+        if(empty($products) || empty($rivals))
+            return;
+        /**
+         * @var Product $product
+         * @var Price $price
+         */
+        $rival_array = array_map(function($a){return $a->getId();},$rivals);
+
+        foreach ($products as &$product){
+            $sum = [];
+            foreach ($product->getPrices()->toArray() as $price){
+                if($rivalId = @$price->getCode()->getRival()->getId()){
+                    if(isset($sum[$rivalId])){
+                        $product->removePrices($price);
+                    } else if (in_array($rivalId,$rival_array) && $price->getPrice()>0){
+                        $sum[$rivalId] = $price->getPrice();
+                    }
+                }
+            }
+            $sum = array_sum($sum)/count($sum); //middle price
+            $product->setPercent(round(($product->getPrice()/$sum-1)*100));
+        }
+    }
+
     /**
      * @Route("/", name="rgk_price_index")
      * @Route("/section/{id}", name="rgk_price_section")
@@ -81,6 +107,7 @@ class PriceController extends BaseController
             $params['products'] = $this->getDoctrine()
                                        ->getRepository('RgkBundle:Product')
                                        ->findBy(array('section'=>$sectionSpectre), array('pos' => 'ASC','title' => 'ASC','price'=>'ASC'));
+            $this->setProductsPersent($params['products'],$params['rivals']);
         }
         else {
             $params['sections'] = $this->menuStrict($params['sections']);

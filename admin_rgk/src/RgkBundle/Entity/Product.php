@@ -65,6 +65,11 @@ class Product
     private $url;
 
     /**
+     * @var int
+     */
+    private $percent = 0;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -242,26 +247,19 @@ class Product
      * @return number
      */
     function getPercent(){
-        if(!$this->getPrices() || !$this->getPrice())
-            return 0;
+        return $this->percent;
+    }
 
-
-        $count = 0;
-        $sum = 0;
-        /**
-         * @var Price $price
-         */
-        foreach ($this->getPrices()->toArray() as $price){
-            if($price->getPrice()){
-                $sum += $price->getPrice();
-                $count++;
-            }
-        }
-        if($count==0)
-            return 0;
-
-        $sum = $sum/$count; // take middle price
-        return round(($this->getPrice()/$sum - 1)*100);
+    /**
+     * Set percent
+     *
+     * @param number $persent
+     *
+     * @return Product
+     */
+    function setPercent($persent){
+        $this->percent = $persent;
+        return $this;
     }
 
     /**
