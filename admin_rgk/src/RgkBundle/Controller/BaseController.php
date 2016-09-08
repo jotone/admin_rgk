@@ -228,7 +228,7 @@ class BaseController extends Controller
         if($excludeRivals && is_array($excludeRivals))
             $excludeArray = array_map(function($a){return $a->getId();},$excludeRivals);
 
-        $q = "SELECT `id`, `name` FROM `rival` WHERE 1".($excludeArray?sprintf(' AND `id` IN (%s)',implode(', ', $excludeArray)):'').' ORDER BY `name` ASC';
+        $q = "SELECT `id`, `name` FROM `rival` WHERE 1".($excludeArray?sprintf(' AND `id` NOT IN (%s)',implode(', ', $excludeArray)):'').' ORDER BY `name` ASC';
         $stmt = $this->getDoctrine()->getManager()
             ->getConnection()
             ->prepare(

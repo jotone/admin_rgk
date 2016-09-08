@@ -369,6 +369,7 @@ class SimpleHtmlDomNodeController
     //PaperG - added ability for find to lowercase the value of the selector.
     function find($selector, $idx=null, $lowercase=false)
     {
+
         $selectors = $this->parse_selector($selector);
         if (($count=count($selectors))===0) return array();
         $found_keys = array();
@@ -423,7 +424,7 @@ class SimpleHtmlDomNodeController
         global $debugObject;
         if (is_object($debugObject)) { $debugObject->debugLogEntry(1); }
 
-        list($tag, $key, $val, $exp, $no_key) = $selector;
+        list($tag, $key, $val, $exp, $no_key, $dopClass) = $selector;
 
         // xpath index
         if ($tag && $key && is_numeric($key))
@@ -452,10 +453,12 @@ class SimpleHtmlDomNodeController
         }
 
         for ($i=$this->_[ParseController::HDOM_INFO_BEGIN]+1; $i<$end; ++$i) {
+            /**
+             * @var SimpleHtmlDomNodeController $node
+             */
             $node = $this->dom->nodes[$i];
 
             $pass = true;
-
             if ($tag==='*' && !$key) {
                 if (in_array($node, $this->children, true))
                     $ret[$i] = 1;
@@ -472,6 +475,7 @@ class SimpleHtmlDomNodeController
                     if (($key != "plaintext") && !isset($node->attr[$key])) $pass=false;
                 }
             }
+
             // compare value
             if ($pass && $key && $val  && $val!=='*') {
                 // If they have told us that this is a "plaintext" search then we want the plaintext of the node - right?
@@ -482,7 +486,10 @@ class SimpleHtmlDomNodeController
                     // this is a normal search, we want the value of that attribute of the tag.
                     $nodeKeyValue = $node->attr[$key];
                 }
+
+
                 if (is_object($debugObject)) {$debugObject->debugLog(2, "testing node: " . $node->tag . " for attribute: " . $key . $exp . $val . " where nodes value is: " . $nodeKeyValue);}
+
 
                 //PaperG - If lowercase is set, do a case insensitive test of the value of the selector.
                 if ($lowercase) {
@@ -492,9 +499,11 @@ class SimpleHtmlDomNodeController
                 }
                 if (is_object($debugObject)) {$debugObject->debugLog(2, "after match: " . ($check ? "true" : "false"));}
 
+
+
                 // handle multiple class
                 if (!$check && strcasecmp($key, 'class')===0) {
-                    foreach (explode(' ',$node->attr[$key]) as $k) {
+                    foreach (explode(' ', $node->attr[$key]) as $k) {
                         // Without this, there were cases where leading, trailing, or double spaces lead to our comparing blanks - bad form.
                         if (!empty($k)) {
                             if ($lowercase) {
@@ -504,6 +513,14 @@ class SimpleHtmlDomNodeController
                             }
                             if ($check) break;
                         }
+                    }
+                }
+                //if selector have second class of id+class
+                if($check && $dopClass && isset($node->attr['class'])){
+                    $high_steak=($lowercase?(strtolower($node->attr['class'])):$node->attr['class']);
+                    $dopClass = ($lowercase?strtolower($dopClass):$dopClass);
+                    if(strpos($high_steak,$dopClass) !== false){
+                        $check = $this->match($exp, $dopClass, $dopClass);
                     }
                 }
                 if (!$check) $pass = false;
@@ -548,7 +565,7 @@ class SimpleHtmlDomNodeController
 // This implies that an html attribute specifier may start with an @ sign that is NOT captured by the expression.
 // farther study is required to determine of this should be documented or removed.
 //        $pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
-        $pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\[@?(!?[\w-:]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
+        $pattern = "/([\w-:\*]*)(?:\#([\w-]+)|\.([\w-]+))?(?:\.([\w-]+))?(?:\[@?(!?[\w-:]+)(?:([!*^$]?=)[\"']?(.*?)[\"']?)?\])?([\/, ]+)/is";
         preg_match_all($pattern, trim($selector_string).' ', $matches, PREG_SET_ORDER);
         if (is_object($debugObject)) {$debugObject->debugLog(2, "Matches Array: ", $matches);}
 
@@ -565,21 +582,25 @@ class SimpleHtmlDomNodeController
             list($tag, $key, $val, $exp, $no_key) = array($m[1], null, null, '=', false);
             if (!empty($m[2])) {$key='id'; $val=$m[2];}
             if (!empty($m[3])) {$key='class'; $val=$m[3];}
-            if (!empty($m[4])) {$key=$m[4];}
-            if (!empty($m[5])) {$exp=$m[5];}
-            if (!empty($m[6])) {$val=$m[6];}
+            $dopClass = (!empty($m[4])?$m[4]:false);
+            if (!empty($m[5])) {$key=$m[5];}
+            if (!empty($m[6])) {$exp=$m[6];}
+            if (!empty($m[7])) {$val=$m[7];}
+
 
             // convert to lowercase
             if ($this->dom->lowercase) {$tag=strtolower($tag); $key=strtolower($key);}
             //elements that do NOT have the specified attribute
             if (isset($key[0]) && $key[0]==='!') {$key=substr($key, 1); $no_key=true;}
 
-            $result[] = array($tag, $key, $val, $exp, $no_key);
-            if (trim($m[7])===',') {
+            $result[] = array($tag, $key, $val, $exp, $no_key, $dopClass);
+
+            if (trim($m[8])===',') {
                 $selectors[] = $result;
                 $result = array();
             }
         }
+
         if (count($result)>0)
             $selectors[] = $result;
         return $selectors;
