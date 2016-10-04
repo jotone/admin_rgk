@@ -253,8 +253,12 @@
                                             var revalCodes = {
                                                 {% for rival in rivals %}
                                                     {{ (loop.first?'':',') }}{{ rival.id }}: {
+                                                        0: {
+                                                            title: '',
+                                                            selected: 0
+                                                        }
                                                         {% for code in rival.code %}
-                                                            {{ (loop.first?'':',') }}{{ code.id }}: {
+                                                            ,{{ code.id }}: {
                                                                 title: '{{ code.code }}',
                                                                 selected: {{ (code.def?1:0) }}
                                                             }
@@ -271,7 +275,7 @@
                                                 {% set noValue = true %}
 
                                                 {% for price in product.prices %}
-                                                    {% if noValue and price.code.rival.id == rival.id %}
+                                                    {% if noValue and price.code and price.code.rival.id == rival.id %}
                                                         <div class="table-td editablePopup"
                                                              data-rival-id="{{ rival.id }}"
                                                              data-price-id="{{ price.id }}"
@@ -293,6 +297,32 @@
                                                         {% set noValue = false %}
                                                     {% endif %}
                                                 {% endfor %}
+
+                                                {% if noValue %}
+                                                    {% for price in product.prices %}
+                                                        {% if noValue and price.rival and price.rival.id == rival.id %}
+                                                            <div class="table-td editablePopup"
+                                                                 data-rival-id="{{ rival.id }}"
+                                                                 data-price-id="{{ price.id }}"
+                                                                 data-price-title="{{ price.title }}"
+                                                                 data-price-url="{{ price.url }}"
+                                                                 data-price-date="{{ price.date|date("d.m.Y") }}"
+                                                                 data-price-code="0"
+                                                                 data-price-price="{{ (price.price?price.price:'-') }}"
+                                                            >
+                                                                {% if price.price %}
+                                                                    {{ price.price|number_format(0,',',' ') }}
+                                                                    {% if price.percent != 0 %}
+                                                                        <span class="Bgmonitoring" style="background: {{ price.label }};">{{ price.percent }}%</span>
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    -
+                                                                {% endif %}
+                                                            </div>
+                                                            {% set noValue = false %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
 
                                                 {% if noValue %}
                                                     <div class="table-td creatingPopup" data-rival-id="{{ rival.id }}">-</div>

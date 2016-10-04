@@ -40,7 +40,7 @@ class PriceController extends BaseController
         foreach ($products as &$product){
             $sum = [];
             foreach ($product->getPrices()->toArray() as $price){
-                if($rivalId = @$price->getCode()->getRival()->getId()){
+                if($price->getCode() && $price->getCode()->getRival() && $rivalId = $price->getCode()->getRival()->getId()){
                     if(isset($sum[$rivalId])){
                         $product->removePrices($price);
                     } else if (in_array($rivalId,$rival_array) && $price->getPrice()>0){
@@ -459,6 +459,7 @@ class PriceController extends BaseController
         }
 
         $price->setCode($code)
+             ->setRival($rival)
              ->setUrl((isset($data['url'])?$data['url']:''))
              ->setTitle((isset($data['title'])?$data['title']:''))
         ;

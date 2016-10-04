@@ -44,15 +44,25 @@ class Price
      */
     private $product;
 
-    /**
+   /**
      * @var Code
      * @Assert\NotBlank()
      * @ORM\ManyToOne(targetEntity="Code")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="code", referencedColumnName="id",nullable=true,onDelete="CASCADE")
+     *   @ORM\JoinColumn(name="code", referencedColumnName="id",nullable=true,onDelete="SET NULL")
      * })
      */
-    private $code;
+   private $code;
+
+    /**
+     * @var Rival
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Rival")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="rival", referencedColumnName="id",nullable=true,onDelete="CASCADE")
+     * })
+     */
+    private $rival;
 
     /**
      * @var string
@@ -149,6 +159,7 @@ class Price
         return $this->product;
     }
 
+
     /**
      * Set code
      *
@@ -170,6 +181,29 @@ class Price
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set rival
+     *
+     * @param \RgkBundle\Entity\Rival $rival
+     * @return Price
+     */
+    public function setRival(\RgkBundle\Entity\Rival $rival = null)
+    {
+        $this->rival = $rival;
+
+        return $this;
+    }
+
+    /**
+     * Get rival
+     *
+     * @return \RgkBundle\Entity\Rival
+     */
+    public function getRival()
+    {
+        return $this->rival;
     }
 
     /**
