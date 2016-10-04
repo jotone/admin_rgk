@@ -48,8 +48,10 @@ class PriceController extends BaseController
                     }
                 }
             }
-            $sum = array_sum($sum)/count($sum); //middle price
-            $product->setPercent(round(($product->getPrice()/$sum-1)*100));
+            if($sum){
+                $sum = array_sum($sum)/count($sum); //middle price
+                $product->setPercent(round(($product->getPrice()/$sum-1)*100));
+            }
         }
     }
 
