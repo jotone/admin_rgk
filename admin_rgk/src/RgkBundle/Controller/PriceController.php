@@ -543,7 +543,7 @@ class PriceController extends BaseController
             $parse = new ParseController();
             foreach ($prices as $price) {
                 $priceValue = $parse->get_price($price->getUrl(), $price->getCode()->getCode());
-                if($priceValue) {
+                if($priceValue && !isset($priceValue['error'])) {
                     $price->setPrice($priceValue)
                         ->setDate(new \DateTime());
                     $manager->persist($price);
@@ -577,9 +577,8 @@ class PriceController extends BaseController
         //check parce
         $parse = new ParseController();
         $priceValue = $parse->get_price($price->getUrl(), $price->getCode()->getCode());
-
-        if (!$priceValue)
-            $this->renderApiJson(['error' => 'Ошибка парсинга кода']);
+        if (!$priceValue || isset($priceValue['error']))
+            $this->renderApiJson(['error' => (isset($priceValue['error'])?$priceValue['error']:'Ошибка парсинга кода')]);
 
         $price->setPrice($priceValue)
               ->setDate(new \DateTime());
