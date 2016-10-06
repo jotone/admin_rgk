@@ -85,6 +85,7 @@ class ParseController
                 \curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
                 \curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
                 \curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
+                \curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36');
                 //\curl_setopt($curl, CURLOPT_CAINFO, getcwd() . '/ca.crt');
                 \curl_setopt($curl, CURLOPT_SSLCERT, __DIR__ . '/cert.pem');
                 \curl_setopt($curl, CURLOPT_SSLCERTPASSWD, "9932");
